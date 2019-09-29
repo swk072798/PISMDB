@@ -7,6 +7,7 @@ import java.util.List;
 
 @Repository
 public interface TargetsDao {
-    public int getTargetsCount();
-  public List<Targets> findTargetById();
+    int getTargetsCount();
+    List<Targets> findTargetById();
+    Targets findTargetByUniprotID(String UniprotID);
 }

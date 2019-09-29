@@ -1,10 +1,11 @@
-package com.nwafu.PISMDB.service;
+package com.nwafu.PISMDB.service.impl;
 
 import com.nwafu.PISMDB.dao.CompoundsDao;
 import com.nwafu.PISMDB.entity.Compounds;
 import com.nwafu.PISMDB.entity.CompoundsBasicInformationBean;
 import com.nwafu.PISMDB.entity.Pic;
 import com.nwafu.PISMDB.entity.Pictures;
+import com.nwafu.PISMDB.service.CompoundsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

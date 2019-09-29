@@ -1,7 +1,8 @@
-package com.nwafu.PISMDB.service;
+package com.nwafu.PISMDB.service.impl;
 
 import com.nwafu.PISMDB.dao.TargetsDao;
 import com.nwafu.PISMDB.entity.Targets;
+import com.nwafu.PISMDB.service.TargetsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

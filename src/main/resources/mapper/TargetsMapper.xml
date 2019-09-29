@@ -16,10 +16,15 @@
         from target
     </select>
 
-
     <select id="findTargetById" resultMap="TargetMap">
         select *
         from target
+    </select>
+
+    <select id="findTargetByUniportID" resultMap="TargetMap">
+        select *
+        from target
+        where UniprotID=#{0}
     </select>
 
 

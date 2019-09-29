@@ -1,6 +1,7 @@
-package com.nwafu.PISMDB.service;
+package com.nwafu.PISMDB.service.impl;
 
 import com.nwafu.PISMDB.dao.PathwaysDao;
+import com.nwafu.PISMDB.service.PathwaysService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
