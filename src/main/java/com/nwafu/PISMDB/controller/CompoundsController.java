@@ -4,25 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nwafu.PISMDB.UserRepository;
 import com.nwafu.PISMDB.entity.*;
-import com.nwafu.PISMDB.service.CompoundsService;
-import com.nwafu.PISMDB.service.PathwaysService;
-import com.nwafu.PISMDB.service.TargetsService;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.TextField;
-import org.apache.lucene.index.*;
-import org.apache.lucene.search.*;
-import org.apache.lucene.search.highlight.*;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
+import com.nwafu.PISMDB.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.apache.lucene.queryparser.classic.QueryParser;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,194 +21,54 @@ import java.util.Vector;
 //@RestController
 @Controller
 public class CompoundsController {
+
     private String search_text;  //临时存放待搜索的文本
     @Autowired
     private CompoundsService compoundsService;
-    //    @Autowired
-//    private CompoundsDao compoundsDao;
-    //CompoundsService compoundsServiceImp=new CompoundsServiceImp();
+
     @Autowired
     private TargetsService targetsService;
     @Autowired
     private PathwaysService pathwaysService;
-
-
+    @Autowired
+    private LuceneSearchService luceneSearchService;
+    @Autowired
+    private FileSearchService fileSearchService;
 
     /////////////////文件搜索部分开始/////////////////////
-    List<String> data_1 = null;
-    List<String> data_2 = null;
-
-    public String readFile(String file_path) {   //读取文件
-        String res = "";
-        String temp = "";
-        File file = new File(file_path);
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            while((temp = br.readLine()) != null) {
-                res += temp;
-//				System.out.println(temp);
-            }
-//            System.out.println(res);
-            br.close();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return res;
-    }
-
-    public List<String> save_data_to_arr(String str,String lastname) {    //将文件通过TAB分隔，遍历后获取文件中的数据，保存到数组，用来获取.mol2中的数据
-        String [] a = str.split("	");
-        List<String> b = new ArrayList<>();
-        boolean flag = false;
-
-        for(int i = 0;i<a.length;i++) {
-            if(a[i].equals("A1_0(C" + lastname +")")) {
-                flag = true;
-                i++;
-            }
-//			System.out.print(i);
-            if(flag == true) {
-                b.add(a[i]);
-//				System.out.print("1");
-            }
-        }
-
-        return b;
-    }
-
-    public List<String> save_data_to_arr(String str,String lastname,String sign) {    //将文件通过TAB分隔，遍历后获取文件中的数据，
-        //以字符串sign为数据的开始标志符，将数据保存到数组，用来获取.smile中的数据
-        String [] a = str.split("	");
-        List<String> b = new ArrayList<>();
-        boolean flag = false;
-
-        for(int i = 0;i<a.length;i++) {
-            if(a[i].equals(sign)) {
-                flag = true;
-                i++;
-            }
-
-//			System.out.print(i);
-            if(flag == true) {
-                b.add(a[i]);
-//				System.out.print("1");
-            }
-        }
-
-        return b;
-    }
-
-
-    public float caculate(List<String> a,List<String> b) { 			//  sum(xi+yi)/(sum(xi^2)+sum(yi^2)-sum(xiyi)【系数的计算公式】
-        float sum_xiyi = 0;
-        int i;
-        for(i = 0;i<a.size();i++) {
-            sum_xiyi += Float.parseFloat(a.get(i)) * Float.parseFloat(b.get(i));
-        }
-
-        float sum_xi2 = 0;
-        for(i = 0;i<a.size();i++) {
-            sum_xi2 += Float.parseFloat(a.get(i)) * Float.parseFloat(a.get(i));  //xi平方的和
-        }
-
-        float sum_yi2 = 0;
-        for(i = 0;i<b.size();i++) {
-            sum_yi2 += Float.parseFloat(b.get(i)) * Float.parseFloat(b.get(i));  //yi的平方和
-        }
-
-        float result = sum_xiyi/(sum_xi2 + sum_yi2 - sum_xiyi);
-        return result;
-    }
-
-
-    public void delete_zero_and_na(){
-        for(int i = 0;i<data_1.size();i++) {
-            if(
-                    data_1.get(i).equals("0") || data_2.get(i).equals("0") ||
-                            data_1.get(i).equals("na") || data_2.get(i).equals("na")
-                    ) {
-                data_1.remove(i);
-                data_2.remove(i);
-                i--;
-            }
-
-
-        }
-    }
-
-    //    @ResponseBody
-//    @RequestMapping("/file_search")
-    public void file_search(String file_1,String file_1_lastname){
-//        String file_1 = "C:\\Users\\47405\\Desktop\\20R.20R";
-//        String file_2 = "C:\\Users\\47405\\Desktop\\20S.20S";
-//            String file_1_lastname = "20R";   //更换文件时记得修改,作为mol2文件数据开始的标志符
-//        String file_2_lastname = "20S";
-
-        ///////////////////开始计时间////////////////////////
-        long startTime = System.currentTimeMillis();
-        /////////////
-        String path = "D:\\IDEA_pro\\data_resource";
-        File file = new File(path);
-        File [] fs =  file.listFiles();
-        System.out.println("文件个数："+fs.length);
-        Vector<String[]> v = new Vector<String[]>();
-        ArrayList<Double> al_1 = new ArrayList<Double>();
-        ArrayList<String> al_path = new ArrayList<>();
-
-        for(File f : fs){
-            String res1 = readFile(file_1);
-            String res2 = readFile(f.getPath());
-
-            String file_2_lastname = f.getName().split("\\.")[0];
-            data_1 = save_data_to_arr(res1,file_1_lastname);
-            data_2 = save_data_to_arr(res2,file_2_lastname);
-            delete_zero_and_na();
-
-            double result = caculate(data_1, data_2);
-            if(result >0.5){        //筛选出评分大于0.5的
-                al_1.add(result);
-                al_path.add(f.getPath());
-
-            }
-        }
-
-        System.out.println(al_1.toString());
-        System.out.println(al_path.toString());
-
-        long endTime = System.currentTimeMillis();
-        System.out.println("计算时间为 ： " + (endTime - startTime));
-
-    }
-
-
-    //    @ResponseBody
-    @RequestMapping("/file_upload")
+    /**
+     * 这里是上传文件进行文件搜索
+     * @param uploadFile
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("/uploadFileSearch")
     //@RequestParam("uploadFile")MultipartFile uploadFile
     public String uploadfile(MultipartFile uploadFile, HttpServletRequest request) throws IOException {
-//        String file_path = request.getParameter("uploadFile");
         String fileName = uploadFile.getOriginalFilename();
-        String newFileName = fileName;
-        String path = "D:\\upload_file_list\\";     /**
-                                                            这里上传路径要改*/
-
         if(null == fileName){
             System.out.println("找不到文件");
             return "找不到文件";
         }
-        else{
-            uploadFile.transferTo(new File(path+newFileName));
-            System.out.println("上传成功！");
-            file_search(path+fileName,newFileName.split("\\.")[0]);
-            return "Search-sequence-Result";
+//        String file_path = request.getParameter("uploadFile");
+        if(!fileName.split(".")[1].equals(".mol2")){
+            System.out.println("文件格式错误");
+            return null;
         }
+        String newFileName = fileName;
+        String path = "D:\\upload_file_list\\";     /**
+                                                            这里上传路径要改*/
+        uploadFile.transferTo(new File(path+newFileName));
+        System.out.println("上传成功！");
+        fileSearchService.fileSearch(path+fileName,newFileName.split("\\.")[0]);
+        return "Search-sequence-Result";
+
         /**
          * 上传成功后还应该调用搜索引擎的更新函数和blast+库的重建函数
          */
 
     }
-
-
 
 //////////////文件搜索部分结束///////////////////////////
 
@@ -244,121 +90,16 @@ public class CompoundsController {
 //    @ResponseBody
 //    @RequestMapping("/list")
     public void createIndex() throws Exception {
-        //把索引库保存到磁盘上
-        Directory directory = FSDirectory.open(new File("D:\\IDEA_pro\\PISMDB").toPath());
-        //会在index中生成索引目录
-        Analyzer analyzer = new StandardAnalyzer();
-        IndexWriter indexWriter = new IndexWriter(directory, new IndexWriterConfig(analyzer));
-
-        List<CompoundsBasicInformationBean> list = compoundsService.FindBasicInformation();
-
-        System.out.println(list.size());
-
-        for (CompoundsBasicInformationBean cbi : list) {
-            String PISMID_ = cbi.getPISMID();
-            String IUPAC_Name_ = cbi.getIUPAC_Name();
-            String ChemicalFormular_ = cbi.getChemicalFormular();
-            String AlogP_ = cbi.getAlogP();
-            String Smiles_ = cbi.getSmiles();
-            String ChemicalNames_ = cbi.getChemicalNames();
-            String path_ = cbi.getAddress();
-            String content = PISMID_ + " " + ChemicalNames_ + " " + IUPAC_Name_ + " " + ChemicalFormular_ + " " + Smiles_ + " " + AlogP_ + " " + path_;
-            System.out.println(content);
-
-            //创建域    域的名称、域的值、是否存储到磁盘
-            Field fieldPISMID_ = new TextField("PISMID", PISMID_, Field.Store.YES);
-            Field fieldContent = new TextField("Content", content, Field.Store.YES);
-//            Field fieldIUPAC_Name_ = new TextField("IUPAC_Name",IUPAC_Name_,Field.Store.YES);
-//            Field fieldChemicalFormular_ = new TextField("ChemicalFormular",ChemicalFormular_,Field.Store.YES);
-//            Field fieldAlogP_ = new TextField("AlogP",AlogP_,Field.Store.YES);
-//            Field fieldSmiles_ = new TextField("Smiles",Smiles_,Field.Store.YES);
-//            Field fieldChemicalNames_ = new TextField("ChemicalNames",ChemicalNames_,Field.Store.YES);
-            //创建文档对象
-            Document document = new Document();
-            document.add(fieldPISMID_);
-            document.add(fieldContent);
-
-            indexWriter.addDocument(document);
-        }
-        indexWriter.close();
+        luceneSearchService.createIndex();
     }
     //content中的值  id,chemicalNames,IUPAC_Name,ChemicalFormular,
 
-
-    @RequestMapping("/Test_search")
+    @RequestMapping("/keywordSearch")
     @ResponseBody
     public List<Compounds> searchIndex(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//        String text = request.getParameter("search_text");
-        search_text += "*";
-        System.out.println(search_text);
-        Directory directory = FSDirectory.open(new File("D:\\IDEA_pro\\PISMDB").toPath());
-        IndexReader indexReader = DirectoryReader.open(directory);
-        IndexSearcher indexSearcher = new IndexSearcher(indexReader);
-        Analyzer analyzer = new StandardAnalyzer();
-        long startTime = System.currentTimeMillis();
-//        Query query = new WildcardQuery(new Term("PISMID","*pis*"));
-//        //  查询对象，查询结果返回的最大数
-        QueryParser queryParser = new QueryParser("Content", new StandardAnalyzer());
-        Query query = queryParser.parse(search_text);
-
-        TopDocs topDocs = indexSearcher.search(query, 10);
-
-        System.out.println("查询总数量为 ：" + topDocs.totalHits);
-        ScoreDoc[] scoreDocs = topDocs.scoreDocs;
-        QueryScorer scorer=new QueryScorer(query);
-        Fragmenter fragmenter=new SimpleSpanFragmenter(scorer);
-        SimpleHTMLFormatter simpleHTMLFormatter=new SimpleHTMLFormatter("<b><fontcolor='red'>","</font></b>");
-        Highlighter highlighter=new Highlighter(simpleHTMLFormatter, scorer);
-        highlighter.setTextFragmenter(fragmenter);
-        List<Compounds> list = new ArrayList<Compounds>();
-
-        for (ScoreDoc doc : scoreDocs) {
-            int docId = doc.doc;
-//            String str = "";
-            //根据文档id 获取文档对象
-            Document document = indexSearcher.doc(docId);
-            System.out.println(document.get("PISMID"));
-            TokenStream tokenStream = analyzer.tokenStream("Content", new StringReader(document.get("Content")));
-           // String context=highlighter.getBestFragment(tokenStream,document.get("Content"));
-            String s=null;
-            String foodname=document.get("Content");
-
-           s=highlighter.getBestFragment(analyzer,"Content",document.get("Content"));
-
-
-            if(s.equals(null)){
-                System.out.println("为空");
-            }else
-//                System.out.println("s是下面这个"+s);
-            System.out.println(document.get("Content"));
-            //String[] str = document.get("Content").split(" ");
-            String[] str = s.split(" ");
-            System.out.println("strNumber"+str.length);
-            for(int i=0;i<str.length;i++){
-                String regex="<b><font";
-                str[i]=str[i].replaceAll(regex,"<b><font ");
-                System.out.println("第"+i+str[i]);
-            }
-            System.out.println("s是下面这个\n"+s);
-            Compounds compounds = new Compounds();
-           // System.out.println("到了3");
-            compounds.setPISMID(str[0]);//
-           // System.out.println("到了4");
-            compounds.setChemicalNames(str[1]);//
-            compounds.setIUPAC_Name(str[2]);//
-            compounds.setChemicalFormular(str[3]);//
-            compounds.setMolecularWeight(str[4]);
-            compounds.setAlogP(str[5]);//
-            compounds.setAddress(str[6]);
-
-            list.add(compounds);
-
-        }
-
-        System.out.println("数组大小：" + list.size());
-        long endTime = System.currentTimeMillis();
-        System.out.println("消耗时间：" + (endTime - startTime));
-        return list;
+        String text = request.getParameter("search_text");
+        List<Compounds> compoundsList = luceneSearchService.searchIndex(".*" + text + "*");
+        return compoundsList;
     }
 
 
