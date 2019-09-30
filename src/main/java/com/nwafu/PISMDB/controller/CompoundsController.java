@@ -46,12 +46,11 @@ public class CompoundsController {
     @Autowired
     private PathwaysService pathwaysService;
 
+
+
     /////////////////文件搜索部分开始/////////////////////
-
-    static Vector<String> data_1 = new Vector<String>();
-    static Vector<String> data_2 = new Vector<String>();
-
-
+    List<String> data_1 = null;
+    List<String> data_2 = null;
 
     public String readFile(String file_path) {   //读取文件
         String res = "";
@@ -72,9 +71,9 @@ public class CompoundsController {
         return res;
     }
 
-    public Vector<String> save_data_to_arr(String str,String lastname) {    //将文件通过TAB分隔，遍历后获取文件中的数据，保存到数组，用来获取.mol2中的数据
+    public List<String> save_data_to_arr(String str,String lastname) {    //将文件通过TAB分隔，遍历后获取文件中的数据，保存到数组，用来获取.mol2中的数据
         String [] a = str.split("	");
-        Vector<String> b = new Vector<String>();
+        List<String> b = new ArrayList<>();
         boolean flag = false;
 
         for(int i = 0;i<a.length;i++) {
@@ -92,10 +91,10 @@ public class CompoundsController {
         return b;
     }
 
-    public Vector<String> save_data_to_arr(String str,String lastname,String sign) {    //将文件通过TAB分隔，遍历后获取文件中的数据，
+    public List<String> save_data_to_arr(String str,String lastname,String sign) {    //将文件通过TAB分隔，遍历后获取文件中的数据，
         //以字符串sign为数据的开始标志符，将数据保存到数组，用来获取.smile中的数据
         String [] a = str.split("	");
-        Vector<String> b = new Vector<String>();
+        List<String> b = new ArrayList<>();
         boolean flag = false;
 
         for(int i = 0;i<a.length;i++) {
@@ -115,21 +114,21 @@ public class CompoundsController {
     }
 
 
-    public float caculate(Vector<String> a,Vector<String> b) { 			//  sum(xi+yi)/(sum(xi^2)+sum(yi^2)-sum(xiyi)【系数的计算公式】
+    public float caculate(List<String> a,List<String> b) { 			//  sum(xi+yi)/(sum(xi^2)+sum(yi^2)-sum(xiyi)【系数的计算公式】
         float sum_xiyi = 0;
         int i;
         for(i = 0;i<a.size();i++) {
-            sum_xiyi += Float.parseFloat(a.elementAt(i)) * Float.parseFloat(b.elementAt(i));
+            sum_xiyi += Float.parseFloat(a.get(i)) * Float.parseFloat(b.get(i));
         }
 
         float sum_xi2 = 0;
         for(i = 0;i<a.size();i++) {
-            sum_xi2 += Float.parseFloat(a.elementAt(i)) * Float.parseFloat(a.elementAt(i));  //xi平方的和
+            sum_xi2 += Float.parseFloat(a.get(i)) * Float.parseFloat(a.get(i));  //xi平方的和
         }
 
         float sum_yi2 = 0;
         for(i = 0;i<b.size();i++) {
-            sum_yi2 += Float.parseFloat(b.elementAt(i)) * Float.parseFloat(b.elementAt(i));  //yi的平方和
+            sum_yi2 += Float.parseFloat(b.get(i)) * Float.parseFloat(b.get(i));  //yi的平方和
         }
 
         float result = sum_xiyi/(sum_xi2 + sum_yi2 - sum_xiyi);
@@ -140,8 +139,8 @@ public class CompoundsController {
     public void delete_zero_and_na(){
         for(int i = 0;i<data_1.size();i++) {
             if(
-                    data_1.elementAt(i).equals("0") || data_2.elementAt(i).equals("0") ||
-                            data_1.elementAt(i).equals("na") || data_2.elementAt(i).equals("na")
+                    data_1.get(i).equals("0") || data_2.get(i).equals("0") ||
+                            data_1.get(i).equals("na") || data_2.get(i).equals("na")
                     ) {
                 data_1.remove(i);
                 data_2.remove(i);
@@ -181,7 +180,7 @@ public class CompoundsController {
             delete_zero_and_na();
 
             double result = caculate(data_1, data_2);
-            if(result >0.5){
+            if(result >0.5){        //筛选出评分大于0.5的
                 al_1.add(result);
                 al_path.add(f.getPath());
 
@@ -204,7 +203,9 @@ public class CompoundsController {
 //        String file_path = request.getParameter("uploadFile");
         String fileName = uploadFile.getOriginalFilename();
         String newFileName = fileName;
-        String path = "D:\\upload_file_list\\";
+        String path = "D:\\upload_file_list\\";     /**
+                                                            这里上传路径要改*/
+
         if(null == fileName){
             System.out.println("找不到文件");
             return "找不到文件";
@@ -215,6 +216,9 @@ public class CompoundsController {
             file_search(path+fileName,newFileName.split("\\.")[0]);
             return "Search-sequence-Result";
         }
+        /**
+         * 上传成功后还应该调用搜索引擎的更新函数和blast+库的重建函数
+         */
 
     }
 

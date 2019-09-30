@@ -13,7 +13,7 @@ import java.util.List;
 * @Author: liu qinchang
 * @Date: 2019/9/29
 */
-public interface blastpSearchProteinService {
+public interface BlastpSearchProteinService {
     //搜索之前，首先建立好blast库
 
     /**

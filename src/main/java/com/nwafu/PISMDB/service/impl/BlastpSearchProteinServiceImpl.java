@@ -4,8 +4,9 @@ package com.nwafu.PISMDB.service.impl;
 import com.nwafu.PISMDB.dao.TargetsDao;
 import com.nwafu.PISMDB.entity.SequenceSearchResult;
 import com.nwafu.PISMDB.entity.Targets;
-import com.nwafu.PISMDB.service.blastpSearchProteinService;
+import com.nwafu.PISMDB.service.BlastpSearchProteinService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -20,7 +21,9 @@ import java.util.List;
 * @Date: 2019/9/29
 */
 
-public class blastpSearchProteinServiceImpl implements blastpSearchProteinService {
+
+@Service
+public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinService {
 
     @Autowired
     TargetsDao targetsDao;
