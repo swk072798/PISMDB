@@ -46,9 +46,9 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
     CompoundsService compoundsService;
 
     @Override
-    public void createIndex() throws IOException {
+    public void createIndex() throws IOException {      //搜索引擎是将数据库里的所有文本读出，存储成关键字
         //把索引库保存到磁盘上
-        Directory directory = FSDirectory.open(new File("D:\\IDEA_pro\\PISMDB").toPath());
+        Directory directory = FSDirectory.open(new File("D:\\IDEA_pro\\PISMDB").toPath());  //路径要改
         //会在index中生成索引目录
         Analyzer analyzer = new StandardAnalyzer();
         IndexWriter indexWriter = new IndexWriter(directory, new IndexWriterConfig(analyzer));
@@ -105,7 +105,7 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
         SimpleHTMLFormatter simpleHTMLFormatter=new SimpleHTMLFormatter("<b><fontcolor='red'>","</font></b>");
         Highlighter highlighter=new Highlighter(simpleHTMLFormatter, scorer);
         highlighter.setTextFragmenter(fragmenter);
-        List<Compounds> list = new ArrayList<Compounds>();
+        List<Compounds> list = new ArrayList<>();
 
         for (ScoreDoc doc : scoreDocs) {
             int docId = doc.doc;
