@@ -22,7 +22,7 @@ import org.thymeleaf.util.StringUtils;
 import java.io.*;
 import java.util.List;
 
-@Controller
+@RestController
 @Slf4j
 //@RequestMapping("/data")
 public class TargetsController {

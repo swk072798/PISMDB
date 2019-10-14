@@ -5,6 +5,7 @@ import com.nwafu.PISMDB.dao.TargetsDao;
 import com.nwafu.PISMDB.entity.SequenceSearchResult;
 import com.nwafu.PISMDB.entity.Targets;
 import com.nwafu.PISMDB.service.BlastpSearchProteinService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ import java.util.List;
 
 
 @Service
+@Slf4j
 public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinService {
 
     @Autowired
@@ -35,22 +37,35 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
     @Override
     public List<SequenceSearchResult> fileSearchProtein(File fastaFile) {
         long nowTime = System.currentTimeMillis();
-        File resultFile = new File("/src/main/resources/sqeSearch/result"+fastaFile.getName() + nowTime +".txt");
-
+        File resultFile = new File("src/main/resources/seqsearch/result", fastaFile.getName().split("\\.")[0] +".txt");
+        log.info("结果文件位置：{}",resultFile.getAbsolutePath());
+        log.info("待查询的fasta文件位置,{}",fastaFile.getAbsolutePath());
         try {
-            Runtime.getRuntime().exec("blastp -task blastp -query 待查询的.fasta -db 数据库名称 -out 输出的结果文件.txt -matrix BLOSUM50 -outfmt '7 bitscore evalue qcovs pident sacc stitle ' -num_threads 4");
+            if(!resultFile.exists()){
+                resultFile.createNewFile();
+            }
+            log.info("调用查找功能！！！");
+            String command = "blastp -task blastp -query "+ fastaFile.getAbsolutePath() +" -db D:\\blast-2.4.0+\\bin\\pismdb -out "+ resultFile.getAbsolutePath() +" -matrix BLOSUM50 -outfmt \"7 bitscore evalue qcovs pident sacc stitle \" -num_threads 4";
+            log.info("执行命令：{}" ,command);
+            Process process = Runtime.getRuntime().exec(command);
+            Thread.sleep(1000);     //这里留出1s的时间用于服务器执行命令行并生成result文件，不然可能会在文件内容写入之前读取，造成读空
         } catch (IOException e) {
             System.out.println("序列查询出错");
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
         ArrayList<String> txt = new ArrayList();
         try {
-            FileReader fr = new FileReader(resultFile.getPath());
+            FileReader fr = new FileReader(resultFile);
             BufferedReader br = new BufferedReader(fr);
-            String str;
+            String str = new String();
             while((str = br.readLine()) != null){
                 txt.add(str);
             }
+            br.close();
+            fr.close();
         } catch (FileNotFoundException e) {
             System.out.println("resultFile文件不存在");
             e.printStackTrace();
@@ -58,16 +73,17 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
             System.out.println("BufferedReader异常");
             e.printStackTrace();
         }
+        System.out.println(txt);
         ArrayList<ArrayList<String>> similarityAndUniportID = new ArrayList<>();
-        for(int i = 5; i < txt.size() - 1;i++){
+        for(int i = 5; i < txt.size() - 1; i++){
             ArrayList<String> similarityAndId = new ArrayList<>();
-            String[] str = txt.get(i).split("   ");
+            String[] str = txt.get(i).split("\t");  //通过TAB键分隔
             similarityAndId.add(str[3]);
             similarityAndId.add(str[4]);
             similarityAndUniportID.add(similarityAndId);
         }
-
-        Double min_level = 0d;
+        log.info("所有的相似度和uniportID列表:{}",similarityAndUniportID.toString());
+        Double min_level = 0d;      //最小值，自己来设定
         for(ArrayList<String> al : similarityAndUniportID){
             if(Double.parseDouble(al.get(0)) < min_level){
                 similarityAndUniportID.remove(al);
@@ -87,22 +103,26 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
             });     //将剩余列表内容按照相似度从大到小排序
         }
         else{
-            System.out.println("没有满足条件的蛋白质");
+            log.warn("没有满足条件的蛋白质???");
             return null;
         }
         List<SequenceSearchResult> sequenceSearchResults = new ArrayList<>();
         for(ArrayList<String> al : similarityAndUniportID){
-            Targets targets = targetsDao.findTargetByUniprotID(al.get(1));
-            SequenceSearchResult sequenceSearchResult = new SequenceSearchResult();
-            sequenceSearchResult.setID("");
-            sequenceSearchResult.setIdentity(String.format("%2f",Double.parseDouble(al.get(0)))+"%");       //保留两位小数
-            sequenceSearchResult.setQueryCoverage("");
-            sequenceSearchResult.setProtein(targets.getProteinName());
-            sequenceSearchResult.setOrganisml(targets.getOrganism1());
-            sequenceSearchResult.setUniportID(targets.getUniprotID());
-            sequenceSearchResults.add(sequenceSearchResult);
+            Targets targets = targetsDao.findTargetByUniportID(al.get(1));
+            if(targets != null){
+                SequenceSearchResult sequenceSearchResult = new SequenceSearchResult();
+                sequenceSearchResult.setID("");
+                sequenceSearchResult.setIdentity(String.format("%2f",Double.parseDouble(al.get(0)))+"%");       //保留两位小数
+                sequenceSearchResult.setQueryCoverage("");
+                sequenceSearchResult.setProtein(targets.getProteinName());
+                sequenceSearchResult.setOrganisml(targets.getOrganism1());
+                sequenceSearchResult.setUniportID(targets.getUniprotID());
+                sequenceSearchResults.add(sequenceSearchResult);
+            }
+            else{
+                log.error("{},数据库中查找失败!!!",al.get(1));
+            }
         }
-
         return sequenceSearchResults;
     }
 
@@ -110,8 +130,13 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
     public List<SequenceSearchResult> seqSearchProtein(String sequence) {
         long nowTime = System.currentTimeMillis();
         String fileName = sequence.substring(0,13) + nowTime + ".fasta";
-        File fastaFile = new File("/src/main/resources/"+fileName);
+        File fastaFile = new File("src/main/resources/seqsearch/exchangedfasta/" + fileName);
+//        File resultFile = new File("src/main/resources/seqsearch/exchangedfasta/" + fastaFile.getName().split("\\.")[0] +".txt");
+
         try {
+            if(!fastaFile.exists()){
+                fastaFile.createNewFile();
+            }
             FileWriter fileWriter = new FileWriter(fastaFile.getPath(),true);
             StringBuffer sb = new StringBuffer();
             sb.append("> \n");
@@ -131,6 +156,9 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
                 sb.append(sequence);
             }
             fileWriter.write(sb.toString());
+            fileWriter.flush();
+            fileWriter.close();
+            log.info("fasta文件转换完成！！！");
         } catch (IOException e) {
             e.printStackTrace();
         }       //将用户上传来的字符串转换成fasta文件的格式
@@ -138,5 +166,9 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
         List<SequenceSearchResult> sequenceSearchResultList = fileSearchProtein(fastaFile);
 
         return sequenceSearchResultList;
+    }
+
+    public void deleteFileCache(){      //定时删除seqsearch中三个文件夹下的文件，避免文件越来越多，造成堆积
+//        File[] fileList =
     }
 }

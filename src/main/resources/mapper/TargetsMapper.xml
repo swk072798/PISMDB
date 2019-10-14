@@ -24,7 +24,7 @@
     <select id="findTargetByUniportID" resultMap="TargetMap">
         select *
         from target
-        where UniprotID=#{0}
+        where UniprotID=${0}
     </select>
 
 

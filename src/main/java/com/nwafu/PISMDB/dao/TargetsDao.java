@@ -9,5 +9,5 @@ import java.util.List;
 public interface TargetsDao {
     int getTargetsCount();
     List<Targets> findTargetById();
-    Targets findTargetByUniprotID(String UniprotID);
+    Targets findTargetByUniportID(String UniprotID);
 }
