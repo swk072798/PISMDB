@@ -3,7 +3,7 @@ import lombok.Data;
 /**
  * @program: PISMDB
  * @description: 序列搜索的返回结果对象
- * @author: zxb
+ * @author: liu qinchang
  * @create: 2019-09-29 11:44
  **/
 

@@ -20,7 +20,6 @@ public class CompoundsServiceImp implements CompoundsService {
     @Autowired
     private CompoundsDao compoundsDao;
     private Compounds compounds;
-    //
     @Override
     public List<Compounds> findById() {
         return compoundsDao.findById();

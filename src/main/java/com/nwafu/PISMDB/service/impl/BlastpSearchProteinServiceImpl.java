@@ -131,8 +131,6 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
         long nowTime = System.currentTimeMillis();
         String fileName = sequence.substring(0,13) + nowTime + ".fasta";
         File fastaFile = new File("src/main/resources/seqsearch/exchangedfasta/" + fileName);
-//        File resultFile = new File("src/main/resources/seqsearch/exchangedfasta/" + fastaFile.getName().split("\\.")[0] +".txt");
-
         try {
             if(!fastaFile.exists()){
                 fastaFile.createNewFile();
@@ -168,7 +166,4 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
         return sequenceSearchResultList;
     }
 
-    public void deleteFileCache(){      //定时删除seqsearch中三个文件夹下的文件，避免文件越来越多，造成堆积
-//        File[] fileList =
-    }
 }

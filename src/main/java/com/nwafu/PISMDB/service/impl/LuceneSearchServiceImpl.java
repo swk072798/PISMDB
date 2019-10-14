@@ -35,7 +35,7 @@ import java.util.List;
 /**
  * @program: PISMDB
  * @description: 搜索引擎的搭建和关键字搜索
- * @author: zxb
+ * @author: liu qinchang
  * @create: 2019-09-30 15:52
  **/
 
