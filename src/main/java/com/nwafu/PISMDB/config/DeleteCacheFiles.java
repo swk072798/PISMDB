@@ -21,7 +21,7 @@ import java.io.File;
 @Slf4j
 public class DeleteCacheFiles {
 
-    @Scheduled(fixedDelay = 300000)
+    @Scheduled(fixedDelay = 300000)     //定时任务每5分钟删除一次缓存
     public void deleteSeqSearchCache(){
         String dir1Path = "src/main/resources/seqsearch/condition";
         String dir2Path = "src/main/resources/seqsearch/exchangedfasta";
@@ -36,7 +36,7 @@ public class DeleteCacheFiles {
 
         thread1.start();
         thread2.start();
-        thread3.start();
+        thread3.start();    //开三个线程同步删，防止文件过多，过于占用系统资源
 
     }
 }
@@ -65,7 +65,6 @@ class DeleteThread implements Runnable{
                 else{
                     log.info("删除文件失败，可能是文件正在被占用");
                 }
-
             }
             else{
                 log.info("{}, 文件不存在",f.getName());

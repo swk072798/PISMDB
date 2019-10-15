@@ -46,7 +46,7 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
     CompoundsService compoundsService;
 
     @Override
-    public void createIndex() throws IOException {      //搜索引擎是将数据库里的所有文本读出，存储成关键字
+    public void createIndex() throws IOException {      //搜索引擎是将数据库里的coumpounds表中所有文本读出，存储成关键字
         //把索引库保存到磁盘上
         Directory directory = FSDirectory.open(new File("D:\\IDEA_pro\\PISMDB").toPath());  //路径要改
         //会在index中生成索引目录
