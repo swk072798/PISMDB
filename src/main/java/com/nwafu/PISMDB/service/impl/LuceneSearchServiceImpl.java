@@ -81,7 +81,7 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
             indexWriter.addDocument(document);
         }
         indexWriter.close();
-    }//content中的值  id,chemicalNames,IUPAC_Name,ChemicalFormular,
+    }       //content中的值  id,chemicalNames,IUPAC_Name,ChemicalFormular,
 
     @Override
     public List<Compounds> searchIndex(String keyword) throws IOException, InvalidTokenOffsetsException, ParseException {

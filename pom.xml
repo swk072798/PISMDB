@@ -19,6 +19,13 @@
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.54</version>
+        </dependency>
+
         <!-- 热部署模块 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

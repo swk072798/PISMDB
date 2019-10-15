@@ -57,17 +57,17 @@ class DeleteThread implements Runnable{
             log.info("文件夹中没有缓存");
             return;
         }
-        for(File f : files){
-            if(f.exists()){
-                if(f.delete()){
-                    log.info("删除缓存文件成功,{}",f.getName());
+        for(int i = 0; i < files.length/2; i++){        //每次删除缓存只删除当前总数的一半，防止刚生成的文件没有被使用就被删除
+            if(files[i].exists()){
+                if(files[i].delete()){
+                    log.info("删除缓存文件成功,{}",files[i].getName());
                 }
                 else{
                     log.info("删除文件失败，可能是文件正在被占用");
                 }
             }
             else{
-                log.info("{}, 文件不存在",f.getName());
+                log.error("{}, 文件不存在",files[i].getName());
             }
         }
     }
