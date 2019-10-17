@@ -2,12 +2,14 @@ package com.nwafu.PISMDB.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "compound")
+@Data
 public class Compounds {
 
     @Id
@@ -54,6 +56,8 @@ public class Compounds {
     private String StructuralSimilarity;
     @Column
     private String Address;
+    @Column
+    private String MocularDescription;
     @JsonProperty("PISMID")
     public String getPISMID() {
         return PISMID;

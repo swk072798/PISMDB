@@ -1,10 +1,13 @@
 package com.nwafu.PISMDB;
 
+import com.nwafu.PISMDB.service.impl.ConnectServerAndChangeFileServiceImpl;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+
 
 /**
  * @program: PISMDB
@@ -13,6 +16,8 @@ import org.springframework.context.annotation.Configuration;
  * @create: 2019-10-15 11:51
  **/
 
+@Component
+@Slf4j
 public class ConnectDragonServer implements ApplicationRunner {
     @Value("${Dragon.url}")
     private String url;
@@ -23,8 +28,25 @@ public class ConnectDragonServer implements ApplicationRunner {
     @Value("${Dragon.port}")
     private String port;
 
+    public static ConnectServerAndChangeFileServiceImpl csacf = ConnectServerAndChangeFileServiceImpl.getInstance();
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        log.info("Dragon服务器连接准备---");
+        csacf.setUrl(url);
+        csacf.setUsername(username);
+        csacf.setPsw(psw);
+        if(port.equals("")){
+            csacf.setPort(0);
+        }
+        else{
+            csacf.setPort(Integer.parseInt(port));
+        }
+
+        while(csacf.isConnect == 0){        //若监听到Dragon服务器未连接
+            csacf.connectToSever();     //主动调用连接方法
+            Thread.sleep(5000);     //休息5S
+        }
 
     }
 }

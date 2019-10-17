@@ -8,7 +8,7 @@ package com.nwafu.PISMDB.service;
 * @Date: 2019/10/15 
 */
 public interface ConnectServerAndChangeFileService {
-     void connectToSever(String url, String username, String psw, int port);
+     void connectToSever();
      void disConnect();
      boolean uploadFile(String remoteFilePath, String localFilePath);      //在上传时要将文件属性设置为不可删除
      boolean caculateMolecularDescriptor();

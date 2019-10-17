@@ -24,6 +24,7 @@
         <result column="StructureActivityRelationship" property="StructureActivityRelationship"
                 jdbcType="VARCHAR"></result>
         <result column="StructuralSimilarity" property="StructuralSimilarity" jdbcType="VARCHAR"></result>
+        <result column="MocularDescription" property="MocularDescription" jdbcType="text"></result>
     </resultMap>
 
     <select id="getCompoundsCount" resultType="java.lang.Integer">
@@ -120,5 +121,15 @@
     <select id="showPictures" resultMap="PicturesMap2">
         select *
         from pictures
+    </select>
+
+    <resultMap id="MocularDescription" type="com.nwafu.PISMDB.entity.CompoudsIdAndDescription">
+        <id column="PISMID" jdbcType="Varchar"></id>
+        <result column="MocularDescription" jdbcType="text"></result>
+    </resultMap>
+
+    <select id="selectIdAndDescription" resultMap="MocularDescription">
+        select PISMID,MocularDescription
+        from compounds
     </select>
 </mapper>

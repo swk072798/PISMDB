@@ -2,6 +2,7 @@ package com.nwafu.PISMDB.service.impl;
 
 import com.jcraft.jsch.*;
 import com.nwafu.PISMDB.service.ConnectServerAndChangeFileService;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.python.icu.util.Output;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.Properties;
  **/
 @Service
 @Slf4j
+@Data
 public class ConnectServerAndChangeFileServiceImpl implements ConnectServerAndChangeFileService {
     private Session sshSession = null;
     private ChannelSftp sftp = null;
@@ -25,6 +27,10 @@ public class ConnectServerAndChangeFileServiceImpl implements ConnectServerAndCh
     private String username;
     private String psw;
     private int port;
+
+    private static ConnectServerAndChangeFileServiceImpl connectServerAndChangeFileService = new ConnectServerAndChangeFileServiceImpl();
+
+    private ConnectServerAndChangeFileServiceImpl(){}       //这里
     /** 
     * @Description: 连接服务器
     * @Param:  
@@ -32,8 +38,13 @@ public class ConnectServerAndChangeFileServiceImpl implements ConnectServerAndCh
     * @Author: liu qinchang
     * @Date: 2019/10/15 
     */
+
+    public static ConnectServerAndChangeFileServiceImpl getInstance(){
+        return connectServerAndChangeFileService;
+    }
+
     @Override
-    public void connectToSever(String url, String username, String psw, int port) {
+    public void connectToSever() {
         log.info("--->连接Dragon服务器开始------");
         JSch jSch = new JSch();
         try {
@@ -53,7 +64,6 @@ public class ConnectServerAndChangeFileServiceImpl implements ConnectServerAndCh
             log.error("连接失败");
             throw new RuntimeException("sftp连接超时");
         }
-
     }
 
     @Override
@@ -86,7 +96,7 @@ public class ConnectServerAndChangeFileServiceImpl implements ConnectServerAndCh
     public boolean uploadFile(String remoteFilePath, String localFilePath) {
         log.info("upload file from {} to {}",localFilePath,remoteFilePath);
         if(isConnect == 0){
-            connectToSever(url, username, psw, port);
+            connectToSever();
             log.info("上传文件时服务器未连接，正在重新连接。。。。");
         }
         File localFile = new File(localFilePath);

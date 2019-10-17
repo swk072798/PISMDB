@@ -4,7 +4,7 @@ import com.nwafu.PISMDB.entity.Compounds;
 import com.nwafu.PISMDB.entity.CompoundsBasicInformationBean;
 import com.nwafu.PISMDB.entity.Pic;
 import com.nwafu.PISMDB.entity.Pictures;
-import org.mybatis.spring.annotation.MapperScan;
+import com.nwafu.PISMDB.entity.CompoudsIdAndDescription;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,15 +13,16 @@ import java.util.List;
 public interface CompoundsDao {
     public int getCompoundsCount();
 
-    public List<Compounds> findAll();
-    public  List<Compounds> findById();
-    public  List<CompoundsBasicInformationBean> FindBasicInformation();
-    public  List<Compounds> FindPathway();
-    public  List<Compounds> FindRelatedCompounds();
-    public  List<Compounds> FindSupportingInformation();
+    List<Compounds> findAll();
+    List<Compounds> findById();
+    List<CompoundsBasicInformationBean> FindBasicInformation();
+    List<Compounds> FindPathway();
+    List<Compounds> FindRelatedCompounds();
+    List<Compounds> FindSupportingInformation();
 
-    public  List<Pictures> showPictureInformation();
-    public  List<Pic> showPictures();
+    List<Pictures> showPictureInformation();
+    List<Pic> showPictures();
+    List<CompoudsIdAndDescription> selectIdAndDescription();
 
     //public Compounds findById(String PISMID);
 }
