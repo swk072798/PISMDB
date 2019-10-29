@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.nwafu.PISMDB.UserRepository;
 import com.nwafu.PISMDB.entity.*;
 import com.nwafu.PISMDB.service.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,20 +13,19 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
-//@RestController
-@Controller
+@RestController
+//@Controller
+@Slf4j
 public class CompoundsController {
 
     private String search_text;  //临时存放待搜索的文本
+
     @Autowired
     private CompoundsService compoundsService;
-
     @Autowired
     private TargetsService targetsService;
     @Autowired
@@ -43,7 +43,10 @@ public class CompoundsController {
      * @return
      * @throws IOException
      */
-    @RequestMapping("/uploadFileSearch")
+    //这个功能还没完，缺少blast的东西
+
+
+    @PostMapping("/uploadFileSearch")
     //@RequestParam("uploadFile")MultipartFile uploadFile
     public String uploadfile(MultipartFile uploadFile, HttpServletRequest request) throws IOException {
         String fileName = uploadFile.getOriginalFilename();
@@ -86,19 +89,21 @@ public class CompoundsController {
      * @return
      */
     ///////////搜索引擎部分开始/////////////////////
-//    @Test
-//    @ResponseBody
-//    @RequestMapping("/list")
-    public void createIndex() throws Exception {
-        luceneSearchService.createIndex();
+
+    @RequestMapping("/createIndex")
+    public Integer createIndex() throws Exception {
+        log.info("创建搜索引擎中");
+        Integer result = luceneSearchService.createIndex();
+        return result;
     }
     //content中的值  id,chemicalNames,IUPAC_Name,ChemicalFormular,
 
-    @RequestMapping("/keywordSearch")
-    @ResponseBody
-    public List<Compounds> searchIndex(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String text = request.getParameter("search_text");
-        List<Compounds> compoundsList = luceneSearchService.searchIndex(".*" + text + "*");
+    @GetMapping("/keywordSearch")
+    public List<Compounds> searchIndex(@RequestParam String search_text) throws Exception {
+        System.out.println(search_text);
+        log.info("搜索引擎关键字查找传参：{}",search_text);
+//        List<Compounds> compoundsList = luceneSearchService.searchIndex(".*" + search_text + "*");
+        List<Compounds> compoundsList = luceneSearchService.searchIndex(search_text + "*");
         return compoundsList;
     }
 

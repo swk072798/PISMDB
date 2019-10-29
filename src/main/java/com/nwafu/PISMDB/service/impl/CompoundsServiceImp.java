@@ -7,19 +7,17 @@ import com.nwafu.PISMDB.entity.Pic;
 import com.nwafu.PISMDB.entity.Pictures;
 import com.nwafu.PISMDB.service.CompoundsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CompoundsServiceImp implements CompoundsService {
+    private Compounds compounds;
+
     @Autowired
     private CompoundsDao compoundsDao;
-    private Compounds compounds;
+
     @Override
     public List<Compounds> findById() {
         return compoundsDao.findById();

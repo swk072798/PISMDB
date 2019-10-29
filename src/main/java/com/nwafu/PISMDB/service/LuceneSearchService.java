@@ -17,6 +17,6 @@ import java.util.List;
 * @Date: 2019/9/30 
 */
 public interface LuceneSearchService {
-    void createIndex() throws IOException;
+    Integer createIndex() throws IOException;
     List<Compounds> searchIndex(String keyword) throws IOException, InvalidTokenOffsetsException, ParseException;
 }

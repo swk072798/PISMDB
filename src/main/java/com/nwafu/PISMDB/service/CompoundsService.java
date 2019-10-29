@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 public interface CompoundsService {
-    public int getCompoundsCount();
-    public List<Compounds> findAll();
-    public List<Compounds> findById();
-    public  List<CompoundsBasicInformationBean> FindBasicInformation();
-    public  List<Compounds> FindPathway();
-    public  List<Compounds> FindRelatedCompounds();
+    int getCompoundsCount();
+    List<Compounds> findAll();
+    List<Compounds> findById();
+    List<CompoundsBasicInformationBean> FindBasicInformation();
+    List<Compounds> FindPathway();
+    List<Compounds> FindRelatedCompounds();
 
-    public  List<Pictures> showPictureInformation();
-    public  List<Pic> showPictures();
+    List<Pictures> showPictureInformation();
+    List<Pic> showPictures();
 }

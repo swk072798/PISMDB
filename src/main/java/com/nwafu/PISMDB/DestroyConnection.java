@@ -13,10 +13,10 @@ import javax.annotation.PreDestroy;
  * @create: 2019-10-16 10:10
  **/
 @Slf4j
-@Component
+//@Component
 public class DestroyConnection {
 
-    @PreDestroy
+//    @PreDestroy
     public void disConnectionDragonSever(){
         log.info("项目关闭，准备断开链接————");
         ConnectServerAndChangeFileServiceImpl.getInstance().disConnect();

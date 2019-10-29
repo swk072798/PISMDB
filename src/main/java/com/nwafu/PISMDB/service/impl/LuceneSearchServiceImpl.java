@@ -4,6 +4,7 @@ import com.nwafu.PISMDB.entity.Compounds;
 import com.nwafu.PISMDB.entity.CompoundsBasicInformationBean;
 import com.nwafu.PISMDB.service.CompoundsService;
 import com.nwafu.PISMDB.service.LuceneSearchService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -38,7 +39,7 @@ import java.util.List;
  * @author: liu qinchang
  * @create: 2019-09-30 15:52
  **/
-
+@Slf4j
 @Service
 public class LuceneSearchServiceImpl implements LuceneSearchService {
 
@@ -46,9 +47,9 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
     CompoundsService compoundsService;
 
     @Override
-    public void createIndex() throws IOException {      //搜索引擎是将数据库里的coumpounds表中所有文本读出，存储成关键字
+    public Integer createIndex() throws IOException {      //搜索引擎是将数据库里的coumpounds表中所有文本读出，存储成关键字
         //把索引库保存到磁盘上
-        Directory directory = FSDirectory.open(new File("D:\\IDEA_pro\\PISMDB").toPath());  //路径要改
+        Directory directory = FSDirectory.open(new File("src/main/resources/luceneindex").toPath());  //路径要改
         //会在index中生成索引目录
         Analyzer analyzer = new StandardAnalyzer();
         IndexWriter indexWriter = new IndexWriter(directory, new IndexWriterConfig(analyzer));
@@ -81,12 +82,14 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
             indexWriter.addDocument(document);
         }
         indexWriter.close();
+        log.info("搜索引擎创建完成");
+        return null;
     }       //content中的值  id,chemicalNames,IUPAC_Name,ChemicalFormular,
 
     @Override
     public List<Compounds> searchIndex(String keyword) throws IOException, InvalidTokenOffsetsException, ParseException {
         System.out.println(keyword);
-        Directory directory = FSDirectory.open(new File("D:\\IDEA_pro\\PISMDB").toPath());
+        Directory directory = FSDirectory.open(new File("src/main/java/com/nwafu/PISMDB/resources/luceneindex").toPath());
         IndexReader indexReader = DirectoryReader.open(directory);
         IndexSearcher indexSearcher = new IndexSearcher(indexReader);
         Analyzer analyzer = new StandardAnalyzer();
@@ -98,7 +101,7 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
 
         TopDocs topDocs = indexSearcher.search(query, 10);
 
-        System.out.println("查询总数量为 ：" + topDocs.totalHits);
+        log.info("查询总数量为 ：{}" , topDocs.totalHits);
         ScoreDoc[] scoreDocs = topDocs.scoreDocs;
         QueryScorer scorer=new QueryScorer(query);
         Fragmenter fragmenter=new SimpleSpanFragmenter(scorer);
@@ -155,4 +158,5 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
         System.out.println("消耗时间：" + (endTime - startTime));
         return list;
     }
+
 }

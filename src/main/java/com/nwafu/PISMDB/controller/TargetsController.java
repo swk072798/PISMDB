@@ -12,10 +12,7 @@ import org.python.core.util.StringUtil;
 import org.python.icu.impl.StringUCharacterIterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
@@ -49,7 +46,7 @@ public class TargetsController {
     * @Author: liu qinchang
     * @Date: 2019/9/30 
     */
-    @RequestMapping("/seqSearchByFile")
+    @PostMapping("/seqSearchByFile")
     public List<SequenceSearchResult> seqSearchByFile(@RequestParam MultipartFile file){
         if(!file.isEmpty()){
             try {
@@ -79,7 +76,7 @@ public class TargetsController {
     * @Author: liu qinchang
     * @Date: 2019/9/30 
     */
-    @RequestMapping("/seqSearchByStr")
+    @GetMapping("/seqSearchByStr")
     public List<SequenceSearchResult> seqSearchByStr(@RequestParam String sequence){
         log.info("传入参数:{}",sequence);
         if(StringUtils.isEmpty(sequence)){
