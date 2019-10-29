@@ -115,16 +115,16 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
 //            String str = "";
             //根据文档id 获取文档对象
             Document document = indexSearcher.doc(docId);
-            System.out.println(document.get("PISMID"));
+//            System.out.println(document.get("PISMID"));
             TokenStream tokenStream = analyzer.tokenStream("Content", new StringReader(document.get("Content")));
             // String context=highlighter.getBestFragment(tokenStream,document.get("Content"));
             String s=null;
             String foodname=document.get("Content");
 
-            s=highlighter.getBestFragment(analyzer,"Content",document.get("Content"));
+            s = highlighter.getBestFragment(analyzer,"Content",document.get("Content"));
 
 
-            if(s.equals(null)){
+            if(s.equals("")){
                 System.out.println("为空");
             }else
 //                System.out.println("s是下面这个"+s);

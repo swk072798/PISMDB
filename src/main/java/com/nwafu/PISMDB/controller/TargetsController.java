@@ -2,16 +2,11 @@ package com.nwafu.PISMDB.controller;
 
 import com.nwafu.PISMDB.entity.CompoundsBasicInformationBean;
 import com.nwafu.PISMDB.entity.SequenceSearchResult;
-import com.nwafu.PISMDB.entity.Targets;
 import com.nwafu.PISMDB.service.BlastpSearchProteinService;
 import com.nwafu.PISMDB.service.TargetsService;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.service.spi.ServiceException;
-import org.junit.jupiter.api.Test;
-import org.python.core.util.StringUtil;
-import org.python.icu.impl.StringUCharacterIterator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
