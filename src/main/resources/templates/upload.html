@@ -7,22 +7,22 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<!-- Fonts-->
-		<link rel="stylesheet" type="text/css" href="./assets/css/reset.css">
+		<link rel="stylesheet" type="text/css" href="./static/assets/css/reset.css">
 		<!-- 引入fonts -->
-		<link rel="stylesheet" href="./assets/css/font-awesome.min.css">
+		<link rel="stylesheet" href="./static/assets/css/font-awesome.min.css">
 		<!-- Vendors-->
-		<link rel="stylesheet" type="text/css" href="./assets/vendors/bootstrap/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="./static/assets/vendors/bootstrap/bootstrap.min.css">
 		<!-- css -->
-		<link rel="stylesheet" type="text/css" href="./assets/css/main.css">
-		<link rel="stylesheet" href="./assets/css/jsa.css">
-		<link rel="stylesheet" href="./assets/css/chrome.css">
-		<link rel="stylesheet" href="./assets/css/mosaic.css">
+		<link rel="stylesheet" type="text/css" href="./static/assets/css/main.css">
+		<link rel="stylesheet" href="./static/assets/css/jsa.css">
+		<link rel="stylesheet" href="./static/assets/css/chrome.css">
+		<link rel="stylesheet" href="./static/assets/css/mosaic.css">
 		<!-- 引入js -->
-		<script src="./assets/vendors/_jquery/jquery-3.3.1.min.js"></script>
-		 <script src="./assets/vendors/bootstrap/bootstrap.min.js"></script>
-		<script type="text/javascript" src="./assets/js/JSmol.min.js"></script>
-		<script type="text/javascript" src="./assets/js/JSmolJME.js"></script>
-		<script type="text/javascript" language="javascript" src="./assets/js/jsme.nocache.js"></script>
+		<script src="./static/assets/vendors/_jquery/jquery-3.3.1.min.js"></script>
+		 <script src="./static/assets/vendors/bootstrap/bootstrap.min.js"></script>
+		<script type="text/javascript" src="./static/assets/js/JSmol.min.js"></script>
+		<script type="text/javascript" src="./static/assets/js/JSmolJME.js"></script>
+		<script type="text/javascript" language="javascript" src="./static/assets/js/jsme.nocache.js"></script>
 		<script type="text/javascript">
 
     //this function will be called after the JavaScriptApplet code has been loaded.
@@ -93,9 +93,9 @@
 <!-- 定义头部 -->
 	<div class="head">
 		<div class="head-bg-img">
-			<img src="./assets/img/head-bg.png" alt="">
+			<img src="./static/assets/img/head-bg.png" alt="">
 		<div class="logo">
-			<img src="./assets/img/logo-shadow.png" alt="">
+			<img src="./static/assets/img/logo-shadow.png" alt="">
 		</div>
 		</div>
 		
@@ -108,15 +108,15 @@
 					BROWSE
 				</a>
 					<ul class="dropdown-menu">
-					<li><a href="./index.html">Commpound</a></li>
-					<li><a href="./Browse-Pathway.html">Pathway</a></li>
-					<li><a href="#">Target</a></li>
+						<li><a href="/Browse_C">Commpound</a></li>
+						<li><a href="/Browse_P">Pathway</a></li>
+						<li><a href="/Browse_T">Target</a></li>
 				</ul>
 				
 			</li>
 		<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">SEARCH</a>
 			<ul class="dropdown-menu">
-					<li><a href="./search-text.html">Text</a></li>
+					<li><a href="/Search_text">Text</a></li>
 					<li><a href="./Search-Structure.html">Structure</a></li>
 					<li><a href="#">Sequence</a></li>
 					
@@ -132,7 +132,7 @@
 <!-- 定义头部结束 -->
 <div class="upload-content">
 	<div class="upload-title">
-		<img src="./assets/img/PISMD Search Sequence.png" alt="">
+		<img src="./static/assets/img/PISMD Search Sequence.png" alt="">
 	</div>
 	<div class="upload-box">
 		<form  th:action="@{/upload_data}" th:object="${compounds}" method="post" class="upload">

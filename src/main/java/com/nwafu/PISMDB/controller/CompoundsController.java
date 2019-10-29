@@ -5,6 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.nwafu.PISMDB.UserRepository;
 import com.nwafu.PISMDB.entity.*;
 import com.nwafu.PISMDB.service.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,9 +19,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
-//@Controller
+//@RestController
+@Controller
 @Slf4j
+@Api(description = "分子操作Api")
 public class CompoundsController {
 
     private String search_text;  //临时存放待搜索的文本
@@ -45,7 +48,7 @@ public class CompoundsController {
      */
     //这个功能还没完，缺少blast的东西
 
-
+    @ApiOperation(value = "上传文件搜索", notes = "根据本地的文件搜索")
     @PostMapping("/uploadFileSearch")
     //@RequestParam("uploadFile")MultipartFile uploadFile
     public String uploadfile(MultipartFile uploadFile, HttpServletRequest request) throws IOException {
@@ -75,7 +78,8 @@ public class CompoundsController {
 
 //////////////文件搜索部分结束///////////////////////////
 
-    @RequestMapping("/browse-T")
+    @ApiOperation(value = "蛋白质json数据", notes = "从数据库中获取的蛋白质的json数据")
+    @GetMapping("/browse-T")
     @ResponseBody
     public List<Targets> showTargets1() {
         List<Targets> list = targetsService.findTargetById();
@@ -90,7 +94,8 @@ public class CompoundsController {
      */
     ///////////搜索引擎部分开始/////////////////////
 
-    @RequestMapping("/createIndex")
+    @ApiOperation(value = "创建搜索索引", notes = "创建搜索引擎的索引")
+    @RequestMapping(value = "/createIndex",method = RequestMethod.POST)
     public Integer createIndex() throws Exception {
         log.info("创建搜索引擎中");
         Integer result = luceneSearchService.createIndex();
@@ -98,6 +103,7 @@ public class CompoundsController {
     }
     //content中的值  id,chemicalNames,IUPAC_Name,ChemicalFormular,
 
+    @ApiOperation(value = "搜索引擎关键字查找传参", notes = "搜索引擎关键字查找传参")
     @GetMapping("/keywordSearch")
     public List<Compounds> searchIndex(@RequestParam String search_text) throws Exception {
         System.out.println(search_text);
@@ -107,8 +113,8 @@ public class CompoundsController {
         return compoundsList;
     }
 
-
-    @RequestMapping(value = "/search_result")
+    @ApiOperation(value = "搜索结果", notes = "搜索结果")
+    @RequestMapping(value = "/search_result",method = RequestMethod.GET)
     public String xianshi(HttpServletRequest request) {
         search_text = request.getParameter("search_text");
         System.out.println(search_text);
@@ -117,8 +123,8 @@ public class CompoundsController {
 
     /////////////////////搜索引擎部分结束////////////////////////
 
-
-    @RequestMapping("/listCompounds")
+    @ApiOperation(value = "分页查询", notes = "分页查询，目前有问题")
+    @GetMapping("/listCompounds")
     public PageInfo listCompounds(Model m, @RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
         //1. 在参数里接受当前是第几页 start ，以及每页显示多少条数据 size。 默认值分别是0和5。
         //2. 根据start,size进行分页，并且设置id 倒排序
@@ -133,7 +139,8 @@ public class CompoundsController {
         return page;
     }
 
-    @RequestMapping("/browse-C")
+    @ApiOperation(value = "分子json数据", notes = "分子的json数据")
+    @GetMapping("/browse-C")
     @ResponseBody
     public List<CompoundsBasicInformationBean> showCompounds1() {
         List<CompoundsBasicInformationBean> list = compoundsService.FindBasicInformation();
@@ -143,23 +150,39 @@ public class CompoundsController {
     }
 
 
-    @RequestMapping("/index")
+    @ApiOperation(value = "系统首页", notes = "跳转到系统的首页")
+    @GetMapping("/index")
     public String getCount(HttpServletRequest request) {
         request.setAttribute("compoundsCount", compoundsService.getCompoundsCount());
-        //System.out.print(compoundsService.getCompoundsCount());
         request.setAttribute("targetsCount", targetsService.getTargetsCount());
         request.setAttribute("pathwaysCount", pathwaysService.getPathwaysCount());
         return "index";
     }
 
-    @RequestMapping("/third")
-    public void showCompoundinfomation(HttpServletRequest request) {
-        // request.setAttribute("ZS", compoundsService.getCompoundsCount());
-        request.setAttribute("basicinformation", compoundsService.FindBasicInformation());
-        //List<Compounds> list=compoundsService.findById();
-        //return null;
+
+    @ApiOperation(value = "跳转到分子页面", notes = "跳转到分子页面")
+    @GetMapping("/Browse_C")
+    public String Browse_C() {
+        return "browse-Compound";
     }
 
+    @ApiOperation(value = "跳转到Target页面", notes = "跳转到Target页面")
+    @GetMapping("/Browse_T")
+    public String Browse_T() {
+        return "browse-Target";
+    }
+
+    @ApiOperation(value = "跳转到Pathway页面", notes = "跳转到Pathway页面")
+    @GetMapping("/Browse_P")
+    public String Browse_P() {
+        return "browse-Pathway";
+    }
+
+    @ApiOperation(value = "跳转到Search_text页面", notes = "跳转到Search_text页面")
+    @GetMapping("/Search_text")
+    public String Search_text() {
+        return "search-text";
+    }
 
     @Autowired // This means to get the bean called userRepository
     // Which is auto-generated by Spring, we will use it to handle the data
@@ -172,13 +195,15 @@ public class CompoundsController {
 //
 //        return "compounds";
 //    }
-    @RequestMapping("/greeting")
+    @ApiOperation(value = "文件上传跳转接口", notes = "跳转到文件上传")
+    @RequestMapping(value = "/greeting",method = RequestMethod.GET)
     public String greetingForm123(Model model) {
         model.addAttribute("compounds", new Compounds());
         return "upload";
     }
 
     static int pid=30;
+    @ApiOperation(value = "文件上传", notes = "文件上传到数据库")
     @RequestMapping(value = "/upload_data", method = RequestMethod.POST)
     public String greetingSubmit(@ModelAttribute Compounds compounds/*HttpServletRequest request*/) {
         //  System.out.println("sfjasklfdaj");
@@ -201,6 +226,7 @@ public class CompoundsController {
 
     }
 
+    @ApiOperation(value = "获取所有数据", notes = "获取所有数据")
     @GetMapping("/all")
     public String getMessage(Model model) {
 
@@ -211,7 +237,8 @@ public class CompoundsController {
         return "all";
     }
 
-    @RequestMapping("/show")
+    @ApiOperation(value = "显示pathway", notes = "显示pathway")
+    @RequestMapping(value = "/show",method = RequestMethod.GET)
     @ResponseBody
     public List<BrowsePathways> showPics(HttpServletRequest request) {
         List<Pictures> list = compoundsService.showPictureInformation();
@@ -269,6 +296,7 @@ public class CompoundsController {
 //        request.setAttribute("p1",p1);
         return list;*/
     }
+
 
 }
 

@@ -7,24 +7,24 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <!--&lt;!&ndash; Fonts&ndash;&gt;-->
-    <link rel="stylesheet" type="text/css" href="./assets/css/reset.css" th:href="@{/assets/css/reset.css}">
+    <link rel="stylesheet" type="text/css" href="./static/assets/css/reset.css" th:href="@{/static/assets/css/reset.css}">
     <!--&lt;!&ndash; Vendors&ndash;&gt;-->
-    <link rel="stylesheet" type="text/css" href="./assets/vendors/bootstrap/bootstrap.min.css"
-          th:href="@{/assets/vendors/bootstrap/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" href="./static/assets/vendors/bootstrap/bootstrap.min.css"
+          th:href="@{/static/assets/vendors/bootstrap/bootstrap.min.css}">
     <!-- css -->
-    <link rel="stylesheet" type="text/css" href="./assets/css/main.css" th:href="@{/assets/css/main.css}">
+    <link rel="stylesheet" type="text/css" href="./static/assets/css/main.css" th:href="@{/static/assets/css/main.css}">
     <!-- 引入js -->
-    <script src="./assets/vendors/_jquery/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="./assets/vendors/_jquery/jquery.superslide.2.1.3.js"></script>
-    <script src="./assets/vendors/bootstrap/bootstrap.min.js"></script>
+    <script src="./static/assets/vendors/_jquery/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="./static/assets/vendors/_jquery/jquery.superslide.2.1.3.js"></script>
+    <script src="./static/assets/vendors/bootstrap/bootstrap.min.js"></script>
 </head>
 <body>
 <!-- 定义头部 -->
 <div class="head">
     <div class="head-bg-img">
-        <img src="./assets/img/head-bg.png" alt="">
+        <img src="./static/assets/img/head-bg.png" alt="">
         <div class="logo">
-            <img src="./assets/img/logo-shadow.png" alt="">
+            <img src="./static/assets/img/logo-shadow.png" alt="">
         </div>
     </div>
 
@@ -37,15 +37,15 @@
                     BROWSE
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="./otherPage/browse-Compound.html">Commpound</a></li>
-                    <li><a href="./Browse-Pathway.html">Pathway</a></li>
-                    <li><a href="./Browse-Target.html">Target</a></li>
+                    <li><a href="/Browse_C">Commpound</a></li>
+                    <li><a href="/Browse_P">Pathway</a></li>
+                    <li><a href="/Browse_T">Target</a></li>
                 </ul>
 
             </li>
             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">SEARCH</a>
                 <ul class="dropdown-menu">
-                    <li><a href="./Search-text.html">Text</a></li>
+                    <li><a href="/Search_text">Text</a></li>
                     <li><a href="./Search-Structure.html">Structure</a></li>
                     <li><a href="./Search-Sequence.html">Sequence</a></li>
 
@@ -66,16 +66,16 @@
         <div class="aui-banner-wrapper bd">
             <ul>
                 <li>
-                    <img src="./assets/picture/banner001.png" alt="">
+                    <img src="./static/assets/picture/banner001.png" alt="">
                 </li>
                 <li>
-                    <img src="./assets/picture/banner002.png" alt="">
+                    <img src="./static/assets/picture/banner002.png" alt="">
                 </li>
                 <li>
-                    <img src="./assets/picture/banner003.png" alt="">
+                    <img src="./static/assets/picture/banner003.png" alt="">
                 </li>
                 <li>
-                    <img src="./assets/picture/banner004.png" alt="">
+                    <img src="./static/assets/picture/banner004.png" alt="">
                 </li>
             </ul>
         </div>
@@ -92,7 +92,7 @@
 <!-- 定义底部 -->
 <div class="foot-statistics">
     <div class="foot-stat-content">
-        <img src="./assets/img/statistics.png" alt="">
+        <img src="./static/assets/img/statistics.png" alt="">
         <ul>
             <li class="stat1" th:text="${compoundsCount}"></li>
             <li class="stat2" th:text="${targetsCount}"></li>
