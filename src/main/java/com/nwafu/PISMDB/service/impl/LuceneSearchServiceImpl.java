@@ -66,8 +66,6 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
             String ChemicalFormular_ = cbi.getChemicalFormular();
             String MolecularWeight = cbi.getMolecularWeight();
             String AlogP_ = cbi.getAlogP();
-//            String Address_ = cbi.getAddress();
-//            System.out.println(Address_);
             String content = PISMID_ + " <1> " + ChemicalNames_ + " <1> " + IUPAC_Name_ + " <1> " + ChemicalFormular_ + " <1> " + MolecularWeight + " <1> " + AlogP_ ;
             System.out.println(content);
             //创建域    域的名称、域的值、是否存储到磁盘
@@ -97,9 +95,7 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
 //        //  查询对象，查询结果返回的最大数
         QueryParser queryParser = new QueryParser("Content", new StandardAnalyzer());
         Query query = queryParser.parse(keyword);
-
         TopDocs topDocs = indexSearcher.search(query, 10);
-
         log.info("查询总数量为 ：{}" , topDocs.totalHits);
         ScoreDoc[] scoreDocs = topDocs.scoreDocs;
         QueryScorer scorer=new QueryScorer(query);
@@ -112,13 +108,9 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
         for (ScoreDoc doc : scoreDocs) {
             int docId = doc.doc;
             log.info(Integer.valueOf(docId).toString());
-//            String str = "";
             //根据文档id 获取文档对象
             Document document = indexSearcher.doc(docId);
-//            System.out.println(document.get("PISMID"));
-//            TokenStream tokenStream = analyzer.tokenStream("Content", new StringReader(document.get("Content")));
-            // String context=highlighter.getBestFragment(tokenStream,document.get("Content"));
-            String s=null;
+            String s = null;
             String foodname=document.get("Content");
             System.out.println(document.get("Content"));
             log.info("内容为：{}",foodname);
@@ -128,7 +120,6 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
             if(s.equals("") || s == null){
                 System.out.println("为空");
             }else{
-                //                System.out.println("s是下面这个"+s);
                 System.out.println(document.get("Content"));
             }
 //            String[] str = document.get("Content").split(" ");
