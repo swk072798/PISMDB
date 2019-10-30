@@ -44,10 +44,17 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
             if(!resultFile.exists()){
                 resultFile.createNewFile();
             }
+            File des = new File("src\\main\\resources\\blastpackage\\blast-2.4.0+\\result.fasta");
+            String path1 = des.getAbsolutePath();
+            File des_1 = new File(path1);
+            String envPath = des_1.getParent();
+            log.info("设置系统环境变量！！::{}",envPath);
+            String command_0 = "set Path=" + envPath + "\\bin";
+            log.info("调用命令设置环境变量：{}",command_0);
             log.info("调用查找功能！！！");
-            String command = "blastp -task blastp -query "+ fastaFile.getAbsolutePath() +" -db D:\\blast-2.4.0+\\bin\\pismdb -out "+ resultFile.getAbsolutePath() +" -matrix BLOSUM50 -outfmt \"7 bitscore evalue qcovs pident sacc stitle \" -num_threads 4";
-            log.info("执行命令：{}" ,command);
-            Process process = Runtime.getRuntime().exec(command);
+            String command_1 = "blastp -task blastp -query "+ fastaFile.getAbsolutePath() +" -db D:\\blast-2.4.0+\\bin\\pismdb -out "+ resultFile.getAbsolutePath() +" -matrix BLOSUM50 -outfmt \"7 bitscore evalue qcovs pident sacc stitle \" -num_threads 4";
+            log.info("执行命令：{}" ,command_1);
+            Process process = Runtime.getRuntime().exec(command_1);
             Thread.sleep(1000);     //这里留出1s的时间用于服务器执行命令行并生成result文件，不然可能会在文件内容写入之前读取，造成读空
         } catch (IOException e) {
             System.out.println("序列查询出错");
@@ -106,8 +113,10 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
             log.warn("没有满足条件的蛋白质???");
             return null;
         }
+        log.info("开始组装结果");
         List<SequenceSearchResult> sequenceSearchResults = new ArrayList<>();
         for(ArrayList<String> al : similarityAndUniportID){
+            log.info("UniportID:{}",al.get(1));
             Targets targets = targetsDao.findTargetByUniportID(al.get(1));
             if(targets != null){
                 SequenceSearchResult sequenceSearchResult = new SequenceSearchResult();
@@ -123,6 +132,7 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
                 log.error("{},数据库中查找失败!!!",al.get(1));
             }
         }
+        log.info("sequenceSearchResults:{}",sequenceSearchResults);
         return sequenceSearchResults;
     }
 

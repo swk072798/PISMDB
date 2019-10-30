@@ -74,10 +74,12 @@ public class TargetsController {
     @GetMapping("/seqSearchByStr")
     public List<SequenceSearchResult> seqSearchByStr(@RequestParam String sequence){
         log.info("传入参数:{}",sequence);
+        long startTime = System.currentTimeMillis();
         if(StringUtils.isEmpty(sequence)){
             throw new ServiceException("序列为空");
         }
         List<SequenceSearchResult> result = blastpSearchProteinService.seqSearchProtein(sequence);
+        log.info("seqSearchByStr调用成功，用时 {} ms",System.currentTimeMillis() - startTime);
         return result;
     }
 

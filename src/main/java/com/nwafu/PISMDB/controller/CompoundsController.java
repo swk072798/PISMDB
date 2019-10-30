@@ -110,8 +110,9 @@ public class CompoundsController {
     public List<Compounds> searchIndex(@RequestParam String search_text) throws Exception {
         System.out.println(search_text);
         log.info("搜索引擎关键字查找传参：{}",search_text);
-//        List<Compounds> compoundsList = luceneSearchService.searchIndex(".*" + search_text + "*");
+//        List<Compounds> compoundsList = luceneSearchService.searchIndex("[^\\S]*" + search_text + "*");
         List<Compounds> compoundsList = luceneSearchService.searchIndex(search_text + "*");
+//        List<Compounds> compoundsList = luceneSearchService.searchIndex(search_text);
         return compoundsList;
     }
 
