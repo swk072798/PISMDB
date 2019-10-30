@@ -95,7 +95,7 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
 //        //  查询对象，查询结果返回的最大数
         QueryParser queryParser = new QueryParser("Content", new StandardAnalyzer());
         Query query = queryParser.parse(keyword);
-        TopDocs topDocs = indexSearcher.search(query, 10);
+        TopDocs topDocs = indexSearcher.search(query, Integer.MAX_VALUE);
         log.info("查询总数量为 ：{}" , topDocs.totalHits);
         ScoreDoc[] scoreDocs = topDocs.scoreDocs;
         QueryScorer scorer=new QueryScorer(query);
@@ -112,20 +112,17 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
             Document document = indexSearcher.doc(docId);
             String s = null;
             String foodname=document.get("Content");
-            System.out.println(document.get("Content"));
             log.info("内容为：{}",foodname);
-            s = highlighter.getBestFragment(analyzer,"Content",document.get("Content"));
-            System.out.println("s的值：：：：：：：" + s);
+            s = document.get("Content");
+            log.info("s的值:{}",s);
 
             if(s.equals("") || s == null){
                 System.out.println("为空");
             }else{
                 System.out.println(document.get("Content"));
             }
-//            String[] str = document.get("Content").split(" ");
             String[] str = s.split("<1>");
-//            System.out.println("strNumber"+str.length);
-            System.out.println(Arrays.toString(str));
+            log.info("分隔后的值:{}",str);
             for(int i = 0;i < str.length; i++){
                 String regex="<b><font";
                 str[i] = str[i].replaceAll(regex,"<b><font ");
@@ -140,11 +137,11 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
             compounds.setIUPAC_Name(str[2]);//
             compounds.setChemicalFormular(str[3]);//
             compounds.setMolecularWeight(str[4]);
-            compounds.setAlogP(str[5]);//
+            compounds.setAlogP(str[5].equals(" ")? null : str[5]);//
 //            compounds.setAddress(str[6]);
-
+            log.info("compounds的值：{}",compounds);
             list.add(compounds);
-            log.info("{}",list);
+
         }
 
         System.out.println("数组大小：" + list.size());
