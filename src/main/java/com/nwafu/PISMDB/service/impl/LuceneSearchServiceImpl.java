@@ -7,6 +7,8 @@ import com.nwafu.PISMDB.service.LuceneSearchService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.core.SimpleAnalyzer;
+import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -31,6 +33,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -49,31 +52,27 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
     @Override
     public Integer createIndex() throws IOException {      //搜索引擎是将数据库里的coumpounds表中所有文本读出，存储成关键字
         //把索引库保存到磁盘上
-        Directory directory = FSDirectory.open(new File("src/main/resources/luceneindex").toPath());  //路径要改
+        Directory directory = FSDirectory.open(new File("src/main/resources/luceneindex").toPath());
         //会在index中生成索引目录
         Analyzer analyzer = new StandardAnalyzer();
         IndexWriter indexWriter = new IndexWriter(directory, new IndexWriterConfig(analyzer));
         List<CompoundsBasicInformationBean> list = compoundsService.FindBasicInformation();
         System.out.println(list.size());
         for (CompoundsBasicInformationBean cbi : list) {
+            log.info("cbi:{}",cbi);
             String PISMID_ = cbi.getPISMID();
+            String ChemicalNames_ = cbi.getChemicalNames();
             String IUPAC_Name_ = cbi.getIUPAC_Name();
             String ChemicalFormular_ = cbi.getChemicalFormular();
+            String MolecularWeight = cbi.getMolecularWeight();
             String AlogP_ = cbi.getAlogP();
-            String Smiles_ = cbi.getSmiles();
-            String ChemicalNames_ = cbi.getChemicalNames();
-            String path_ = cbi.getAddress();
-            String content = PISMID_ + " " + ChemicalNames_ + " " + IUPAC_Name_ + " " + ChemicalFormular_ + " " + Smiles_ + " " + AlogP_ + " " + path_;
+//            String Address_ = cbi.getAddress();
+//            System.out.println(Address_);
+            String content = PISMID_ + " <1> " + ChemicalNames_ + " <1> " + IUPAC_Name_ + " <1> " + ChemicalFormular_ + " <1> " + MolecularWeight + " <1> " + AlogP_ ;
             System.out.println(content);
-
             //创建域    域的名称、域的值、是否存储到磁盘
             Field fieldPISMID_ = new TextField("PISMID", PISMID_, Field.Store.YES);
             Field fieldContent = new TextField("Content", content, Field.Store.YES);
-//            Field fieldIUPAC_Name_ = new TextField("IUPAC_Name",IUPAC_Name_,Field.Store.YES);
-//            Field fieldChemicalFormular_ = new TextField("ChemicalFormular",ChemicalFormular_,Field.Store.YES);
-//            Field fieldAlogP_ = new TextField("AlogP",AlogP_,Field.Store.YES);
-//            Field fieldSmiles_ = new TextField("Smiles",Smiles_,Field.Store.YES);
-//            Field fieldChemicalNames_ = new TextField("ChemicalNames",ChemicalNames_,Field.Store.YES);
             //创建文档对象
             Document document = new Document();
             document.add(fieldPISMID_);
@@ -89,7 +88,7 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
     @Override
     public List<Compounds> searchIndex(String keyword) throws IOException, InvalidTokenOffsetsException, ParseException {
         System.out.println(keyword);
-        Directory directory = FSDirectory.open(new File("src/main/java/com/nwafu/PISMDB/resources/luceneindex").toPath());
+        Directory directory = FSDirectory.open(new File("src/main/resources/luceneindex").toPath());
         IndexReader indexReader = DirectoryReader.open(directory);
         IndexSearcher indexSearcher = new IndexSearcher(indexReader);
         Analyzer analyzer = new StandardAnalyzer();
@@ -112,32 +111,36 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
 
         for (ScoreDoc doc : scoreDocs) {
             int docId = doc.doc;
+            log.info(Integer.valueOf(docId).toString());
 //            String str = "";
             //根据文档id 获取文档对象
             Document document = indexSearcher.doc(docId);
 //            System.out.println(document.get("PISMID"));
-            TokenStream tokenStream = analyzer.tokenStream("Content", new StringReader(document.get("Content")));
+//            TokenStream tokenStream = analyzer.tokenStream("Content", new StringReader(document.get("Content")));
             // String context=highlighter.getBestFragment(tokenStream,document.get("Content"));
             String s=null;
             String foodname=document.get("Content");
-
+            System.out.println(document.get("Content"));
+            log.info("内容为：{}",foodname);
             s = highlighter.getBestFragment(analyzer,"Content",document.get("Content"));
+            System.out.println("s的值：：：：：：：" + s);
 
-
-            if(s.equals("")){
+            if(s.equals("") || s == null){
                 System.out.println("为空");
-            }else
-//                System.out.println("s是下面这个"+s);
+            }else{
+                //                System.out.println("s是下面这个"+s);
                 System.out.println(document.get("Content"));
-            //String[] str = document.get("Content").split(" ");
-            String[] str = s.split(" ");
-            System.out.println("strNumber"+str.length);
-            for(int i=0;i<str.length;i++){
-                String regex="<b><font";
-                str[i]=str[i].replaceAll(regex,"<b><font ");
-                System.out.println("第"+i+str[i]);
             }
-            System.out.println("s是下面这个\n"+s);
+//            String[] str = document.get("Content").split(" ");
+            String[] str = s.split("<1>");
+//            System.out.println("strNumber"+str.length);
+            System.out.println(Arrays.toString(str));
+            for(int i = 0;i < str.length; i++){
+                String regex="<b><font";
+                str[i] = str[i].replaceAll(regex,"<b><font ");
+//                System.out.println("第"+i+str[i]);
+            }
+//            System.out.println("s是下面这个\n"+s);
             Compounds compounds = new Compounds();
             // System.out.println("到了3");
             compounds.setPISMID(str[0]);//
@@ -147,15 +150,15 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
             compounds.setChemicalFormular(str[3]);//
             compounds.setMolecularWeight(str[4]);
             compounds.setAlogP(str[5]);//
-            compounds.setAddress(str[6]);
+//            compounds.setAddress(str[6]);
 
             list.add(compounds);
-
+            log.info("{}",list);
         }
 
         System.out.println("数组大小：" + list.size());
         long endTime = System.currentTimeMillis();
-        System.out.println("消耗时间：" + (endTime - startTime));
+        System.out.println("消耗时间：" + (endTime - startTime)+"ms");
         return list;
     }
 

@@ -94,8 +94,9 @@ public class CompoundsController {
      */
     ///////////搜索引擎部分开始/////////////////////
 
-    @ApiOperation(value = "创建搜索索引", notes = "创建搜索引擎的索引")
+    @ApiOperation(value = "创建搜索索引", notes = "创建搜索引擎的索引,不要随便调用")
     @RequestMapping(value = "/createIndex",method = RequestMethod.POST)
+    @ResponseBody
     public Integer createIndex() throws Exception {
         log.info("创建搜索引擎中");
         Integer result = luceneSearchService.createIndex();
@@ -105,6 +106,7 @@ public class CompoundsController {
 
     @ApiOperation(value = "搜索引擎关键字查找传参", notes = "搜索引擎关键字查找传参")
     @GetMapping("/keywordSearch")
+    @ResponseBody
     public List<Compounds> searchIndex(@RequestParam String search_text) throws Exception {
         System.out.println(search_text);
         log.info("搜索引擎关键字查找传参：{}",search_text);

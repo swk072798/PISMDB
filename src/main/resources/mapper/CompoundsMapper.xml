@@ -24,6 +24,8 @@
         <result column="StructureActivityRelationship" property="StructureActivityRelationship"
                 jdbcType="VARCHAR"></result>
         <result column="StructuralSimilarity" property="StructuralSimilarity" jdbcType="VARCHAR"></result>
+        <!--<result column="Address" property="Address" jdbcType="VARCHAR"></result>-->
+        <!--<result column="updatedate2" property="updatedate2" jdbcType="VARCHAR"></result>-->
         <result column="MocularDescription" property="MocularDescription" jdbcType="VARCHAR"></result>
     </resultMap>
 
@@ -42,11 +44,13 @@
         <result column="ChemicalNames" property="ChemicalNames" jdbcType="VARCHAR"></result>
         <result column="IUPAC_Name" property="IUPAC_Name" jdbcType="VARCHAR"></result>
         <result column="ChemicalFormular" property="ChemicalFormular" jdbcType="VARCHAR"></result>
+        <result column="MolecularWeight" property="MolecularWeight" jdbcType="VARCHAR"></result>
         <result column="AlogP" property="AlogP" jdbcType="VARCHAR"></result>
         <result column="Smiles" property="Smiles" jdbcType="VARCHAR"></result>
         <result column="Function" property="Function" jdbcType="VARCHAR"></result>
         <result column="Mechanism" property="Mechanism" jdbcType="VARCHAR"></result>
         <result column="Phenotype" property="Phenotype" jdbcType="VARCHAR"></result>
+        <!--<result column="Address" property="Address" jdbcType="VARCHAR"></result>-->
     </resultMap>
 
     <select id="FindBasicInformation" resultMap="BasicInformation">
