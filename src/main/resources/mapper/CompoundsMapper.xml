@@ -59,7 +59,7 @@
     </select>
 
     <!--Pathway数据信息-->
-    <resultMap id="Pathway" type="com.nwafu.PISMDB.entity.Compounds">
+    <resultMap id="Pathway" type="com.nwafu.PISMDB.entity.CompoundsPathway">
         <id column="PISMID" property="PISMID" jdbcType="VARCHAR"></id>
         <result column="IUPAC_Name" property="IUPAC_Name" jdbcType="VARCHAR"></result>
         <result column="ChemicalFormular" property="ChemicalFormular" jdbcType="VARCHAR"></result>
@@ -73,7 +73,7 @@
     </select>
 
     <!--RelatedInformation数据信息-->
-    <resultMap id="RelatedInformation" type="com.nwafu.PISMDB.entity.Compounds">
+    <resultMap id="RelatedInformation" type="com.nwafu.PISMDB.entity.CompoundsRelatedCompounds">
         <id column="PISMID" property="PISMID" jdbcType="VARCHAR"></id>
         <result column="IUPAC_Name" property="IUPAC_Name" jdbcType="VARCHAR"></result>
         <result column="ChemicalFormular" property="ChemicalFormular" jdbcType="VARCHAR"></result>
@@ -81,13 +81,13 @@
         <result column="Smiles" property="Smiles" jdbcType="VARCHAR"></result>
     </resultMap>
 
-    <select id="FindRelatedInformation" resultMap="RelatedInformation">
+    <select id="FindRelatedCompounds" resultMap="RelatedInformation">
         select *
         from compound
     </select>
 
     <!--SupportingInformation数据信息-->
-    <resultMap id="SupportingInformation" type="com.nwafu.PISMDB.entity.Compounds">
+    <resultMap id="SupportingInformation" type="com.nwafu.PISMDB.entity.CompoundSupportingInformation">
         <id column="PISMID" property="PISMID" jdbcType="VARCHAR"></id>
         <result column="IUPAC_Name" property="IUPAC_Name" jdbcType="VARCHAR"></result>
         <result column="ChemicalFormular" property="ChemicalFormular" jdbcType="VARCHAR"></result>

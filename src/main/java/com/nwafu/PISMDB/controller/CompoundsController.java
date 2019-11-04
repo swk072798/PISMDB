@@ -152,6 +152,29 @@ public class CompoundsController {
         return list;
     }
 
+    @ApiOperation(value = "数据格式化", notes = "数据格式化")
+    @GetMapping("/formatData")
+    @ResponseBody
+    public List<FormatData> showCompoundsPathway() {
+        List<CompoundsBasicInformationBean> list1 = compoundsService.FindBasicInformation();
+        List<CompoundsPathway> list2 = compoundsService.FindPathway();
+        List<CompoundsRelatedCompounds> list3 = compoundsService.FindRelatedCompounds();
+        List<CompoundSupportingInformation> list4 = compoundsService.FindSupportingInformation();
+        List<FormatData> list =new ArrayList<>();
+        for(int i=0;i<compoundsService.getCompoundsCount();i++){
+        FormatData formatData=new FormatData();
+        formatData.setId(list1.get(i).getPISMID());
+        formatData.setIdLink(list1.get(i).getPISMID());
+        formatData.setName(list1.get(i).getChemicalNames());
+        formatData.setBasic(list1.get(i));
+        formatData.setRelated(list3.get(i));
+        formatData.setPathway(list2.get(i));
+        formatData.setSupporting(list4.get(i));
+        list.add(formatData);
+        }
+        return list;
+    }
+
 
     @ApiOperation(value = "系统首页", notes = "跳转到系统的首页")
     @GetMapping("/index")

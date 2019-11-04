@@ -1,10 +1,6 @@
 package com.nwafu.PISMDB.dao;
 
-import com.nwafu.PISMDB.entity.Compounds;
-import com.nwafu.PISMDB.entity.CompoundsBasicInformationBean;
-import com.nwafu.PISMDB.entity.Pic;
-import com.nwafu.PISMDB.entity.Pictures;
-import com.nwafu.PISMDB.entity.CompoudsIdAndDescription;
+import com.nwafu.PISMDB.entity.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,9 +12,9 @@ public interface CompoundsDao {
     List<Compounds> findAll();
     List<Compounds> findById();
     List<CompoundsBasicInformationBean> FindBasicInformation();
-    List<Compounds> FindPathway();
-    List<Compounds> FindRelatedCompounds();
-    List<Compounds> FindSupportingInformation();
+    List<CompoundsPathway> FindPathway();
+    List<CompoundsRelatedCompounds> FindRelatedCompounds();
+    List<CompoundSupportingInformation> FindSupportingInformation();
 
     List<Pictures> showPictureInformation();
     List<Pic> showPictures();

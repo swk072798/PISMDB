@@ -1,10 +1,7 @@
 package com.nwafu.PISMDB.service.impl;
 
 import com.nwafu.PISMDB.dao.CompoundsDao;
-import com.nwafu.PISMDB.entity.Compounds;
-import com.nwafu.PISMDB.entity.CompoundsBasicInformationBean;
-import com.nwafu.PISMDB.entity.Pic;
-import com.nwafu.PISMDB.entity.Pictures;
+import com.nwafu.PISMDB.entity.*;
 import com.nwafu.PISMDB.service.CompoundsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,14 +34,18 @@ public class CompoundsServiceImp implements CompoundsService {
     }
 
     @Override
-    public  List<Compounds> FindPathway(){
+    public  List<CompoundsPathway> FindPathway(){
         return  compoundsDao.FindPathway();
     }
     @Override
-    public  List<Compounds> FindRelatedCompounds(){
+    public  List<CompoundsRelatedCompounds> FindRelatedCompounds(){
         return  compoundsDao.FindRelatedCompounds();
     }
 
+    @Override
+    public List<CompoundSupportingInformation> FindSupportingInformation(){
+        return compoundsDao.FindSupportingInformation();
+    }
     @Override
     public List<Pictures> showPictureInformation() {
         return compoundsDao.showPictureInformation();
