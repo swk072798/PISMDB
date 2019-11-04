@@ -52,7 +52,7 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
     @Override
     public Integer createIndex() throws IOException {      //搜索引擎是将数据库里的coumpounds表中所有文本读出，存储成关键字
         //把索引库保存到磁盘上
-        Directory directory = FSDirectory.open(new File("src/main/resources/luceneindex").toPath());
+        Directory directory = FSDirectory.open(new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\luceneindex").toPath());
         //会在index中生成索引目录
         Analyzer analyzer = new StandardAnalyzer();
         IndexWriter indexWriter = new IndexWriter(directory, new IndexWriterConfig(analyzer));
@@ -86,7 +86,7 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
     @Override
     public List<Compounds> searchIndex(String keyword) throws IOException, InvalidTokenOffsetsException, ParseException {
         System.out.println(keyword);
-        Directory directory = FSDirectory.open(new File("src/main/resources/luceneindex").toPath());
+        Directory directory = FSDirectory.open(new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\luceneindex").toPath());  //服务器端路径
         IndexReader indexReader = DirectoryReader.open(directory);
         IndexSearcher indexSearcher = new IndexSearcher(indexReader);
         Analyzer analyzer = new StandardAnalyzer();
@@ -144,9 +144,9 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
 
         }
 
-        System.out.println("数组大小：" + list.size());
+        log.info("数组大小：{}" , list.size());
         long endTime = System.currentTimeMillis();
-        System.out.println("消耗时间：" + (endTime - startTime)+"ms");
+        log.info("消耗时间：{}" ,(endTime - startTime)+"ms");
         return list;
     }
 

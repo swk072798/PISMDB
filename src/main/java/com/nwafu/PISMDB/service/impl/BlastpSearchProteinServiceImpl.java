@@ -7,6 +7,9 @@ import com.nwafu.PISMDB.entity.Targets;
 import com.nwafu.PISMDB.service.BlastpSearchProteinService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -29,6 +32,15 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
 
     @Autowired
     TargetsDao targetsDao;
+
+    @Value("${blast.binPath}")
+    private String blastPath;
+    @Value("${blast.changedfasta}")
+    private String changedfastaFile;
+    @Value("${blast.result}")
+    private String resultFile;
+    @Value("${Thymeleaf.prefix}")
+    private String the;
     /**
      * 通过上传文件进行序列查询
      * @param fastaFile
@@ -37,22 +49,20 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
     @Override
     public List<SequenceSearchResult> fileSearchProtein(File fastaFile) {
         long nowTime = System.currentTimeMillis();
-        File resultFile = new File("src/main/resources/seqsearch/result", fastaFile.getName().split("\\.")[0] +".txt");
-        log.info("结果文件位置：{}",resultFile.getAbsolutePath());
-        log.info("待查询的fasta文件位置,{}",fastaFile.getAbsolutePath());
+        File resultFile = null;
         try {
+            resultFile = new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\seqsearch\\result\\" + fastaFile.getName().split("\\.")[0] +".txt");     //服务器端用这个
+//            resultFile = new File("D:\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\seqsearch\\result\\" + fastaFile.getName().split("\\.")[0] +".txt");     //本地端tomcat用这个
+            log.info("结果文件位置：{}",resultFile.getAbsolutePath());
+            log.info("待查询的fasta文件位置,{}",fastaFile.getAbsolutePath());
             if(!resultFile.exists()){
                 resultFile.createNewFile();
+                log.info("创建resultFile");
             }
-            File des = new File("src\\main\\resources\\blastpackage\\blast-2.4.0+\\result.fasta");
-            String path1 = des.getAbsolutePath();
-            File des_1 = new File(path1);
-            String envPath = des_1.getParent();
-            log.info("设置系统环境变量！！::{}",envPath);
-            String command_0 = "set Path=" + envPath + "\\bin";
-            log.info("调用命令设置环境变量：{}",command_0);
             log.info("调用查找功能！！！");
-            String command_1 = "blastp -task blastp -query "+ fastaFile.getAbsolutePath() +" -db D:\\blast-2.4.0+\\bin\\pismdb -out "+ resultFile.getAbsolutePath() +" -matrix BLOSUM50 -outfmt \"7 bitscore evalue qcovs pident sacc stitle \" -num_threads 4";
+
+            String command_1 = "blastp -task blastp -query "+ fastaFile.getAbsolutePath() +" -db C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\blastpackage\\blast-2.4.0+\\bin\\pismdb -out "+ resultFile.getAbsolutePath() +" -matrix BLOSUM50 -outfmt \"7 bitscore evalue qcovs pident sacc stitle \" -num_threads 4";      //服务器路径
+//            String command_1 = "blastp -task blastp -query "+ fastaFile.getAbsolutePath() +" -db D:\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\blastpackage\\blast-2.4.0+\\bin\\pismdb -out "+ resultFile.getAbsolutePath() +" -matrix BLOSUM50 -outfmt \"7 bitscore evalue qcovs pident sacc stitle \" -num_threads 4";      //本地tomcat路径
             log.info("执行命令：{}" ,command_1);
             Process process = Runtime.getRuntime().exec(command_1);
             Thread.sleep(1000);     //这里留出1s的时间用于服务器执行命令行并生成result文件，不然可能会在文件内容写入之前读取，造成读空
@@ -62,6 +72,7 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
 
         ArrayList<String> txt = new ArrayList();
         try {
@@ -75,12 +86,12 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
             fr.close();
         } catch (FileNotFoundException e) {
             System.out.println("resultFile文件不存在");
-            e.printStackTrace();
+            log.info(e.getMessage());
         } catch (IOException e) {
             System.out.println("BufferedReader异常");
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
-        System.out.println(txt);
+//        System.out.println(txt);
         ArrayList<ArrayList<String>> similarityAndUniportID = new ArrayList<>();
         for(int i = 5; i < txt.size() - 1; i++){
             ArrayList<String> similarityAndId = new ArrayList<>();
@@ -132,16 +143,23 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
                 log.error("{},数据库中查找失败!!!",al.get(1));
             }
         }
-        log.info("sequenceSearchResults:{}",sequenceSearchResults);
+        log.info("sequenceSearchResults:{}",sequenceSearchResults.size());
         return sequenceSearchResults;
     }
 
     @Override
     public List<SequenceSearchResult> seqSearchProtein(String sequence) {
         long nowTime = System.currentTimeMillis();
+
         String fileName = sequence.substring(0,13) + nowTime + ".fasta";
-        File fastaFile = new File("src/main/resources/seqsearch/exchangedfasta/" + fileName);
+//        File fastaFile = new File("classpath:/seqsearch\\exchangedfasta\\" + fileName);
+        File fastaFile = null;
         try {
+//            log.info("{},{}",changedfastaFile,the);
+            fastaFile = new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\seqsearch\\exchangedfasta",fileName);      //服务器端用这个
+//            fastaFile = new File("D:\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\seqsearch\\exchangedfasta",fileName);        //本地端tomcat用这个
+
+            log.info("fastaFile:{}",fastaFile.getAbsolutePath());
             if(!fastaFile.exists()){
                 fastaFile.createNewFile();
             }
@@ -166,7 +184,7 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
             fileWriter.write(sb.toString());
             fileWriter.flush();
             fileWriter.close();
-            log.info("fasta文件转换完成！！！");
+            log.info("fasta文件转换完成！！！位置:{}",fastaFile.getAbsolutePath());
         } catch (IOException e) {
             e.printStackTrace();
         }       //将用户上传来的字符串转换成fasta文件的格式

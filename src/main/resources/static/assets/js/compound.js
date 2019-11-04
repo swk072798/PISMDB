@@ -37,8 +37,8 @@ function page_ctrl2(data_obj,data) {
             {
                 // console.log("当前为"+current_page);
                 pageContent+='<li>';
-                pageContent+='<div class="item item1"><p class="Compound-id">ID: <a href="#"id="PISMID">'+data[per_num*(current_page-1)+i].PISMID+'</a></p></div>';
-                pageContent+='<div class="item item2"><p><a href="#"id="Chemical-name">'+data[per_num*(current_page-1)+i].ChemicalNames+'</a></p><div class="chemical-member"><ul><li><p id="basic">Basic Information</p></li><li><p id="pathway">Pathway</p></li><li><p id="related">Related Compounds</p></li><li><p id="supporting">Supporting Information</p></li></ul></div></div>';
+                pageContent+='<div class="item item1"><p class="Compound-id">ID: <a href="#"id="PISMID">'+data[per_num*(current_page-1)+i].pismid+'</a></p></div>';
+                pageContent+='<div class="item item2"><p><a href="#"id="Chemical-name">'+data[per_num*(current_page-1)+i].chemicalNames+'</a></p><div class="chemical-member"><ul><li><p id="basic">Basic Information</p></li><li><p id="pathway">Pathway</p></li><li><p id="related">Related Compounds</p></li><li><p id="supporting">Supporting Information</p></li></ul></div></div>';
                 pageContent+='<div class="item item3"><ul><li>IUPAC Name <span id="IUPAC-name">'+data[per_num*(current_page-1)+i].IUPAC_Name+'</span></li><li>Chemical Formula <span id="Chemical-Formula">'+data[per_num*(current_page-1)+i].ChemicalFormular+'</span></li><li>SMILES <span id="SMILES">'+data[per_num*(current_page-1)+i].Smiles+'</span></li><li>Alog P <span id="ClogP">'+data[per_num*(current_page-1)+i].AlogP+'</span></li><li>MV<span id="MV"></span></li></ul></div>';
                 pageContent+='<div class="item item4"><div class="chemical-img"><img src="http://localhost:8080/assets/img/yangli.png" alt=""></div></div>';
                 pageContent+='</li>';
