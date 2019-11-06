@@ -156,23 +156,35 @@ public class CompoundsController {
     @GetMapping("/formatData")
     @ResponseBody
     public List<FormatData> showCompoundsPathway() {
-        List<CompoundsBasicInformationBean> list1 = compoundsService.FindBasicInformation();
+        List<CompoundsBasic> list1 = compoundsService.FindBasic();
+        List<Compounds> listc=compoundsService.findById();
         List<CompoundsPathway> list2 = compoundsService.FindPathway();
-        List<CompoundsRelatedCompounds> list3 = compoundsService.FindRelatedCompounds();
+      //  List<CompoundsRelatedCompounds> list3 = compoundsService.FindRelatedCompounds();
         List<CompoundSupportingInformation> list4 = compoundsService.FindSupportingInformation();
         List<FormatData> list =new ArrayList<>();
-        for(int i=0;i<compoundsService.getCompoundsCount();i++){
+        for(int i=0;i<1000;i++){
         FormatData formatData=new FormatData();
+        CompoundsRelatedCompounds compoundsRelatedCompounds=new CompoundsRelatedCompounds();
         formatData.setId(list1.get(i).getPISMID());
         formatData.setIdLink(list1.get(i).getPISMID());
-        formatData.setName(list1.get(i).getChemicalNames());
+        formatData.setName(listc.get(i).getChemicalNames());
         formatData.setBasic(list1.get(i));
-        formatData.setRelated(list3.get(i));
+        compoundsRelatedCompounds.setPISMID(list1.get(i).getPISMID());
+        compoundsRelatedCompounds.setCompoundsList(compoundsService.findRelatedById(list1.get(i).getPISMID()));
+        formatData.setRelated(compoundsRelatedCompounds);
         formatData.setPathway(list2.get(i));
         formatData.setSupporting(list4.get(i));
         list.add(formatData);
         }
         return list;
+    }
+
+
+    @ApiOperation(value = "查分子的相关分子", notes = "查分子的相关分子")
+    @GetMapping("/related")
+    @ResponseBody
+    public List<String> related(){
+        return compoundsService.findRelatedById("PISM00019");
     }
 
 
@@ -201,7 +213,7 @@ public class CompoundsController {
     @ApiOperation(value = "跳转到Pathway页面", notes = "跳转到Pathway页面")
     @GetMapping("/Browse_P")
     public String Browse_P() {
-        return "browse-Pathway";
+        return "Browse-Pathway";
     }
 
     @ApiOperation(value = "跳转到Search_text页面", notes = "跳转到Search_text页面")

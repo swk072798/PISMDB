@@ -29,6 +29,11 @@ public class CompoundsServiceImp implements CompoundsService {
     }
 
     @Override
+    public  List<CompoundsBasic> FindBasic(){
+        return compoundsDao.FindBasic();
+    }
+
+    @Override
     public  List<CompoundsBasicInformationBean> FindBasicInformation(){
         return compoundsDao.FindBasicInformation();
     }
@@ -56,5 +61,9 @@ public class CompoundsServiceImp implements CompoundsService {
         return compoundsDao.showPictures();
     }
 
+    @Override
+    public List<String> findRelatedById(String pismid){
+        return compoundsDao.findRelatedById(pismid);
+    }
 
 }

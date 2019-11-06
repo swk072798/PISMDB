@@ -2,10 +2,9 @@ package com.nwafu.PISMDB.entity;
 
 public class CompoundSupportingInformation {
     private String PISMID;
-    private String IUPAC_Name;
-    private String ChemicalFormular;
-    private String AlogP;
-    private String Smiles;
+    private String Function;
+    private String Mechanism;
+    private String Phenotype;
 
     public String getPISMID() {
         return PISMID;
@@ -15,46 +14,37 @@ public class CompoundSupportingInformation {
         this.PISMID = PISMID;
     }
 
-    public String getIUPAC_Name() {
-        return IUPAC_Name;
+    public String getFunction() {
+        return Function;
     }
 
-    public void setIUPAC_Name(String IUPAC_Name) {
-        this.IUPAC_Name = IUPAC_Name;
+    public void setFunction(String function) {
+        Function = function;
     }
 
-    public String getChemicalFormular() {
-        return ChemicalFormular;
+    public String getMechanism() {
+        return Mechanism;
     }
 
-    public void setChemicalFormular(String chemicalFormular) {
-        ChemicalFormular = chemicalFormular;
+    public void setMechanism(String mechanism) {
+        Mechanism = mechanism;
     }
 
-    public String getAlogP() {
-        return AlogP;
+    public String getPhenotype() {
+        return Phenotype;
     }
 
-    public void setAlogP(String alogP) {
-        AlogP = alogP;
-    }
-
-    public String getSmiles() {
-        return Smiles;
-    }
-
-    public void setSmiles(String smiles) {
-        Smiles = smiles;
+    public void setPhenotype(String phenotype) {
+        Phenotype = phenotype;
     }
 
     @Override
     public String toString() {
-        return "CompoundsPathway{" +
+        return "CompoundSupportingInformation{" +
                 "PISMID='" + PISMID + '\'' +
-                ", IUPAC_Name='" + IUPAC_Name + '\'' +
-                ", ChemicalFormular='" + ChemicalFormular + '\'' +
-                ", AlogP='" + AlogP + '\'' +
-                ", Smiles='" + Smiles + '\'' +
+                ", Function='" + Function + '\'' +
+                ", Mechanism='" + Mechanism + '\'' +
+                ", Phenotype='" + Phenotype + '\'' +
                 '}';
     }
 }

@@ -2,10 +2,7 @@ package com.nwafu.PISMDB.entity;
 
 public class CompoundsPathway {
     private String PISMID;
-    private String IUPAC_Name;
-    private String ChemicalFormular;
-    private String AlogP;
-    private String Smiles;
+    private String PathwayID;
 
     public String getPISMID() {
         return PISMID;
@@ -15,46 +12,19 @@ public class CompoundsPathway {
         this.PISMID = PISMID;
     }
 
-    public String getIUPAC_Name() {
-        return IUPAC_Name;
+    public String getPathwayID() {
+        return PathwayID;
     }
 
-    public void setIUPAC_Name(String IUPAC_Name) {
-        this.IUPAC_Name = IUPAC_Name;
-    }
-
-    public String getChemicalFormular() {
-        return ChemicalFormular;
-    }
-
-    public void setChemicalFormular(String chemicalFormular) {
-        ChemicalFormular = chemicalFormular;
-    }
-
-    public String getAlogP() {
-        return AlogP;
-    }
-
-    public void setAlogP(String alogP) {
-        AlogP = alogP;
-    }
-
-    public String getSmiles() {
-        return Smiles;
-    }
-
-    public void setSmiles(String smiles) {
-        Smiles = smiles;
+    public void setPathwayID(String pathwayID) {
+        PathwayID = pathwayID;
     }
 
     @Override
     public String toString() {
         return "CompoundsPathway{" +
                 "PISMID='" + PISMID + '\'' +
-                ", IUPAC_Name='" + IUPAC_Name + '\'' +
-                ", ChemicalFormular='" + ChemicalFormular + '\'' +
-                ", AlogP='" + AlogP + '\'' +
-                ", Smiles='" + Smiles + '\'' +
+                ", PathwayID='" + PathwayID + '\'' +
                 '}';
     }
 }

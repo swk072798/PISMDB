@@ -1,11 +1,10 @@
 package com.nwafu.PISMDB.entity;
 
+import java.util.List;
+
 public class CompoundsRelatedCompounds {
     private String PISMID;
-    private String IUPAC_Name;
-    private String ChemicalFormular;
-    private String AlogP;
-    private String Smiles;
+    List<String> compoundsList;
 
     public String getPISMID() {
         return PISMID;
@@ -15,46 +14,19 @@ public class CompoundsRelatedCompounds {
         this.PISMID = PISMID;
     }
 
-    public String getIUPAC_Name() {
-        return IUPAC_Name;
+    public List<String> getCompoundsList() {
+        return compoundsList;
     }
 
-    public void setIUPAC_Name(String IUPAC_Name) {
-        this.IUPAC_Name = IUPAC_Name;
-    }
-
-    public String getChemicalFormular() {
-        return ChemicalFormular;
-    }
-
-    public void setChemicalFormular(String chemicalFormular) {
-        ChemicalFormular = chemicalFormular;
-    }
-
-    public String getAlogP() {
-        return AlogP;
-    }
-
-    public void setAlogP(String alogP) {
-        AlogP = alogP;
-    }
-
-    public String getSmiles() {
-        return Smiles;
-    }
-
-    public void setSmiles(String smiles) {
-        Smiles = smiles;
+    public void setCompoundsList(List<String> compoundsList) {
+        this.compoundsList = compoundsList;
     }
 
     @Override
     public String toString() {
-        return "CompoundsPathway{" +
+        return "CompoundsRelatedCompounds{" +
                 "PISMID='" + PISMID + '\'' +
-                ", IUPAC_Name='" + IUPAC_Name + '\'' +
-                ", ChemicalFormular='" + ChemicalFormular + '\'' +
-                ", AlogP='" + AlogP + '\'' +
-                ", Smiles='" + Smiles + '\'' +
+                ", compoundsList=" + compoundsList +
                 '}';
     }
 }

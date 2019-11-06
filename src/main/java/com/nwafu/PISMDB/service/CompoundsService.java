@@ -11,9 +11,11 @@ public interface CompoundsService {
     List<Compounds> findAll();
     List<Compounds> findById();
     List<CompoundsBasicInformationBean> FindBasicInformation();
+    List<CompoundsBasic> FindBasic();
     List<CompoundsPathway> FindPathway();
     List<CompoundsRelatedCompounds> FindRelatedCompounds();
     List<CompoundSupportingInformation> FindSupportingInformation();
     List<Pictures> showPictureInformation();
     List<Pic> showPictures();
+    List<String> findRelatedById(String pismid);
 }

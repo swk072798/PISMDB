@@ -38,6 +38,21 @@
      select *
      from compound
     </select>
+
+
+    <select id="findRelatedById" parameterType="string" resultType="java.lang.String">
+        select  b.PISMID
+        from compound a
+        join compound b
+        where a.PISMID=#{Pismid}
+        and b.StructureActivityRelationship is not null
+        and b.StructureActivityRelationship !=' '
+        and a.StructureActivityRelationship is not null
+        and a.StructureActivityRelationship !=' '
+        and b.StructureActivityRelationship=a.StructureActivityRelationship
+        and b.PISMID not in(#{Pismid})
+    </select>
+
 <!--BasicInformation数据信息-->
     <resultMap id="BasicInformation" type="com.nwafu.PISMDB.entity.CompoundsBasicInformationBean">
         <id column="PISMID" property="PISMID" jdbcType="VARCHAR"></id>
@@ -58,13 +73,25 @@
         from compound
     </select>
 
-    <!--Pathway数据信息-->
-    <resultMap id="Pathway" type="com.nwafu.PISMDB.entity.CompoundsPathway">
+    <!--BasicI数据信息-->
+    <resultMap id="Basic" type="com.nwafu.PISMDB.entity.CompoundsBasic">
         <id column="PISMID" property="PISMID" jdbcType="VARCHAR"></id>
         <result column="IUPAC_Name" property="IUPAC_Name" jdbcType="VARCHAR"></result>
         <result column="ChemicalFormular" property="ChemicalFormular" jdbcType="VARCHAR"></result>
+        <result column="MolecularWeight" property="MolecularWeight" jdbcType="VARCHAR"></result>
         <result column="AlogP" property="AlogP" jdbcType="VARCHAR"></result>
         <result column="Smiles" property="Smiles" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <select id="FindBasic" resultMap="Basic">
+        select *
+        from compound
+    </select>
+
+    <!--Pathway数据信息-->
+    <resultMap id="Pathway" type="com.nwafu.PISMDB.entity.CompoundsPathway">
+        <id column="PISMID" property="PISMID" jdbcType="VARCHAR"></id>
+        <result column="PathwayID" property="PathwayID" jdbcType="VARCHAR"></result>
     </resultMap>
 
     <select id="FindPathway" resultMap="Pathway">
@@ -73,12 +100,9 @@
     </select>
 
     <!--RelatedInformation数据信息-->
-    <resultMap id="RelatedInformation" type="com.nwafu.PISMDB.entity.CompoundsRelatedCompounds">
+    <resultMap id="RelatedInformation" type="com.nwafu.PISMDB.entity.Compounds">
         <id column="PISMID" property="PISMID" jdbcType="VARCHAR"></id>
         <result column="IUPAC_Name" property="IUPAC_Name" jdbcType="VARCHAR"></result>
-        <result column="ChemicalFormular" property="ChemicalFormular" jdbcType="VARCHAR"></result>
-        <result column="AlogP" property="AlogP" jdbcType="VARCHAR"></result>
-        <result column="Smiles" property="Smiles" jdbcType="VARCHAR"></result>
     </resultMap>
 
     <select id="FindRelatedCompounds" resultMap="RelatedInformation">
@@ -89,10 +113,9 @@
     <!--SupportingInformation数据信息-->
     <resultMap id="SupportingInformation" type="com.nwafu.PISMDB.entity.CompoundSupportingInformation">
         <id column="PISMID" property="PISMID" jdbcType="VARCHAR"></id>
-        <result column="IUPAC_Name" property="IUPAC_Name" jdbcType="VARCHAR"></result>
-        <result column="ChemicalFormular" property="ChemicalFormular" jdbcType="VARCHAR"></result>
-        <result column="AlogP" property="AlogP" jdbcType="VARCHAR"></result>
-        <result column="Smiles" property="Smiles" jdbcType="VARCHAR"></result>
+        <result column="Function" property="Function" jdbcType="VARCHAR"></result>
+        <result column="Mechanism" property="Mechanism" jdbcType="VARCHAR"></result>
+        <result column="Phenotype" property="Phenotype" jdbcType="VARCHAR"></result>
     </resultMap>
 
     <select id="FindSupportingInformation" resultMap="SupportingInformation">

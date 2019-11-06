@@ -4,7 +4,7 @@ public class FormatData {
     private String id;
     private String idLink;
     private String name;
-    CompoundsBasicInformationBean basic;
+    CompoundsBasic basic;
     CompoundsPathway pathway;
     CompoundsRelatedCompounds related;
     CompoundSupportingInformation supporting;
@@ -33,11 +33,11 @@ public class FormatData {
         this.name = name;
     }
 
-    public CompoundsBasicInformationBean getBasic() {
+    public CompoundsBasic getBasic() {
         return basic;
     }
 
-    public void setBasic(CompoundsBasicInformationBean basic) {
+    public void setBasic(CompoundsBasic basic) {
         this.basic = basic;
     }
 
