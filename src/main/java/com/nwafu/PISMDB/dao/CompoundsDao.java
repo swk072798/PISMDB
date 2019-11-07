@@ -21,6 +21,7 @@ public interface CompoundsDao {
     List<Pictures> showPictureInformation();
     List<Pic> showPictures();
     List<CompoudsIdAndDescription> selectIdAndDescription();
+    Compounds findByPISMID(String pismid);
 
     //public Compounds findById(String PISMID);
 }

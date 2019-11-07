@@ -39,6 +39,12 @@
      from compound
     </select>
 
+    <select id="findByPISMID" parameterType="string" resultMap="CompoundsMap">
+        select *
+        from compound
+        where PISMID=#{pismid}
+    </select>
+
 
     <select id="findRelatedById" parameterType="string" resultType="java.lang.String">
         select  b.PISMID

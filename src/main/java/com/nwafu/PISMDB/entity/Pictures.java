@@ -1,5 +1,7 @@
 package com.nwafu.PISMDB.entity;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,6 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="places")
+@Data
 public class Pictures {
     @Id
     @GeneratedValue
@@ -17,14 +20,6 @@ public class Pictures {
     float endX;
     float endY;
     String information;
-
-    public String getInformation() {
-        return information;
-    }
-
-    public void setInformation(String information) {
-        this.information = information;
-    }
 
     public Pictures(){}
     public Pictures(float startX,float startY,float endX,float endY,String information)

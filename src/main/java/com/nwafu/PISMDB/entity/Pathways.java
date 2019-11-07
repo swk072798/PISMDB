@@ -1,11 +1,14 @@
 package com.nwafu.PISMDB.entity;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "pathway")
+@Data
 public class Pathways {
     @Id
     private String PathwayID;
@@ -14,43 +17,4 @@ public class Pathways {
     private String PathwayName;
     private String PathwayInformation;
 
-    public String getPathwayID() {
-        return PathwayID;
-    }
-
-    public void setPathwayID(String pathwayID) {
-        PathwayID = pathwayID;
-    }
-
-    public String getPISMID() {
-        return PISMID;
-    }
-
-    public void setPISMID(String PISMID) {
-        this.PISMID = PISMID;
-    }
-
-    public String getTargetID() {
-        return TargetID;
-    }
-
-    public void setTargetID(String targetID) {
-        TargetID = targetID;
-    }
-
-    public String getPathwayName() {
-        return PathwayName;
-    }
-
-    public void setPathwayName(String pathwayName) {
-        PathwayName = pathwayName;
-    }
-
-    public String getPathwayInformation() {
-        return PathwayInformation;
-    }
-
-    public void setPathwayInformation(String pathwayInformation) {
-        PathwayInformation = pathwayInformation;
-    }
 }

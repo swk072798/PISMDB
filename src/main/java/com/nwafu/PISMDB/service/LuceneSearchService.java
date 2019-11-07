@@ -1,6 +1,7 @@
 package com.nwafu.PISMDB.service;
 
 import com.nwafu.PISMDB.entity.Compounds;
+import com.nwafu.PISMDB.entity.FormatData;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
 
@@ -18,5 +19,5 @@ import java.util.List;
 */
 public interface LuceneSearchService {
     Integer createIndex() throws IOException;
-    List<Compounds> searchIndex(String keyword) throws IOException, InvalidTokenOffsetsException, ParseException;
+    List<FormatData> searchIndex(String keyword) throws IOException, InvalidTokenOffsetsException, ParseException;
 }

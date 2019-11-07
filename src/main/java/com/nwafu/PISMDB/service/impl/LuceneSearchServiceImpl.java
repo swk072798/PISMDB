@@ -1,7 +1,7 @@
 package com.nwafu.PISMDB.service.impl;
 
-import com.nwafu.PISMDB.entity.Compounds;
-import com.nwafu.PISMDB.entity.CompoundsBasicInformationBean;
+import com.nwafu.PISMDB.dao.CompoundsDao;
+import com.nwafu.PISMDB.entity.*;
 import com.nwafu.PISMDB.service.CompoundsService;
 import com.nwafu.PISMDB.service.LuceneSearchService;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +48,8 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
 
     @Autowired
     CompoundsService compoundsService;
+    @Autowired
+    CompoundsDao compoundsDao;
 
     @Override
     public Integer createIndex() throws IOException {      //搜索引擎是将数据库里的coumpounds表中所有文本读出，存储成关键字
@@ -84,9 +86,10 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
     }       //content中的值  id,chemicalNames,IUPAC_Name,ChemicalFormular,
 
     @Override
-    public List<Compounds> searchIndex(String keyword) throws IOException, InvalidTokenOffsetsException, ParseException {
+    public List<FormatData> searchIndex(String keyword) throws IOException, InvalidTokenOffsetsException, ParseException {
         System.out.println(keyword);
-        Directory directory = FSDirectory.open(new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\luceneindex").toPath());  //服务器端路径
+//        Directory directory = FSDirectory.open(new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\luceneindex").toPath());  //服务器端路径
+        Directory directory = FSDirectory.open(new File("D:\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\luceneindex").toPath());//本地tomcat路径
         IndexReader indexReader = DirectoryReader.open(directory);
         IndexSearcher indexSearcher = new IndexSearcher(indexReader);
         Analyzer analyzer = new StandardAnalyzer();
@@ -104,6 +107,7 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
         Highlighter highlighter=new Highlighter(simpleHTMLFormatter, scorer);
         highlighter.setTextFragmenter(fragmenter);
         List<Compounds> list = new ArrayList<>();
+        List<FormatData> formatResult = new ArrayList<>();
 
         for (ScoreDoc doc : scoreDocs) {
             int docId = doc.doc;
@@ -128,26 +132,30 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
                 str[i] = str[i].replaceAll(regex,"<b><font ");
 //                System.out.println("第"+i+str[i]);
             }
-//            System.out.println("s是下面这个\n"+s);
-            Compounds compounds = new Compounds();
-            // System.out.println("到了3");
-            compounds.setPISMID(str[0]);//
-            // System.out.println("到了4");
-            compounds.setChemicalNames(str[1]);//
-            compounds.setIUPAC_Name(str[2]);//
-            compounds.setChemicalFormular(str[3]);//
-            compounds.setMolecularWeight(str[4]);
-            compounds.setAlogP(str[5].equals(" ")? null : str[5]);//
-//            compounds.setAddress(str[6]);
-            log.info("compounds的值：{}",compounds);
-            list.add(compounds);
 
+            FormatData formatData = new FormatData();
+            formatData.setId(str[0]);
+            Compounds compounds = compoundsDao.findByPISMID(str[0]);
+            formatData.setName(compounds.getChemicalNames());
+            CompoundsBasic compoundsBasic = new CompoundsBasic();
+            compoundsBasic.setPISMID(compounds.getPISMID());
+            compoundsBasic.setAlogP(compounds.getAlogP());
+            compoundsBasic.setChemicalFormular(compounds.getChemicalFormular());
+            compoundsBasic.setIUPAC_Name(compounds.getIUPAC_Name());
+            compoundsBasic.setMolecularWeight(compounds.getMolecularWeight());
+            compoundsBasic.setSmiles(compounds.getSmiles());
+            formatData.setBasic(compoundsBasic);
+            List<String> relatedList = compoundsService.findRelatedById(str[0]);
+            formatData.setRelated(new CompoundsRelatedCompounds(str[0],relatedList));
+            formatData.setPathway(null);
+            formatData.setIdLink(str[0]);
+            formatResult.add(formatData);
         }
 
         log.info("数组大小：{}" , list.size());
         long endTime = System.currentTimeMillis();
         log.info("消耗时间：{}" ,(endTime - startTime)+"ms");
-        return list;
+        return formatResult;
     }
 
 }

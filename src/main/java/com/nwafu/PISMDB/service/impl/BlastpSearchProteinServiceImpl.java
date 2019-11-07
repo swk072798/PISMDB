@@ -2,6 +2,7 @@ package com.nwafu.PISMDB.service.impl;
 
 
 import com.nwafu.PISMDB.dao.TargetsDao;
+import com.nwafu.PISMDB.entity.FormatData;
 import com.nwafu.PISMDB.entity.SequenceSearchResult;
 import com.nwafu.PISMDB.entity.Targets;
 import com.nwafu.PISMDB.service.BlastpSearchProteinService;
@@ -126,6 +127,7 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
         }
         log.info("开始组装结果");
         List<SequenceSearchResult> sequenceSearchResults = new ArrayList<>();
+//        List<FormatData> formatResult = new ArrayList<>();
         for(ArrayList<String> al : similarityAndUniportID){
             log.info("UniportID:{}",al.get(1));
             Targets targets = targetsDao.findTargetByUniportID(al.get(1));

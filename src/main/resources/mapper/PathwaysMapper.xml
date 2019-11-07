@@ -12,4 +12,5 @@
         select count(*)
         from pathway
     </select>
+
 </mapper>
