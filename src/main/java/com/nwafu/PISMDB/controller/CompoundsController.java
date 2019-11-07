@@ -146,18 +146,18 @@ public class CompoundsController {
         return page;
     }
 
-    @ApiOperation(value = "分子json数据", notes = "分子的json数据")
+//    @ApiOperation(value = "分子json数据", notes = "分子的json数据")
+//    @GetMapping("/browse-C")
+//    @ResponseBody
+//    public List<CompoundsBasicInformationBean> showCompounds1() {
+//        List<CompoundsBasicInformationBean> list = compoundsService.FindBasicInformation();
+//        System.out.println("data数据" + list.size());
+//
+//        return list;
+//    }
+
+    @ApiOperation(value = "查询分子数据格式化", notes = "查询分子数据格式化")
     @GetMapping("/browse-C")
-    @ResponseBody
-    public List<CompoundsBasicInformationBean> showCompounds1() {
-        List<CompoundsBasicInformationBean> list = compoundsService.FindBasicInformation();
-        System.out.println("data数据" + list.size());
-
-        return list;
-    }
-
-    @ApiOperation(value = "数据格式化", notes = "数据格式化")
-    @GetMapping("/formatData")
     @ResponseBody
     public List<FormatData> showCompoundsPathway() {
         List<CompoundsBasic> list1 = compoundsService.FindBasic();
