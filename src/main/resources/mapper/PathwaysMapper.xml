@@ -13,4 +13,8 @@
         from pathway
     </select>
 
+    <select id="getPathwaysByPISMID" parameterType="string" resultMap="PathwayMap">
+
+    </select>
+
 </mapper>
