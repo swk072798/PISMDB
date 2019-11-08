@@ -172,6 +172,7 @@ public class CompoundsController {
         formatData.setId(list1.get(i).getPISMID());
         formatData.setIdLink(list1.get(i).getPISMID());
         formatData.setName(listc.get(i).getChemicalNames());
+        formatData.setImgurl(listc.get(i).getStructure());
         formatData.setBasic(list1.get(i));
         compoundsRelatedCompounds.setPISMID(list1.get(i).getPISMID());
         compoundsRelatedCompounds.setCompoundsList(compoundsService.findRelatedById(list1.get(i).getPISMID()));

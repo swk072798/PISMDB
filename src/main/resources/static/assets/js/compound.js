@@ -9,7 +9,7 @@ function page_ctrl2(data_obj,data) {
     var total_item=(data.length!== undefined)?parseInt(Object.keys(data).length):0;//数据条目总数,默认为0,组件将不加载
     console.log(total_item);
 
-    var per_num=(data_obj.per_num!== undefined)?parseInt(data_obj.per_num):1;//每页显示条数,默认为10条
+    var per_num=(data_obj.per_num!== undefined)?parseInt(data_obj.per_num):20;//每页显示条数,默认为10条
 
     var current_page=(data_obj.current_page!== undefined)?parseInt(data_obj.current_page):1;//当前页,默认为1
 
@@ -37,10 +37,33 @@ function page_ctrl2(data_obj,data) {
             {
                 // console.log("当前为"+current_page);
                 pageContent+='<li>';
-                pageContent+='<div class="item item1"><p class="Compound-id">ID: <a href="#"id="PISMID">'+data[per_num*(current_page-1)+i].pismid+'</a></p></div>';
-                pageContent+='<div class="item item2"><p><a href="#"id="Chemical-name">'+data[per_num*(current_page-1)+i].chemicalNames+'</a></p><div class="chemical-member"><ul><li><p id="basic">Basic Information</p></li><li><p id="pathway">Pathway</p></li><li><p id="related">Related Compounds</p></li><li><p id="supporting">Supporting Information</p></li></ul></div></div>';
-                pageContent+='<div class="item item3"><ul><li>IUPAC Name <span id="IUPAC-name">'+data[per_num*(current_page-1)+i].IUPAC_Name+'</span></li><li>Chemical Formula <span id="Chemical-Formula">'+data[per_num*(current_page-1)+i].ChemicalFormular+'</span></li><li>SMILES <span id="SMILES">'+data[per_num*(current_page-1)+i].Smiles+'</span></li><li>Alog P <span id="ClogP">'+data[per_num*(current_page-1)+i].AlogP+'</span></li><li>MV<span id="MV"></span></li></ul></div>';
-                pageContent+='<div class="item item4"><div class="chemical-img"><img src="http://localhost:8080/assets/img/yangli.png" alt=""></div></div>';
+                pageContent+='<div class="item item1"><p class="Compound-id">ID: <a href="#"id="PISMID">'+data[per_num*(current_page-1)+i].id+'</a></p></div>';
+                pageContent+=`<div class="item item2">
+                                       <p><a href="#"id="Chemical-name">'+data[per_num*(current_page-1)+i].name+'</a></p>
+                                       <div class="chemical-member">
+                                           <ul>
+                                                <li><p id="basic">Basic Information</p></li>
+                                                <li><p id="pathway">Pathway</p></li>
+                                                <li><p id="related">Related Compounds</p></li>
+                                                <li><p id="supporting">Supporting Information</p></li>
+                                            </ul>
+                                        </div>
+                               </div>`;
+                pageContent+=`<div class="item item3">
+                                <ul>
+                                    <li>IUPAC Name <span id="IUPAC-name">'+data[per_num*(current_page-1)+i].basic.iupac_Name+'</span></li>
+                                    <li>Chemical Formula <span id="Chemical-Formula">'+data[per_num*(current_page-1)+i].basic.chemicalFormular+'</span></li>
+                                    <li>SMILES <span id="SMILES">'+data[per_num*(current_page-1)+i].basic.smiles+'</span></li>
+                                    <li>Alog P <span id="ClogP">'+data[per_num*(current_page-1)+i].basic.alogP+'</span></li>
+                                    <li>MV<span id="MV"></span></li>
+                                </ul>
+                              </div>`;
+
+                pageContent+=`<div class="item item4">
+                                <div class="chemical-img">
+                                    <img src="http://localhost:8080/assets/img/yangli.png" alt="">
+                                </div>
+                              </div>`;
                 pageContent+='</li>';
             }
             pageContent+='</ul>';
@@ -165,6 +188,7 @@ function page_ctrl2(data_obj,data) {
         $(".chemical-member").parent().parent().mouseover(function(){
             $(this).css("cursor","pointer");});
         var b = $(".chemical-member");
+
         $.each(data,function(index,items){
             $(b[index]).find("li:first-child").children("p").after("<div class='current'></div>");
             $(b[index]).children("ul").children("li").click(function(){
@@ -182,17 +206,25 @@ function page_ctrl2(data_obj,data) {
 
             });
             $(b[index]).find("li:nth-child(1)").click(function(){
-                $(b[index]).parent().next().empty().append('<ul><li>IUPAC_Name<span id="IUPAC_Name">'+items.IUPAC_Name+'</span></li><li>ChemicalFormular<span id="ChemicalFormular">'+items.ChemicalFormular+'</span></li><li>AlogP<span id="AlogP">'+items.AlogP+'</span></li><li>Smiles <span id="Smiles">'+items.Smiles+'</span></li><li>MV<span id="MV">\'+items.MV+\'</span></li></ul>');
+                $(b[index]).parent().next().empty().append('<ul><li>IUPAC_Name<span id="IUPAC_Name">'+items.basic.iupac_Name+'</span></li><li>ChemicalFormular<span id="ChemicalFormular">'+items.basic.chemicalFormular+'</span></li><li>AlogP<span id="AlogP">'+items.basic.alogP+'</span></li><li>Smiles <span id="Smiles">'+items.basic.smiles+'</span></li><li>MV<span id="MV"></span></li></ul>');
 
             });
             $(b[index]).find("li:nth-child(2)").click(function(){
-                $(b[index]).parent().next().empty().append('<ul><li>IUPAC Name <span id="IUPAC-name">'+items.pathway.iupacName+'</span></li><li>Chemical Formula  <span id="Chemical-Formula">'+items.pathway.chemicalFormula+'</span></li><li>SMILES<span id="SMILES">'+items.pathway.SMILES+'</span></li><li>Clog P<span id="ClogP">'+items.pathway.clogP+'</span></li><li>MV <span id="MV">'+items.pathway.MV+'</span></li></ul>');
+                $(b[index]).parent().next().empty().append('<ul><li>cell wall formation <span id="IUPAC-name">'+items.pathway.pathwayID+'</span></li><li>Chemical Formula  <span id="Chemical-Formula">'+items.pathway.pismid+'</span></li></ul>');
             });
             $(b[index]).find("li:nth-child(3)").click(function(){
-                $(b[index]).parent().next().empty().append('<ul><li>IUPAC Name <span id="IUPAC-name">'+items.related.iupacName+'</span></li><li>Chemical Formula  <span id="Chemical-Formula">'+items.related.chemicalFormula+'</span></li><li>SMILES<span id="SMILES">'+items.related.SMILES+'</span></li><li>Clog P<span id="ClogP">'+items.related.clogP+'</span></li><li>MV <span id="MV">'+items.related.MV+'</span></li></ul>');
+                var a = "<ul>";
+                for(var i = 0;i<items.related.compoundsList.length;i++)
+                {
+                    a+='<li>'+items.related.compoundsList[i]+'</li>'
+
+                }
+                a+="</ul>";
+
+                $(b[index]).parent().next().empty().append(a);
             });
             $(b[index]).find("li:nth-child(4)").click(function(){
-                $(b[index]).parent().next().empty().append('<ul><li>Function <span id="Function">'+items.Function+'</span></li><li>Mechanism <span id="Mechanism">'+items.Mechanism+'</span></li><li>Phenotype<span id="Phenotype">'+items.Phenotype+'</span></li></ul>');
+                $(b[index]).parent().next().empty().append('<ul><li>Function <span id="Function">'+items.supporting.function+'</span></li><li>Mechanism <span id="Mechanism">'+items.supporting.mechanism+'</span></li><li>Phenotype<span id="Phenotype">'+items.supporting.phenotype+'</span></li></ul>');
             });
             $(".item3").find("span").mouseover(function(){
                 this.title = this.innerHTML;

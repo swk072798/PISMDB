@@ -4,6 +4,7 @@ import com.nwafu.PISMDB.dao.CompoundsDao;
 import com.nwafu.PISMDB.entity.*;
 import com.nwafu.PISMDB.service.CompoundsService;
 import com.nwafu.PISMDB.service.LuceneSearchService;
+import com.nwafu.PISMDB.service.PathwaysService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -50,6 +51,8 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
     CompoundsService compoundsService;
     @Autowired
     CompoundsDao compoundsDao;
+    @Autowired
+    PathwaysService pathwaysService;
 
     @Override
     public Integer createIndex() throws IOException {      //搜索引擎是将数据库里的coumpounds表中所有文本读出，存储成关键字
@@ -147,7 +150,11 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
             formatData.setBasic(compoundsBasic);
             List<String> relatedList = compoundsService.findRelatedById(str[0]);
             formatData.setRelated(new CompoundsRelatedCompounds(str[0],relatedList));
-            formatData.setPathway(null);
+            CompoundsPathway compoundsPathway = new CompoundsPathway();
+            compoundsPathway.setPISMID(pathwaysService.getPathwaysByPISMID(str[0]).getPISMID());
+            compoundsPathway.setPathwayID(pathwaysService.getPathwaysByPISMID(str[0]).getPathwayID());
+            compoundsPathway.setPathwayName(pathwaysService.getPathwaysByPISMID(str[0]).getPathwayName());
+            formatData.setPathway(compoundsPathway);
             formatData.setIdLink(str[0]);
             formatResult.add(formatData);
         }

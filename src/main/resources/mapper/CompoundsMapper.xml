@@ -98,6 +98,7 @@
     <resultMap id="Pathway" type="com.nwafu.PISMDB.entity.CompoundsPathway">
         <id column="PISMID" property="PISMID" jdbcType="VARCHAR"></id>
         <result column="PathwayID" property="PathwayID" jdbcType="VARCHAR"></result>
+        <result column="PathwayName" property="PathwayName" jdbcType="VARCHAR"></result>
     </resultMap>
 
     <select id="FindPathway" resultMap="Pathway">

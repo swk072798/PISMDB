@@ -13,8 +13,17 @@
         from pathway
     </select>
 
-    <select id="getPathwaysByPISMID" parameterType="string" resultMap="PathwayMap">
 
+    <resultMap id="Pathway" type="com.nwafu.PISMDB.entity.CompoundsPathway">
+        <id column="PISMID" property="PISMID" jdbcType="VARCHAR"></id>
+        <result column="PathwayID" property="PathwayID" jdbcType="VARCHAR"></result>
+        <result column="PathwayName" property="PathwayName" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <select id="getPathwaysByPISMID" parameterType="string" resultMap="Pathway">
+        select PathwayID
+        from pathway
+        where PISMID=#{pismid} limit 1
     </select>
 
 </mapper>

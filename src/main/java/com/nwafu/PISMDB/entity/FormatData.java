@@ -7,6 +7,7 @@ public class FormatData {
     private String id;
     private String idLink;
     private String name;
+    private String imgurl;
     CompoundsBasic basic;
     CompoundsPathway pathway;
     CompoundsRelatedCompounds related;
