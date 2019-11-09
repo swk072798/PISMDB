@@ -4,14 +4,19 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  *
  */
 
 @Data
+@Entity
 public class CompoundsBasicInformationBean {
     // 空返回
     //public static final CompoundsBasicInformationBean simple = new CompoundsBasicInformationBean();
+    @Id
     private String PISMID;
     private String IUPAC_Name;
     private String ChemicalFormular;

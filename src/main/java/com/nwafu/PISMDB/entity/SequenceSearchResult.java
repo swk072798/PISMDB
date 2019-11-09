@@ -1,5 +1,9 @@
 package com.nwafu.PISMDB.entity;
 import lombok.Data;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  * @program: PISMDB
  * @description: 序列搜索的返回结果对象
@@ -8,7 +12,9 @@ import lombok.Data;
  **/
 
 @Data
+@Entity
 public class SequenceSearchResult {
+    @Id
     private String ID;
     private String identity;
     private String queryCoverage;

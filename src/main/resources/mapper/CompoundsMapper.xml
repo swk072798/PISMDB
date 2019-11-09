@@ -132,30 +132,37 @@
 
     <!--<sql id="Base_Column_List">PISMID,TargetID,PathwayID,Version,CreationDate,UpdateDate,ChemicalNames,IUPAC_Name,OtherNames,ChemicalFormular,MolecularWeight,AlogP,ThreeD_Structure,Structure,Smiles,Mechanism,Phenotype,GroupDescription,StructureActivityRelationship,StructuralSimilarity</sql>-->
     <!--<sql id="RelatedCompounds">RelatedCompoundsPISMID,PISMID,RelatedCompoundsName;</sql>-->
-    <resultMap id="PicturesMap" type="com.nwafu.PISMDB.entity.Pictures">
-        <id column="id" property="id" jdbcType="INTEGER"></id>
-        <result column="startX" property="startX" jdbcType="FLOAT"></result>
-        <result column="startY" property="startY" jdbcType="FLOAT"></result>
-        <result column="endX" property="endX" jdbcType="FLOAT"></result>
-        <result column="endY" property="endY" jdbcType="FLOAT"></result>
-        <result column="information" property="information" jdbcType="VARCHAR"></result>
-    </resultMap>
+    <!--<resultMap id="PicturesMap" type="com.nwafu.PISMDB.entity.Pictures">-->
+        <!--<id column="id" property="id" jdbcType="INTEGER"></id>-->
+        <!--<result column="startX" property="startX" jdbcType="FLOAT"></result>-->
+        <!--<result column="startY" property="startY" jdbcType="FLOAT"></result>-->
+        <!--<result column="endX" property="endX" jdbcType="FLOAT"></result>-->
+        <!--<result column="endY" property="endY" jdbcType="FLOAT"></result>-->
+        <!--<result column="information" property="information" jdbcType="VARCHAR"></result>-->
+    <!--</resultMap>-->
 
-    <select id="showPictureInformation" resultMap="PicturesMap">
-        select *
-        from places
-    </select>
+    <!--<select id="showPictureInformation" resultMap="PicturesMap">-->
+        <!--select *-->
+        <!--from places-->
+    <!--</select>-->
 
-    <resultMap id="PicturesMap2" type="com.nwafu.PISMDB.entity.Pic">
-        <id column="id" property="id" jdbcType="INTEGER"></id>
-        <result column="desc" property="desc" jdbcType="VARCHAR"></result>
-        <result column="url" property="url" jdbcType="VARCHAR"></result>
-    </resultMap>
+    <!--<resultMap id="PicturesMap2" type="com.nwafu.PISMDB.entity.Pic">-->
+        <!--<id column="id" property="id" jdbcType="INTEGER"></id>-->
+        <!--<result column="desc" property="desc" jdbcType="VARCHAR"></result>-->
+        <!--<result column="url" property="url" jdbcType="VARCHAR"></result>-->
+    <!--</resultMap>-->
 
-    <select id="showPictures" resultMap="PicturesMap2">
-        select *
-        from pictures
-    </select>
+    <!--<select id="getPicturesCount" resultType="java.lang.Integer">-->
+        <!--select count(*)-->
+        <!--from pictures-->
+    <!--</select>-->
+
+
+
+    <!--<select id="showPictures" resultMap="PicturesMap2">-->
+        <!--select *-->
+        <!--from pictures-->
+    <!--</select>-->
 
     <resultMap id="MocularDescription" type="com.nwafu.PISMDB.entity.CompoudsIdAndDescription">
         <id column="PISMID" jdbcType="VARCHAR"></id>

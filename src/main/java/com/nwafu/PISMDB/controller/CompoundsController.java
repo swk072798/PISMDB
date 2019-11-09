@@ -148,7 +148,7 @@ public class CompoundsController {
       //  List<CompoundsRelatedCompounds> list3 = compoundsService.FindRelatedCompounds();
         List<CompoundSupportingInformation> list4 = compoundsService.FindSupportingInformation();
         List<FormatData> list =new ArrayList<>();
-        for(int i=0;i<1000;i++){
+        for(int i=0;i<compoundsService.getCompoundsCount();i++){
         FormatData formatData=new FormatData();
         CompoundsRelatedCompounds compoundsRelatedCompounds=new CompoundsRelatedCompounds();
         formatData.setId(list1.get(i).getPISMID());
@@ -167,7 +167,7 @@ public class CompoundsController {
     }
 
 
-    @ApiOperation(value = "查分子的相关分子", notes = "查分子的相关分子")
+    @ApiOperation(value = "查分子的相关分子测试", notes = "查分子的相关分子测试")
     @GetMapping("/related")
     @ResponseBody
     public List<String> related(){
@@ -198,6 +198,14 @@ public class CompoundsController {
     }
 
 
+
+//        @GetMapping("/compounds")
+//    public String greetingForm(Model model) {
+//        model.addAttribute("compounds", new Compounds());
+//        System.out.println("上传数据1"+ model.toString());
+//
+//        return "compounds";
+//}
     @ApiOperation(value = "文件上传跳转接口", notes = "跳转到文件上传")
     @RequestMapping(value = "/greeting",method = RequestMethod.GET)
     public String greetingForm123(Model model) {
@@ -240,65 +248,6 @@ public class CompoundsController {
         return "all";
     }
 
-    @ApiOperation(value = "显示pathway", notes = "显示pathway")
-    @RequestMapping(value = "/show",method = RequestMethod.GET)
-    @ResponseBody
-    public List<BrowsePathways> showPics(HttpServletRequest request) {
-        List<Pictures> list = compoundsService.showPictureInformation();
-        List<Pic> list1 = compoundsService.showPictures();
-        List<BrowsePathways> pathways=new ArrayList<>();
-        BrowsePathways p1=new BrowsePathways();
-
-        p1.setPic(list1.get(0));
-        p1.setPictures(list);
-        pathways.add(p1);
-        int size = list.size();
-        System.out.println(size);
-        return pathways;
-
-
-     /*   Pictures pic[]=new Pictures[size];
-
-        for(int i=0;i<size;i++)
-        {
-            float startX=list.get(i).getStartX();
-            float startY=list.get(i).getStartY();
-            float endX=list.get(i).getEndX();
-            float endY=list.get(i).getEndY();
-            //String url=list.get(i).getUrl();
-            String information=list.get(i).getInformation();
-
-            pic[i]=new Pictures(startX,startY,endX,endY,information);
-            System.out.println(pic[i].toString());
-
-            //request.setAttribute("p1",pic[i]);
-        }
-//        float startX=list.get(0).getStartX();
-//        float startY=list.get(0).getStartY();
-//        float endX=list.get(0).getEndX();
-//        float endY=list.get(0).getEndY();
-//        String information=list.get(0).getInformation();
-//
-//        String url=list.get(0).getUrl();
-//
-//        Pictures p1=new Pictures();
-//        p1.setStartX(startX);
-//        p1.setStartY(startY);
-//        p1.setEndX(endX);
-//        p1.setEndY(endY);
-//        p1.setUrl(url);
-//
-//        Pictures p2=new Pictures(url,startX,startY,endX,endY,information);
-//
-//        request.setAttribute("url",url);
-//        request.setAttribute("startX",startX);
-//        request.setAttribute("startY",startY);
-//        request.setAttribute("endX",endX);
-//        request.setAttribute("endY",endY);
-//
-//        request.setAttribute("p1",p1);
-        return list;*/
-    }
 
 
 }

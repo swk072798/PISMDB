@@ -51,15 +51,6 @@ public class CompoundsServiceImp implements CompoundsService {
     public List<CompoundSupportingInformation> FindSupportingInformation(){
         return compoundsDao.FindSupportingInformation();
     }
-    @Override
-    public List<Pictures> showPictureInformation() {
-        return compoundsDao.showPictureInformation();
-    }
-
-    @Override
-    public List<Pic> showPictures() {
-        return compoundsDao.showPictures();
-    }
 
     @Override
     public List<String> findRelatedById(String pismid){

@@ -14,7 +14,7 @@ public class Pictures {
     @Id
     @GeneratedValue
     int id;
-   // String url;
+    int picturesid;
     float startX;
     float startY;
     float endX;
@@ -24,12 +24,19 @@ public class Pictures {
     public Pictures(){}
     public Pictures(float startX,float startY,float endX,float endY,String information)
     {
-        //this.url=url;
         this.startX=startX;
         this.startY=startY;
         this.endX=endX;
         this.endY=endY;
         this.information=information;
+    }
+
+    public int getPicturesid() {
+        return picturesid;
+    }
+
+    public void setPicturesid(int picturesid) {
+        this.picturesid = picturesid;
     }
 
     public int getId() {
@@ -39,14 +46,6 @@ public class Pictures {
     public void setId(int id) {
         this.id = id;
     }
-
-  /*  public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }*/
 
     public float getStartX() {
         return startX;

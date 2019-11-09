@@ -15,7 +15,5 @@ public interface CompoundsService {
     List<CompoundsPathway> FindPathway();
     List<CompoundsRelatedCompounds> FindRelatedCompounds();
     List<CompoundSupportingInformation> FindSupportingInformation();
-    List<Pictures> showPictureInformation();
-    List<Pic> showPictures();
     List<String> findRelatedById(String pismid);
 }

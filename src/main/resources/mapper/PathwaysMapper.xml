@@ -26,4 +26,37 @@
         where PISMID=#{pismid} limit 1
     </select>
 
+    <resultMap id="PicturesMap" type="com.nwafu.PISMDB.entity.Pictures">
+        <id column="id" property="id" jdbcType="INTEGER"></id>
+        <result column="picturesid" property="picturesid" jdbcType="INTEGER"></result>
+        <result column="startX" property="startX" jdbcType="FLOAT"></result>
+        <result column="startY" property="startY" jdbcType="FLOAT"></result>
+        <result column="endX" property="endX" jdbcType="FLOAT"></result>
+        <result column="endY" property="endY" jdbcType="FLOAT"></result>
+        <result column="information" property="information" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <select id="showPictureInformation" parameterType="int" resultMap="PicturesMap">
+        select *
+        from places
+        where picturesid=#{picturesid}
+    </select>
+
+    <resultMap id="PicturesMap2" type="com.nwafu.PISMDB.entity.Pic">
+        <id column="id" property="id" jdbcType="INTEGER"></id>
+        <result column="desc" property="desc" jdbcType="VARCHAR"></result>
+        <result column="url" property="url" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <select id="getPicturesCount" resultType="java.lang.Integer">
+        select count(*)
+        from pictures
+    </select>
+
+
+    <select id="showPictures" resultMap="PicturesMap2">
+        select *
+        from pictures
+    </select>
+
 </mapper>

@@ -7,9 +7,9 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Date;
 
+@Data
 @Entity
 @Table(name = "compound")
-@Data
 public class Compounds {
 
     @Id
