@@ -103,13 +103,18 @@ public class CompoundsController {
     @ApiOperation(value = "搜索引擎关键字查找传参", notes = "搜索引擎关键字查找传参")
     @GetMapping("/keywordSearch")
     @ResponseBody
-    public List<FormatData> searchIndex(@RequestParam String search_text) throws Exception {
+    public String searchIndex(@RequestParam String callback,@RequestParam String search_text) throws Exception {
         System.out.println(search_text);
         log.info("搜索引擎关键字查找传参：{}",search_text);
 //        List<Compounds> compoundsList = luceneSearchService.searchIndex("[^\\S]*" + search_text + "*");
         List<FormatData> compoundsList = luceneSearchService.searchIndex(search_text + "*");
 //        List<Compounds> compoundsList = luceneSearchService.searchIndex(search_text);
-        return compoundsList;
+//        return compoundsList;
+        CallbackResult<List<FormatData>> result = new CallbackResult();
+        result.setCallback(callback);
+        result.setData(compoundsList);
+        log.info("{}",result.changToJsonp());
+        return result.changToJsonp();
     }
 
     @ApiOperation(value = "搜索结果", notes = "搜索结果")
