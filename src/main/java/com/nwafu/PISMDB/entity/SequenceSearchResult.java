@@ -12,7 +12,6 @@ import javax.persistence.Id;
  **/
 
 @Data
-@Entity
 public class SequenceSearchResult {
     @Id
     private String ID;

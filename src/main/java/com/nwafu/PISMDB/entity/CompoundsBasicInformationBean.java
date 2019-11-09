@@ -12,7 +12,6 @@ import javax.persistence.Id;
  */
 
 @Data
-@Entity
 public class CompoundsBasicInformationBean {
     // 空返回
     //public static final CompoundsBasicInformationBean simple = new CompoundsBasicInformationBean();

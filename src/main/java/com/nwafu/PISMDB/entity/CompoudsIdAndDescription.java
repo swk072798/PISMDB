@@ -11,7 +11,7 @@ import javax.persistence.Id;
  * @author: liu qinchang
  * @create: 2019-10-16 14:24
  **/
-@Entity
+
 @Data
 public class CompoudsIdAndDescription {
     @Id
