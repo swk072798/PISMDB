@@ -248,7 +248,12 @@ public class CompoundsController {
         return "all";
     }
 
-
+    @ApiOperation(value = "获取所有文献", notes = "获取所有文献")
+    @GetMapping("/allReference")
+    @ResponseBody
+    public List<Reference> allReference() {
+        return compoundsService.findReference();
+    }
 
 }
 

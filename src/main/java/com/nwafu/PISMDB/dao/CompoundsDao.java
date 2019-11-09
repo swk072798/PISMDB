@@ -18,10 +18,9 @@ public interface CompoundsDao {
     List<CompoundsRelatedCompounds> FindRelatedCompounds();
     List<CompoundSupportingInformation> FindSupportingInformation();
     List<String> findRelatedById(@Param("Pismid") String Pismid);
-//    List<Pictures> showPictureInformation();
-//    List<Pic> showPictures();
     List<CompoudsIdAndDescription> selectIdAndDescription();
     Compounds findByPISMID(String pismid);
+    List<Reference> findReference();
 
     //public Compounds findById(String PISMID);
 }

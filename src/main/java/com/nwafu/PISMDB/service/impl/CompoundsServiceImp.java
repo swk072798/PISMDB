@@ -57,4 +57,7 @@ public class CompoundsServiceImp implements CompoundsService {
         return compoundsDao.findRelatedById(pismid);
     }
 
+    @Override
+    public List<Reference> findReference(){
+        return compoundsDao.findReference();}
 }
