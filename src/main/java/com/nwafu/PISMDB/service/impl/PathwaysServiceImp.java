@@ -4,6 +4,7 @@ import com.nwafu.PISMDB.dao.PathwaysDao;
 import com.nwafu.PISMDB.entity.CompoundsPathway;
 import com.nwafu.PISMDB.entity.Pic;
 import com.nwafu.PISMDB.entity.Pictures;
+import com.nwafu.PISMDB.entity.Pathways;
 import com.nwafu.PISMDB.service.PathwaysService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,11 @@ public class PathwaysServiceImp implements PathwaysService {
     @Override
     public CompoundsPathway getPathwaysByPISMID(String pismid) {
         return pathwaysDao.getPathwaysByPISMID(pismid);
+    }
+
+    @Override
+    public List<Pathways> getPathwaysByTargetId(String targetId) {
+        return pathwaysDao.getPathwaysByTargetId(targetId);
     }
 
 

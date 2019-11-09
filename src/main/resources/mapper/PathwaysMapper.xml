@@ -59,4 +59,9 @@
         from pictures
     </select>
 
+    <select id="getPathwaysByTargetId" parameterType="string" resultMap="PathwayMap">
+        select *
+        from pathway
+        where TargetID="%"#{targetId}"%"
+    </select>
 </mapper>

@@ -16,7 +16,7 @@
         from target
     </select>
 
-    <select id="findTargetById" resultMap="TargetMap">
+    <select id="findTargets" resultMap="TargetMap">
         select *
         from target
     </select>

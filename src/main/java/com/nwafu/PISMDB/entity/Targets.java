@@ -11,6 +11,7 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "target")
+@Data
 public class Targets {
     @Id
     private String TargetID;
@@ -27,60 +28,60 @@ public class Targets {
     @Column(name="pismid")
     private String PISMID;
 
-    @JsonProperty("TargetID")
-    public String getTargetID() {
-        return TargetID;
-    }
-    @JsonProperty("TargetID")
-    public void setTargetID(String targetID) {
-        TargetID = targetID;
-    }
-    @JsonProperty("UniprotID")
-    public String getUniprotID() {
-        return UniprotID;
-    }
-    @JsonProperty("UniprotID")
-    public void setUniprotID(String uniprotID) {
-        UniprotID = uniprotID;
-    }
-    @JsonProperty("proteinName")
-    public String getProteinName() {
-        return ProteinName;
-    }
-    @JsonProperty("proteinName")
-    public void setProteinName(String proteinName) {
-        ProteinName = proteinName;
-    }
-    @JsonProperty("organisml")
-    public String getOrganism1() {
-        return Organisml;
-    }
-    @JsonProperty("organisml")
-    public void setOrganism1(String organisml) {
-        Organisml = organisml;
-    }
-    @JsonProperty("sequencel")
-    public String getSequencel() {
-        return Sequencel;
-    }
-    @JsonProperty("sequencel")
-    public void setSequencel(String sequencel) {
-        Sequencel = sequencel;
-    }
-    @JsonProperty("PDBID")
-    public String getPDBID() {
-        return PDBID;
-    }
-    @JsonProperty("PDBID")
-    public void setPDBID(String PDBID) {
-        this.PDBID = PDBID;
-    }
-    @JsonProperty("PISMID")
-    public String getPISMID() {
-        return PISMID;
-    }
-    @JsonProperty("PISMID")
-    public void setPISMID(String PISMID) {
-        this.PISMID = PISMID;
-    }
+//    @JsonProperty("TargetID")
+//    public String getTargetID() {
+//        return TargetID;
+//    }
+//    @JsonProperty("TargetID")
+//    public void setTargetID(String targetID) {
+//        TargetID = targetID;
+//    }
+//    @JsonProperty("UniprotID")
+//    public String getUniprotID() {
+//        return UniprotID;
+//    }
+//    @JsonProperty("UniprotID")
+//    public void setUniprotID(String uniprotID) {
+//        UniprotID = uniprotID;
+//    }
+//    @JsonProperty("proteinName")
+//    public String getProteinName() {
+//        return ProteinName;
+//    }
+//    @JsonProperty("proteinName")
+//    public void setProteinName(String proteinName) {
+//        ProteinName = proteinName;
+//    }
+//    @JsonProperty("organisml")
+//    public String getOrganism1() {
+//        return Organisml;
+//    }
+//    @JsonProperty("organisml")
+//    public void setOrganism1(String organisml) {
+//        Organisml = organisml;
+//    }
+//    @JsonProperty("sequencel")
+//    public String getSequencel() {
+//        return Sequencel;
+//    }
+//    @JsonProperty("sequencel")
+//    public void setSequencel(String sequencel) {
+//        Sequencel = sequencel;
+//    }
+//    @JsonProperty("PDBID")
+//    public String getPDBID() {
+//        return PDBID;
+//    }
+//    @JsonProperty("PDBID")
+//    public void setPDBID(String PDBID) {
+//        this.PDBID = PDBID;
+//    }
+//    @JsonProperty("PISMID")
+//    public String getPISMID() {
+//        return PISMID;
+//    }
+//    @JsonProperty("PISMID")
+//    public void setPISMID(String PISMID) {
+//        this.PISMID = PISMID;
+//    }
 }

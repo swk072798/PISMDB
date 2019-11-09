@@ -139,7 +139,7 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
                 sequenceSearchResult.setIdentity(String.format("%2f",Double.parseDouble(al.get(0)))+"%");       //保留两位小数
                 sequenceSearchResult.setQueryCoverage("");
                 sequenceSearchResult.setProtein(targets.getProteinName());
-                sequenceSearchResult.setOrganisml(targets.getOrganism1());
+                sequenceSearchResult.setOrganisml(targets.getOrganisml());
                 sequenceSearchResult.setUniportID(targets.getUniprotID());
                 sequenceSearchResults.add(sequenceSearchResult);
             }

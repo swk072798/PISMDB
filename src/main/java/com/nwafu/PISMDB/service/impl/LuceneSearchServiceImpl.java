@@ -91,8 +91,11 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
     @Override
     public List<FormatData> searchIndex(String keyword) throws IOException, InvalidTokenOffsetsException, ParseException {
         System.out.println(keyword);
-//        Directory directory = FSDirectory.open(new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\luceneindex").toPath());  //服务器端路径
-        Directory directory = FSDirectory.open(new File("D:\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\luceneindex").toPath());//本地tomcat路径
+
+//        C:\Program Files\Apache Software Foundation\Tomcat 8.5\webapps\PISMDB-0.0.1-SNAPSHOT\WEB-INF\classes\luceneindex
+
+        Directory directory = FSDirectory.open(new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\luceneindex").toPath());  //服务器端路径
+//        Directory directory = FSDirectory.open(new File("D:\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\luceneindex").toPath());//本地tomcat路径
         IndexReader indexReader = DirectoryReader.open(directory);
         IndexSearcher indexSearcher = new IndexSearcher(indexReader);
         Analyzer analyzer = new StandardAnalyzer();
@@ -151,9 +154,12 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
             List<String> relatedList = compoundsService.findRelatedById(str[0]);
             formatData.setRelated(new CompoundsRelatedCompounds(str[0],relatedList));
             CompoundsPathway compoundsPathway = new CompoundsPathway();
-            compoundsPathway.setPISMID(pathwaysService.getPathwaysByPISMID(str[0]).getPISMID());
-            compoundsPathway.setPathwayID(pathwaysService.getPathwaysByPISMID(str[0]).getPathwayID());
-            compoundsPathway.setPathwayName(pathwaysService.getPathwaysByPISMID(str[0]).getPathwayName());
+            if(pathwaysService.getPathwaysByPISMID(str[0]) != null){
+                compoundsPathway.setPISMID(pathwaysService.getPathwaysByPISMID(str[0]).getPISMID());
+                compoundsPathway.setPathwayID(pathwaysService.getPathwaysByPISMID(str[0]).getPathwayID());
+                compoundsPathway.setPathwayName(pathwaysService.getPathwaysByPISMID(str[0]).getPathwayName());
+            }
+
             formatData.setPathway(compoundsPathway);
             formatData.setIdLink(str[0]);
             formatResult.add(formatData);
