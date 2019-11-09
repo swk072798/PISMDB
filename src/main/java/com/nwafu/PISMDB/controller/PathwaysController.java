@@ -2,6 +2,7 @@ package com.nwafu.PISMDB.controller;
 
 import com.nwafu.PISMDB.entity.CompoundsPathway;
 import com.nwafu.PISMDB.service.PathwaysService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,5 +28,11 @@ public class PathwaysController {
     @ResponseBody
     public CompoundsPathway getPathwaysByPISMDB(String pismid){
         return pathwaysService.getPathwaysByPISMID(pismid);
+    }
+
+    @ApiOperation(value = "跳转到Pathway页面", notes = "跳转到Pathway页面")
+    @GetMapping("/Browse_P")
+    public String Browse_P() {
+        return "Browse-Pathway";
     }
 }

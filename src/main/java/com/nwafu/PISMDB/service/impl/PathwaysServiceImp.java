@@ -21,4 +21,5 @@ public class PathwaysServiceImp implements PathwaysService {
         return pathwaysDao.getPathwaysByPISMID(pismid);
     }
 
+
 }

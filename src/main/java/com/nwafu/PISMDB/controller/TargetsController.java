@@ -1,9 +1,10 @@
 package com.nwafu.PISMDB.controller;
 
-import com.nwafu.PISMDB.entity.CompoundsBasicInformationBean;
 import com.nwafu.PISMDB.entity.SequenceSearchResult;
+import com.nwafu.PISMDB.entity.Targets;
 import com.nwafu.PISMDB.service.BlastpSearchProteinService;
 import com.nwafu.PISMDB.service.TargetsService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,21 @@ public class TargetsController {
 //
 //        return list;
 //    }
+    @ApiOperation(value = "跳转到Target页面", notes = "跳转到Target页面")
+    @GetMapping("/Browse_T")
+    public String Browse_T() {
+        return "browse-Target";
+    }
+
+    @ApiOperation(value = "蛋白质json数据", notes = "从数据库中获取的蛋白质的json数据")
+    @GetMapping("/browse-T")
+    @ResponseBody
+    public List<Targets> showTargets1() {
+        List<Targets> list = targetsService.findTargetById();
+        System.out.println("data数据" + list.size());
+
+        return list;
+    }
 
     /** 
     * @Description: 通文件进行序列搜索 

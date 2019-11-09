@@ -23,5 +23,10 @@ public class TargetsServiceImp implements TargetsService {
     {
         return targetsDao.findTargetById();
     }
+
+    @Override
+    public Targets findTargetByUniportID(String UniprotID){
+        return targetsDao.findTargetByUniportID(UniprotID);
+    }
 }
 

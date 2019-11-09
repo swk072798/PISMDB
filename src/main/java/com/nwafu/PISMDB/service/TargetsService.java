@@ -5,6 +5,7 @@ import com.nwafu.PISMDB.entity.*;
 import java.util.List;
 
 public interface TargetsService {
-    public int getTargetsCount();
-    public List<Targets> findTargetById();
+    int getTargetsCount();
+    List<Targets> findTargetById();
+    Targets findTargetByUniportID(String UniprotID);
 }

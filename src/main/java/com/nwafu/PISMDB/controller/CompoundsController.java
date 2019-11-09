@@ -82,15 +82,7 @@ public class CompoundsController {
 
 //////////////文件搜索部分结束///////////////////////////
 
-    @ApiOperation(value = "蛋白质json数据", notes = "从数据库中获取的蛋白质的json数据")
-    @GetMapping("/browse-T")
-    @ResponseBody
-    public List<Targets> showTargets1() {
-        List<Targets> list = targetsService.findTargetById();
-        System.out.println("data数据" + list.size());
 
-        return list;
-    }
     /**
      * 分页获取邮箱为指定内容的数据
      *
@@ -146,16 +138,6 @@ public class CompoundsController {
         return page;
     }
 
-//    @ApiOperation(value = "分子json数据", notes = "分子的json数据")
-//    @GetMapping("/browse-C")
-//    @ResponseBody
-//    public List<CompoundsBasicInformationBean> showCompounds1() {
-//        List<CompoundsBasicInformationBean> list = compoundsService.FindBasicInformation();
-//        System.out.println("data数据" + list.size());
-//
-//        return list;
-//    }
-
     @ApiOperation(value = "查询分子数据格式化", notes = "查询分子数据格式化")
     @GetMapping("/browse-C")
     @ResponseBody
@@ -202,24 +184,12 @@ public class CompoundsController {
         return "index";
     }
 
-
     @ApiOperation(value = "跳转到分子页面", notes = "跳转到分子页面")
     @GetMapping("/Browse_C")
     public String Browse_C() {
         return "browse-Compound";
     }
 
-    @ApiOperation(value = "跳转到Target页面", notes = "跳转到Target页面")
-    @GetMapping("/Browse_T")
-    public String Browse_T() {
-        return "browse-Target";
-    }
-
-    @ApiOperation(value = "跳转到Pathway页面", notes = "跳转到Pathway页面")
-    @GetMapping("/Browse_P")
-    public String Browse_P() {
-        return "Browse-Pathway";
-    }
 
     @ApiOperation(value = "跳转到Search_text页面", notes = "跳转到Search_text页面")
     @GetMapping("/Search_text")
@@ -228,14 +198,6 @@ public class CompoundsController {
     }
 
 
-
-//        @GetMapping("/compounds")
-//    public String greetingForm(Model model) {
-//        model.addAttribute("compounds", new Compounds());
-//        System.out.println("上传数据1"+ model.toString());
-//
-//        return "compounds";
-//}
     @ApiOperation(value = "文件上传跳转接口", notes = "跳转到文件上传")
     @RequestMapping(value = "/greeting",method = RequestMethod.GET)
     public String greetingForm123(Model model) {
