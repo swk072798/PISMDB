@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface TargetsService {
     int getTargetsCount();
-    List<Targets> findTargetById();
+    List<Targets> findTargets();
+    List<FormatData<Targets>> findTargetsFormat();
     Targets findTargetByUniportID(String UniprotID);
 }

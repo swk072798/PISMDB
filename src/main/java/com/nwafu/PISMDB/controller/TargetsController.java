@@ -1,5 +1,6 @@
 package com.nwafu.PISMDB.controller;
 
+import com.nwafu.PISMDB.entity.FormatData;
 import com.nwafu.PISMDB.entity.SequenceSearchResult;
 import com.nwafu.PISMDB.entity.Targets;
 import com.nwafu.PISMDB.service.BlastpSearchProteinService;
@@ -8,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
@@ -15,7 +17,8 @@ import org.thymeleaf.util.StringUtils;
 import java.io.*;
 import java.util.List;
 
-@RestController
+//@RestController
+@Controller
 @Slf4j
 //@RequestMapping("/data")
 public class TargetsController {
@@ -24,29 +27,19 @@ public class TargetsController {
     @Autowired
     private BlastpSearchProteinService blastpSearchProteinService;
     
-    
-//    @RequestMapping("/browse-T")
-//    @ResponseBody
-//    //@Test
-//    public List<Targets> showTargets1() {
-//        List<Targets> list = targetsService.findTargetById();
-//        System.out.println("data数据" + list.size());
-//
-//        return list;
-//    }
+
     @ApiOperation(value = "跳转到Target页面", notes = "跳转到Target页面")
     @GetMapping("/Browse_T")
     public String Browse_T() {
-        return "browse-Target";
+        return "Browse-Target";
     }
 
     @ApiOperation(value = "蛋白质json数据", notes = "从数据库中获取的蛋白质的json数据")
     @GetMapping("/browse-T")
     @ResponseBody
-    public List<Targets> showTargets1() {
-        List<Targets> list = targetsService.findTargetById();
+    public List<FormatData<Targets>> showTargets1() {
+        List<FormatData<Targets>> list = targetsService.findTargetsFormat();
         System.out.println("data数据" + list.size());
-
         return list;
     }
 
@@ -58,6 +51,7 @@ public class TargetsController {
     * @Date: 2019/9/30 
     */
     @PostMapping("/seqSearchByFile")
+    @ResponseBody
     public List<SequenceSearchResult> seqSearchByFile(@RequestParam MultipartFile file){
         if(!file.isEmpty()){
             try {
@@ -88,6 +82,7 @@ public class TargetsController {
     * @Date: 2019/9/30 
     */
     @GetMapping("/seqSearchByStr")
+    @ResponseBody
     public List<SequenceSearchResult> seqSearchByStr(@RequestParam String sequence){
         log.info("传入参数:{}",sequence);
         long startTime = System.currentTimeMillis();

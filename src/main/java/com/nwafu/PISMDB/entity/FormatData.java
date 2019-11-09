@@ -3,12 +3,12 @@ package com.nwafu.PISMDB.entity;
 import lombok.Data;
 
 @Data
-public class FormatData {
+public class FormatData<T> {
     private String id;
     private String idLink;
     private String name;
     private String imgurl;
-    CompoundsBasic basic;
+    private T basic;    //这里根据不同的分子显示不同的信息
     CompoundsPathway pathway;
     CompoundsRelatedCompounds related;
     CompoundSupportingInformation supporting;
