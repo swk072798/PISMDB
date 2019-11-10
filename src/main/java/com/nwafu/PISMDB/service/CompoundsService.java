@@ -17,4 +17,5 @@ public interface CompoundsService {
     List<CompoundSupportingInformation> FindSupportingInformation();
     List<String> findRelatedById(String pismid);
     List<Reference> findReference();
+    Compounds findByPISMID(String pismid);
 }

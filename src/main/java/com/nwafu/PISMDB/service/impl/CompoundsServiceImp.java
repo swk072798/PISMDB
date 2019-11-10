@@ -19,6 +19,10 @@ public class CompoundsServiceImp implements CompoundsService {
     public List<Compounds> findById() {
         return compoundsDao.findById();
     }
+
+    @Override
+    public Compounds findByPISMID(String pismid){return compoundsDao.findByPISMID(pismid);}
+
     @Override
     public int getCompoundsCount() {
         return compoundsDao.getCompoundsCount();

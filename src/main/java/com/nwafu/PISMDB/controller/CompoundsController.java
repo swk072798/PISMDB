@@ -8,6 +8,7 @@ import com.nwafu.PISMDB.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -146,7 +147,7 @@ public class CompoundsController {
     @ApiOperation(value = "查询分子数据格式化", notes = "查询分子数据格式化")
     @GetMapping("/browse-C")
     @ResponseBody
-    public List<FormatData> showCompoundsPathway() {
+    public String showCompoundsPathway(@RequestParam String callback) {
         List<CompoundsBasic> list1 = compoundsService.FindBasic();
         List<Compounds> listc=compoundsService.findById();
         List<CompoundsPathway> list2 = compoundsService.FindPathway();
@@ -168,7 +169,11 @@ public class CompoundsController {
         formatData.setSupporting(list4.get(i));
         list.add(formatData);
         }
-        return list;
+        CallbackResult<List<FormatData>> result = new CallbackResult();
+        result.setCallback(callback);
+        result.setData(list);
+        log.info("{}",result.changToJsonp());
+        return result.changToJsonp();
     }
 
 
@@ -258,6 +263,18 @@ public class CompoundsController {
     @ResponseBody
     public List<Reference> allReference() {
         return compoundsService.findReference();
+    }
+
+    @ApiOperation(value = "根据PISMID获取分子详细信息", notes = "根据PISMID获取分子详细信息")
+    @GetMapping("/compoundInfomationByPismid")
+    @ResponseBody
+    public String compoundInfomation(@RequestParam String callback,@Param("pismid")String pismid) {
+        Compounds compoundsList=compoundsService.findByPISMID(pismid);
+        CallbackResult<Compounds> result = new CallbackResult();
+        result.setCallback(callback);
+        result.setData(compoundsList);
+        log.info("{}",result.changToJsonp());
+        return result.changToJsonp();
     }
 
 }
