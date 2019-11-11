@@ -10,6 +10,10 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * 接口文档配置
+ */
+
 // swagger2的配置内容仅仅就是需要创建一个Docket实例
 @Configuration
 @EnableSwagger2 //启用swagger2
