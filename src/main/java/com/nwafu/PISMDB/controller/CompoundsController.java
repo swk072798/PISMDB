@@ -180,8 +180,13 @@ public class CompoundsController {
     @ApiOperation(value = "查分子的相关分子测试", notes = "查分子的相关分子测试")
     @GetMapping("/related")
     @ResponseBody
-    public List<String> related(){
-        return compoundsService.findRelatedById("PISM00019");
+    public String related(@RequestParam String callback,@Param("pismid")String pismid){
+        List<String> stringList= compoundsService.findRelatedById(pismid);
+        CallbackResult<List<String>> result = new CallbackResult();
+        result.setCallback(callback);
+        result.setData(stringList);
+        log.info("{}",result.changToJsonp());
+        return result.changToJsonp();
     }
 
 
@@ -223,14 +228,12 @@ public class CompoundsController {
         return "upload";
     }
 
-    static int pid=30;
+    static int pid=1220;
     @ApiOperation(value = "文件上传", notes = "文件上传到数据库")
     @RequestMapping(value = "/upload_data", method = RequestMethod.POST)
     public String greetingSubmit(@ModelAttribute Compounds compounds/*HttpServletRequest request*/) {
-        //  System.out.println("sfjasklfdaj");
-
         Compounds newCompounds = new Compounds();
-        newCompounds.setPISMID(String.valueOf(pid));
+        newCompounds.setPISMID("PISM0"+String.valueOf(pid));
 //        newCompounds.setVersion(compounds.getVersion());
         newCompounds.setChemicalNames(compounds.getChemicalNames());
         newCompounds.setIUPAC_Name(compounds.getIUPAC_Name());
@@ -261,8 +264,13 @@ public class CompoundsController {
     @ApiOperation(value = "获取所有文献", notes = "获取所有文献")
     @GetMapping("/allReference")
     @ResponseBody
-    public List<Reference> allReference() {
-        return compoundsService.findReference();
+    public String allReference(@RequestParam String callback) {
+        List<Reference> referenceList= compoundsService.findReference();
+        CallbackResult<List<Reference>> result = new CallbackResult();
+        result.setCallback(callback);
+        result.setData(referenceList);
+        log.info("{}",result.changToJsonp());
+        return result.changToJsonp();
     }
 
     @ApiOperation(value = "根据PISMID获取分子详细信息", notes = "根据PISMID获取分子详细信息")

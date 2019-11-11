@@ -1,8 +1,6 @@
 package com.nwafu.PISMDB.controller;
 
-import com.nwafu.PISMDB.entity.FormatData;
-import com.nwafu.PISMDB.entity.SequenceSearchResult;
-import com.nwafu.PISMDB.entity.Targets;
+import com.nwafu.PISMDB.entity.*;
 import com.nwafu.PISMDB.service.BlastpSearchProteinService;
 import com.nwafu.PISMDB.service.TargetsService;
 import io.swagger.annotations.ApiOperation;
@@ -37,10 +35,13 @@ public class TargetsController {
     @ApiOperation(value = "蛋白质json数据", notes = "从数据库中获取的蛋白质的json数据")
     @GetMapping("/browse-T")
     @ResponseBody
-    public List<FormatData<Targets>> showTargets1() {
+    public String showTargets1(@RequestParam String callback) {
         List<FormatData<Targets>> list = targetsService.findTargetsFormat();
-        System.out.println("data数据" + list.size());
-        return list;
+        CallbackResult<List<FormatData<Targets>>> result = new CallbackResult();
+        result.setCallback(callback);
+        result.setData(list);
+        log.info("{}",result.changToJsonp());
+        return result.changToJsonp();
     }
 
     /** 
@@ -52,7 +53,7 @@ public class TargetsController {
     */
     @PostMapping("/seqSearchByFile")
     @ResponseBody
-    public List<SequenceSearchResult> seqSearchByFile(@RequestParam MultipartFile file){
+    public String seqSearchByFile(@RequestParam String callback,@RequestParam MultipartFile file){
         if(!file.isEmpty()){
             try {
                 BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(
@@ -66,7 +67,12 @@ public class TargetsController {
                 e.printStackTrace();
             }       //接收文件到resources下的文件夹中
             List<SequenceSearchResult> result = blastpSearchProteinService.fileSearchProtein(new File("/src/main/resources/seqsearch/condition/"+file.getOriginalFilename()));
-            return result;
+            CallbackResult<List<SequenceSearchResult>> result1 = new CallbackResult();
+            result1.setCallback(callback);
+            result1.setData(result);
+            log.info("{}",result1.changToJsonp());
+            return result1.changToJsonp();
+           // return result;
         }
         else{
             log.info("接收文件为空");
@@ -83,7 +89,7 @@ public class TargetsController {
     */
     @GetMapping("/seqSearchByStr")
     @ResponseBody
-    public List<SequenceSearchResult> seqSearchByStr(@RequestParam String sequence){
+    public String seqSearchByStr(@RequestParam String callback,@RequestParam String sequence){
         log.info("传入参数:{}",sequence);
         long startTime = System.currentTimeMillis();
         if(StringUtils.isEmpty(sequence)){
@@ -91,7 +97,12 @@ public class TargetsController {
         }
         List<SequenceSearchResult> result = blastpSearchProteinService.seqSearchProtein(sequence);
         log.info("seqSearchByStr调用成功，用时 {} ms",System.currentTimeMillis() - startTime);
-        return result;
+        CallbackResult<List<SequenceSearchResult>> result1 = new CallbackResult();
+        result1.setCallback(callback);
+        result1.setData(result);
+        log.info("{}",result1.changToJsonp());
+        return result1.changToJsonp();
+//        return result;
     }
 
 

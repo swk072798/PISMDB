@@ -1,11 +1,9 @@
 package com.nwafu.PISMDB.controller;
 
-import com.nwafu.PISMDB.entity.BrowsePathways;
-import com.nwafu.PISMDB.entity.CompoundsPathway;
-import com.nwafu.PISMDB.entity.Pic;
-import com.nwafu.PISMDB.entity.Pictures;
+import com.nwafu.PISMDB.entity.*;
 import com.nwafu.PISMDB.service.CompoundsService;
 import com.nwafu.PISMDB.service.PathwaysService;
+import lombok.extern.slf4j.Slf4j;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -19,6 +17,7 @@ import java.util.List;
 
 @Controller
 //@RequestMapping("/data")
+@Slf4j
 public class PathwaysController {
     @Autowired
     private PathwaysService pathwaysService;
@@ -47,7 +46,7 @@ public class PathwaysController {
     @ApiOperation(value = "显示所有pathway", notes = "显示所有pathway")
     @RequestMapping(value = "/showAllPathways",method = RequestMethod.GET)
     @ResponseBody
-    public List<BrowsePathways> showPicsAll(HttpServletRequest request) {
+    public String showPicsAll(@RequestParam String callback) {
         List<Pic> list1 = pathwaysService.showPictures();
         List<BrowsePathways> pathways = new ArrayList<>();
         for(int i=0;i<pathwaysService.getPicturesCount();i++){
@@ -57,7 +56,11 @@ public class PathwaysController {
             p1.setPictures(list);
             pathways.add(p1);
         }
-        return pathways;
+        CallbackResult<List<BrowsePathways>> result = new CallbackResult();
+        result.setCallback(callback);
+        result.setData(pathways);
+        log.info("{}",result.changToJsonp());
+        return result.changToJsonp();
     }
 
     @ApiOperation(value = "跳转到Pathway页面", notes = "跳转到Pathway页面")
@@ -69,7 +72,7 @@ public class PathwaysController {
     @ApiOperation(value = "显示pathway", notes = "显示pathway")
     @RequestMapping(value = "/show",method = RequestMethod.GET)
     @ResponseBody
-    public List<BrowsePathways> showPics(HttpServletRequest request) {
+    public String showPics(@RequestParam String callback) {
 
         List<Pic> list1 = pathwaysService.showPictures();
         List<Pictures> list = pathwaysService.showPictureInformation(list1.get(0).getId());
@@ -81,7 +84,11 @@ public class PathwaysController {
         pathways.add(p1);
         int size = list.size();
         System.out.println(size);
-        return pathways;
+        CallbackResult<List<BrowsePathways>> result = new CallbackResult();
+        result.setCallback(callback);
+        result.setData(pathways);
+        log.info("{}",result.changToJsonp());
+        return result.changToJsonp();
 
 
      /*   Pictures pic[]=new Pictures[size];
