@@ -273,7 +273,6 @@ public class CompoundsController {
         CallbackResult<Compounds> result = new CallbackResult();
         result.setCallback(callback);
         result.setData(compoundsList);
-        log.info("{}",result.changToJsonp());
         return result.changToJsonp();
     }
 

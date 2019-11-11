@@ -148,6 +148,7 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
             }
         }
         log.info("sequenceSearchResults:{}",sequenceSearchResults.size());
+
         return sequenceSearchResults;
     }
 
