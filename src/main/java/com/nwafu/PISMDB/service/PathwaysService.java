@@ -12,6 +12,7 @@ public interface PathwaysService {
     int getPathwaysCount();
     int getPicturesCount();
     List<Pictures> showPictureInformation(int picturesid);
+    List<Pictures> showAllPictureInformation();
     List<Pic> showPictures();
     CompoundsPathway getPathwaysByPISMID(String pismid);
     List<Pathways> getPathwaysByTargetId(String targetId);
