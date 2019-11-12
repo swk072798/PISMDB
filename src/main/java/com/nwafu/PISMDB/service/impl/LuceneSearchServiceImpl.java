@@ -100,7 +100,7 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
 //        //  查询对象，查询结果返回的最大数
         QueryParser queryParser = new QueryParser("Content", new StandardAnalyzer());
         Query query = queryParser.parse(keyword);
-        TopDocs topDocs = indexSearcher.search(query, Integer.MAX_VALUE);
+        TopDocs topDocs = indexSearcher.search(query, 10);
         log.info("查询总数量为 ：{}" , topDocs.totalHits);
         ScoreDoc[] scoreDocs = topDocs.scoreDocs;
         QueryScorer scorer=new QueryScorer(query);
@@ -110,7 +110,7 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
         highlighter.setTextFragmenter(fragmenter);
         List<Compounds> list = new ArrayList<>();
         List<FormatData> formatResult = new ArrayList<>();
-
+        log.info("{}",scoreDocs.length);
         for (ScoreDoc doc : scoreDocs) {
             int docId = doc.doc;
             log.info(Integer.valueOf(docId).toString());
@@ -146,6 +146,7 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
             compoundsBasic.setIUPAC_Name(compounds.getIUPAC_Name());
             compoundsBasic.setMolecularWeight(compounds.getMolecularWeight());
             compoundsBasic.setSmiles(compounds.getSmiles());
+            formatData.setImgurl(compounds.getStructure());
             formatData.setBasic(compoundsBasic);
             List<String> relatedList = compoundsService.findRelatedById(str[0]);
             formatData.setRelated(new CompoundsRelatedCompounds(str[0],relatedList));

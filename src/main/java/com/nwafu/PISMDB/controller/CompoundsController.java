@@ -247,17 +247,6 @@ public class CompoundsController {
 
     }
 
-    @ApiOperation(value = "获取所有数据", notes = "获取所有数据")
-    @GetMapping("/all")
-    public String getMessage(Model model) {
-
-        Iterable<Compounds> compounds = userRepository.findAll();
-
-        model.addAttribute("compounds", compounds);
-        System.out.println("上传数据3" + compounds.toString());
-        return "all";
-    }
-
     @ApiOperation(value = "获取所有文献", notes = "获取所有文献")
     @GetMapping("/allReference")
     @ResponseBody
