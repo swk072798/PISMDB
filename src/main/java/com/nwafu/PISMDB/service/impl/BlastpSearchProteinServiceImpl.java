@@ -120,7 +120,7 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
                 }
             });     //将剩余列表内容按照相似度从大到小排序
         }
-        else{
+        else{//
             log.warn("没有满足条件的蛋白质???");
             return null;
         }
