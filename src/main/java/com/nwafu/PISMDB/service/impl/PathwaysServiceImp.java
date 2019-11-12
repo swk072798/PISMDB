@@ -32,6 +32,9 @@ public class PathwaysServiceImp implements PathwaysService {
     }
 
     @Override
+    public List<Pictures> showAllPictureInformation(){return pathwaysDao.showAllPictureInformation();}
+
+    @Override
     public List<Pic> showPictures() {
         return pathwaysDao.showPictures();
     }

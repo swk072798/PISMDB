@@ -2,10 +2,7 @@ package com.nwafu.PISMDB.entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="places")
@@ -19,7 +16,18 @@ public class Pictures {
     float startY;
     float endX;
     float endY;
+    String type;
     String information;
+    @Column(name = "proteintargetid")
+    String ProteinTargetID;
+    @Column(name = "proteinname")
+    String ProteinName;
+    @Column(name = "molecularpismid")
+    String MolecularPISMID;
+    @Column(name = "groupname")
+    String GroupName;
+    @Column(name = "pathwayid")
+    String PathwayID;
 
     public Pictures(){}
     public Pictures(float startX,float startY,float endX,float endY,String information)
@@ -78,4 +86,6 @@ public class Pictures {
     public void setEndY(float endY) {
         this.endY = endY;
     }
+
+
 }

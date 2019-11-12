@@ -9,5 +9,7 @@ import java.util.List;
 public class BrowsePathways {
     Pic pic;
     List<Pictures>pictures;
+    List<GroupFormat> CompoundGroup;
+    List<GroupFormat> ProteinGroup;
 
 }

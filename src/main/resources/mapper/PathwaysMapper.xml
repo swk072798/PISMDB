@@ -31,6 +31,12 @@
         <result column="endX" property="endX" jdbcType="FLOAT"></result>
         <result column="endY" property="endY" jdbcType="FLOAT"></result>
         <result column="information" property="information" jdbcType="VARCHAR"></result>
+        <result column="type" property="type" jdbcType="VARCHAR"></result>
+        <result column="ProteinTargetID" property="ProteinTargetID" jdbcType="VARCHAR"></result>
+        <result column="ProteinName" property="ProteinName" jdbcType="VARCHAR"></result>
+        <result column="MolecularPISMID" property="MolecularPISMID" jdbcType="VARCHAR"></result>
+        <result column="GroupName" property="GroupName" jdbcType="VARCHAR"></result>
+        <result column="PathwayID" property="PathwayID" jdbcType="VARCHAR"></result>
     </resultMap>
 
     <select id="showPictureInformation" parameterType="int" resultMap="PicturesMap">
@@ -38,6 +44,13 @@
         from places
         where picturesid=#{picturesid}
     </select>
+
+
+    <select id="showAllPictureInformation"  resultMap="PicturesMap">
+        select *
+        from places
+    </select>
+
 
     <resultMap id="PicturesMap2" type="com.nwafu.PISMDB.entity.Pic">
         <id column="id" property="id" jdbcType="INTEGER"></id>

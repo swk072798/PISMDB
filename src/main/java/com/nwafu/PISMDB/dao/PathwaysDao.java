@@ -14,6 +14,7 @@ public interface PathwaysDao {
     int getPathwaysCount();
     int getPicturesCount();
     List<Pictures> showPictureInformation(@Param("picturesid") int picturesid);
+    List<Pictures> showAllPictureInformation();
     List<Pic> showPictures();
     CompoundsPathway getPathwaysByPISMID(String pismid);
     List<Pathways> getPathwaysByTargetId(String targetId);

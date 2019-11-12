@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -44,6 +45,13 @@ public class PathwaysController {
     }
 
     @ApiOperation(value = "显示所有pathway", notes = "显示所有pathway")
+    @RequestMapping(value = "/showAllPathwaysInformation",method = RequestMethod.GET)
+    @ResponseBody
+    public List<Pictures> showPicsAllinformation() {//@RequestParam String callback
+        return pathwaysService.showAllPictureInformation();
+    }
+
+    @ApiOperation(value = "显示所有pathway", notes = "显示所有pathway")
     @RequestMapping(value = "/showAllPathways",method = RequestMethod.GET)
     @ResponseBody
     public String showPicsAll(@RequestParam String callback) {
@@ -52,8 +60,28 @@ public class PathwaysController {
         for(int i=0;i<pathwaysService.getPicturesCount();i++){
             List<Pictures> list = pathwaysService.showPictureInformation(list1.get(i).getId());
             BrowsePathways p1 = new BrowsePathways();
+            List<GroupFormat> groupFormats=new ArrayList<>();
+            for(int j=0;j<list.size();j++){
+                GroupFormat groupFormat=new GroupFormat();
+                groupFormat.setGroupname(list.get(j).getGroupName());
+                if(list.get(j).getMolecularPISMID()!= null) {
+                    groupFormat.setId(Arrays.asList(list.get(j).getMolecularPISMID().split("%%")));
+                }
+                groupFormats.add(groupFormat);
+            }
+            List<GroupFormat> groupFormat1 = new ArrayList<>();
+            for (int k = 0; k < list.size(); k++) {
+                GroupFormat groupFormat = new GroupFormat();
+                groupFormat.setGroupname(list.get(k).getProteinName());
+                if (list.get(k).getProteinTargetID() != null) {
+                    groupFormat.setId(Arrays.asList(list.get(k).getProteinTargetID().split("%%")));
+                }
+                groupFormat1.add(groupFormat);
+            }
+            p1.setCompoundGroup(groupFormats);
             p1.setPic(list1.get(i));
             p1.setPictures(list);
+            p1.setProteinGroup(groupFormat1);
             pathways.add(p1);
         }
         CallbackResult<List<BrowsePathways>> result = new CallbackResult();
@@ -75,63 +103,39 @@ public class PathwaysController {
     public String showPics(@RequestParam String callback) {
 
         List<Pic> list1 = pathwaysService.showPictures();
-        List<Pictures> list = pathwaysService.showPictureInformation(list1.get(0).getId());
-        List<BrowsePathways> pathways=new ArrayList<>();
-        BrowsePathways p1=new BrowsePathways();
-
-        p1.setPic(list1.get(0));
+        List<Pictures> list = pathwaysService.showPictureInformation(list1.get(2).getId());
+        List<BrowsePathways> pathways = new ArrayList<>();
+        BrowsePathways p1 = new BrowsePathways();
+        List<GroupFormat> groupFormats = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            GroupFormat groupFormat = new GroupFormat();
+            groupFormat.setGroupname(list.get(i).getGroupName());
+            if (list.get(i).getMolecularPISMID() != null) {
+                groupFormat.setId(Arrays.asList(list.get(i).getMolecularPISMID().split("%%")));
+            }
+            groupFormats.add(groupFormat);
+        }
+        List<GroupFormat> groupFormat1 = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            GroupFormat groupFormat = new GroupFormat();
+            groupFormat.setGroupname(list.get(i).getProteinName());
+            if (list.get(i).getProteinTargetID() != null) {
+                groupFormat.setId(Arrays.asList(list.get(i).getProteinTargetID().split("%%")));
+            }
+            groupFormat1.add(groupFormat);
+        }
+        p1.setPic(list1.get(2));
         p1.setPictures(list);
+        p1.setProteinGroup(groupFormat1);
+        p1.setCompoundGroup(groupFormats);
         pathways.add(p1);
         int size = list.size();
         System.out.println(size);
         CallbackResult<List<BrowsePathways>> result = new CallbackResult();
         result.setCallback(callback);
         result.setData(pathways);
-        log.info("{}",result.changToJsonp());
+        log.info("{}", result.changToJsonp());
         return result.changToJsonp();
 
-
-     /*   Pictures pic[]=new Pictures[size];
-
-        for(int i=0;i<size;i++)
-        {
-            float startX=list.get(i).getStartX();
-            float startY=list.get(i).getStartY();
-            float endX=list.get(i).getEndX();
-            float endY=list.get(i).getEndY();
-            //String url=list.get(i).getUrl();
-            String information=list.get(i).getInformation();
-
-            pic[i]=new Pictures(startX,startY,endX,endY,information);
-            System.out.println(pic[i].toString());
-
-            //request.setAttribute("p1",pic[i]);
-        }
-//        float startX=list.get(0).getStartX();
-//        float startY=list.get(0).getStartY();
-//        float endX=list.get(0).getEndX();
-//        float endY=list.get(0).getEndY();
-//        String information=list.get(0).getInformation();
-//
-//        String url=list.get(0).getUrl();
-//
-//        Pictures p1=new Pictures();
-//        p1.setStartX(startX);
-//        p1.setStartY(startY);
-//        p1.setEndX(endX);
-//        p1.setEndY(endY);
-//        p1.setUrl(url);
-//
-//        Pictures p2=new Pictures(url,startX,startY,endX,endY,information);
-//
-//        request.setAttribute("url",url);
-//        request.setAttribute("startX",startX);
-//        request.setAttribute("startY",startY);
-//        request.setAttribute("endX",endX);
-//        request.setAttribute("endY",endY);
-//
-//        request.setAttribute("p1",p1);
-        return list;*/
     }
-
 }
