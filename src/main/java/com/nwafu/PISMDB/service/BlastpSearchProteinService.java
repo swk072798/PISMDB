@@ -1,6 +1,8 @@
 package com.nwafu.PISMDB.service;
 
+import com.nwafu.PISMDB.entity.FormatData;
 import com.nwafu.PISMDB.entity.SequenceSearchResult;
+import com.nwafu.PISMDB.entity.Targets;
 
 import java.io.File;
 import java.util.List;
@@ -21,7 +23,7 @@ public interface BlastpSearchProteinService {
      * @param fastaFile
      * @return
      */
-    List<SequenceSearchResult> fileSearchProtein(File fastaFile);
+    List<FormatData<Targets>> fileSearchProtein(File fastaFile);
 
-    List<SequenceSearchResult> seqSearchProtein(String seq);
+    List<FormatData<Targets>> seqSearchProtein(String seq);
 }

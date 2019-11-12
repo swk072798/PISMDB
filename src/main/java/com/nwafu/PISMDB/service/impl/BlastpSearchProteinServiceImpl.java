@@ -2,19 +2,18 @@ package com.nwafu.PISMDB.service.impl;
 
 
 import com.nwafu.PISMDB.dao.TargetsDao;
+import com.nwafu.PISMDB.entity.CompoundsRelatedCompounds;
 import com.nwafu.PISMDB.entity.FormatData;
-import com.nwafu.PISMDB.entity.SequenceSearchResult;
 import com.nwafu.PISMDB.entity.Targets;
 import com.nwafu.PISMDB.service.BlastpSearchProteinService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -48,7 +47,7 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
      * @return
      */
     @Override
-    public List<SequenceSearchResult> fileSearchProtein(File fastaFile) {
+    public List<FormatData<Targets>> fileSearchProtein(File fastaFile) {
         long nowTime = System.currentTimeMillis();
         File resultFile = null;
         try {
@@ -126,37 +125,42 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
             return null;
         }
         log.info("开始组装结果");
-        List<SequenceSearchResult> sequenceSearchResults = new ArrayList<>();
-//        List<FormatData> formatResult = new ArrayList<>();
+        List<FormatData<Targets>> formatResult = new ArrayList<>();
         for(ArrayList<String> al : similarityAndUniportID){
             log.info("UniportID:{}",al.get(1));
             Targets targets = targetsDao.findTargetByUniportID(al.get(1));
-            List<FormatData> formatResult = new ArrayList<>();
-            if(targets != null){
 
-                SequenceSearchResult sequenceSearchResult = new SequenceSearchResult();
-                sequenceSearchResult.setID("");
-                sequenceSearchResult.setIdentity(String.format("%2f",Double.parseDouble(al.get(0)))+"%");       //保留两位小数
-                sequenceSearchResult.setQueryCoverage("");
-                sequenceSearchResult.setProtein(targets.getProteinName());
-                sequenceSearchResult.setOrganisml(targets.getOrganisml());
-                sequenceSearchResult.setUniportID(targets.getUniprotID());
-                sequenceSearchResults.add(sequenceSearchResult);
+            if(targets != null){
+                FormatData<Targets> f = new FormatData<>();
+                f.setBasic(targets);
+                f.setId(targets.getTargetID());
+                f.setName(targets.getProteinName());
+                f.setRelated(new CompoundsRelatedCompounds(targets.getTargetID(),(targets.getPISMID() == null ? new ArrayList<String>() : Arrays.asList(targets.getPISMID().split("%%")))));
+                f.setSupporting(null);
+                f.setPathway(null);
+                f.setImgurl(null);
+                f.setIdLink(null);
+                formatResult.add(f);
             }
             else{
                 log.error("{},数据库中查找失败!!!",al.get(1));
             }
         }
-        log.info("sequenceSearchResults:{}",sequenceSearchResults.size());
-
-        return sequenceSearchResults;
+        log.info("sequenceSearchResults:{}",formatResult.size());
+        return formatResult;
     }
 
     @Override
-    public List<SequenceSearchResult> seqSearchProtein(String sequence) {
+    public List<FormatData<Targets>> seqSearchProtein(String sequence) {
         long nowTime = System.currentTimeMillis();
+        String fileName = new String();
+        if(sequence.length() > 13){
+            fileName = sequence.substring(0,13) + nowTime + ".fasta";
+        }
+        else{
+            fileName = sequence + nowTime + ".fasta";
+        }
 
-        String fileName = sequence.substring(0,13) + nowTime + ".fasta";
 //        File fastaFile = new File("classpath:/seqsearch\\exchangedfasta\\" + fileName);
         File fastaFile = null;
         try {
@@ -194,7 +198,7 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
             e.printStackTrace();
         }       //将用户上传来的字符串转换成fasta文件的格式
 
-        List<SequenceSearchResult> sequenceSearchResultList = fileSearchProtein(fastaFile);
+        List<FormatData<Targets>> sequenceSearchResultList = fileSearchProtein(fastaFile);
 
         return sequenceSearchResultList;
     }

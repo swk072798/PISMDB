@@ -114,7 +114,6 @@ public class CompoundsController {
         CallbackResult<List<FormatData>> result = new CallbackResult();
         result.setCallback(callback);
         result.setData(compoundsList);
-        log.info("{}",result.changToJsonp());
         return result.changToJsonp();
     }
 
@@ -172,7 +171,6 @@ public class CompoundsController {
         CallbackResult<List<FormatData>> result = new CallbackResult();
         result.setCallback(callback);
         result.setData(list);
-        log.info("{}",result.changToJsonp());
         return result.changToJsonp();
     }
 
@@ -185,7 +183,6 @@ public class CompoundsController {
         CallbackResult<List<String>> result = new CallbackResult();
         result.setCallback(callback);
         result.setData(stringList);
-        log.info("{}",result.changToJsonp());
         return result.changToJsonp();
     }
 
@@ -269,7 +266,6 @@ public class CompoundsController {
         CallbackResult<List<Reference>> result = new CallbackResult();
         result.setCallback(callback);
         result.setData(referenceList);
-        log.info("{}",result.changToJsonp());
         return result.changToJsonp();
     }
 

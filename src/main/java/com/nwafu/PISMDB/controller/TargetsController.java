@@ -40,7 +40,6 @@ public class TargetsController {
         CallbackResult<List<FormatData<Targets>>> result = new CallbackResult();
         result.setCallback(callback);
         result.setData(list);
-        log.info("{}",result.changToJsonp());
         return result.changToJsonp();
     }
 
@@ -66,13 +65,11 @@ public class TargetsController {
             } catch (IOException e) {
                 e.printStackTrace();
             }       //接收文件到resources下的文件夹中
-            List<SequenceSearchResult> result = blastpSearchProteinService.fileSearchProtein(new File("/src/main/resources/seqsearch/condition/"+file.getOriginalFilename()));
-            CallbackResult<List<SequenceSearchResult>> result1 = new CallbackResult();
+            List<FormatData<Targets>> result = blastpSearchProteinService.fileSearchProtein(new File("/src/main/resources/seqsearch/condition/"+file.getOriginalFilename()));
+            CallbackResult<List<FormatData<Targets>>> result1 = new CallbackResult();
             result1.setCallback(callback);
             result1.setData(result);
-            log.info("{}",result1.changToJsonp());
             return result1.changToJsonp();
-           // return result;
         }
         else{
             log.info("接收文件为空");
@@ -95,14 +92,12 @@ public class TargetsController {
         if(StringUtils.isEmpty(sequence)){
             throw new ServiceException("序列为空");
         }
-        List<SequenceSearchResult> result = blastpSearchProteinService.seqSearchProtein(sequence);
+        List<FormatData<Targets>> result = blastpSearchProteinService.seqSearchProtein(sequence);
         log.info("seqSearchByStr调用成功，用时 {} ms",System.currentTimeMillis() - startTime);
-        CallbackResult<List<SequenceSearchResult>> result1 = new CallbackResult();
+        CallbackResult<List<FormatData<Targets>>> result1 = new CallbackResult();
         result1.setCallback(callback);
         result1.setData(result);
-        log.info("{}",result1.changToJsonp());
         return result1.changToJsonp();
-//        return result;
     }
 
 

@@ -43,18 +43,18 @@ public class TargetsServiceImp implements TargetsService {
             FormatData formatData = new FormatData();
             formatData.setId(t.getTargetID());
             formatData.setBasic(t);
-            List<Pathways> pathwaysList = pathwaysService.getPathwaysByTargetId(t.getTargetID());
-            List<String> pathwaysIdList = new ArrayList<>();
-            for(Pathways p : pathwaysList){
-                pathwaysIdList.add(p.getPathwayID());
-            }
-            List<String> pathwaysNameList = new ArrayList<>();
-            for(Pathways p : pathwaysList){
-                pathwaysNameList.add(p.getPathwayName());
-            }
+//            List<Pathways> pathwaysList = pathwaysService.getPathwaysByTargetId(t.getTargetID());
+//            List<String> pathwaysIdList = new ArrayList<>();
+//            for(Pathways p : pathwaysList){
+//                pathwaysIdList.add(p.getPathwayID());
+//            }
+//            List<String> pathwaysNameList = new ArrayList<>();
+//            for(Pathways p : pathwaysList){
+//                pathwaysNameList.add(p.getPathwayName());
+//            }
             CompoundsPathway compoundsPathway = new CompoundsPathway();
-            compoundsPathway.setPathwayID(pathwaysIdList.toString());
-            compoundsPathway.setPathwayName(pathwaysNameList.toString());
+//            compoundsPathway.setPathwayID(pathwaysIdList.toString());
+//            compoundsPathway.setPathwayName(pathwaysNameList.toString());
             formatData.setPathway(compoundsPathway);
             CompoundsRelatedCompounds compoundsRelatedCompounds = new CompoundsRelatedCompounds();
             if(t.getPISMID() != null){
