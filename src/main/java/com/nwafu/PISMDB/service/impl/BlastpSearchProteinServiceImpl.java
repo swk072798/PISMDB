@@ -65,14 +65,17 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
             String command_1 = "blastp -task blastp -query "+ fastaFile.getAbsolutePath() +" -db D:\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\blastpackage\\blast-2.4.0+\\bin\\pismdb -out "+ resultFile.getAbsolutePath() +" -matrix BLOSUM50 -outfmt \"7 bitscore evalue qcovs pident sacc stitle \" -num_threads 4";      //本地tomcat路径
             log.info("执行命令：{}" ,command_1);
             Process process = Runtime.getRuntime().exec(command_1);
-            Thread.sleep(1000);     //这里留出1s的时间用于服务器执行命令行并生成result文件，不然可能会在文件内容写入之前读取，造成读空
+//            Thread.sleep(2000);     //这里留出1s的时间用于服务器执行命令行并生成result文件，不然可能会在文件内容写入之前读取，造成读空
         } catch (IOException e) {
             System.out.println("序列查询出错");
             e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
+//        catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        while(resultFile.length() == 0){
 
+        }
 
         ArrayList<String> txt = new ArrayList();
         try {
@@ -119,7 +122,7 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
                 }
             });     //将剩余列表内容按照相似度从大到小排序
         }
-        else{//
+        else{
             log.warn("没有满足条件的蛋白质???");
             return null;
         }
