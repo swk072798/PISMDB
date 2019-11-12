@@ -91,7 +91,6 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
             System.out.println("BufferedReader异常");
             log.info(e.getMessage());
         }
-//        System.out.println(txt);
         ArrayList<ArrayList<String>> similarityAndUniportID = new ArrayList<>();
         for(int i = 5; i < txt.size() - 1; i++){
             ArrayList<String> similarityAndId = new ArrayList<>();
