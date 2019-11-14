@@ -57,8 +57,8 @@ public class TargetsServiceImp implements TargetsService {
 //            compoundsPathway.setPathwayName(pathwaysNameList.toString());
             formatData.setPathway(compoundsPathway);
             CompoundsRelatedCompounds compoundsRelatedCompounds = new CompoundsRelatedCompounds();
-            if(t.getPISMID() != null){
-                compoundsRelatedCompounds.setCompoundsList(Arrays.asList(t.getPISMID().split("%%")));
+            if(t.getPismid() != null){
+                compoundsRelatedCompounds.setCompoundsList(Arrays.asList(t.getPismid().split("%%")));
                 formatData.setRelated(compoundsRelatedCompounds);
             }else{
                 formatData.setRelated(compoundsRelatedCompounds);

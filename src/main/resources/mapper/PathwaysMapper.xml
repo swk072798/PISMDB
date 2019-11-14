@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.nwafu.PISMDB.dao.PathwaysDao">
     <resultMap id="PathwayMap" type="com.nwafu.PISMDB.entity.Pathways">
-        <id column="PathwayID" property="PathwayID" jdbcType="VARCHAR"></id>
-        <result column="PathwayName" property="PathwayName" jdbcType="VARCHAR"></result>
+        <id column="PathwayID" property="pathwayID" jdbcType="VARCHAR"></id>
+        <result column="PathwayName" property="pathwayName" jdbcType="VARCHAR"></result>
     </resultMap>
     <select id="getPathwaysCount" resultType="java.lang.Integer">
         select count(*)
@@ -12,9 +12,9 @@
 
 
     <resultMap id="Pathway" type="com.nwafu.PISMDB.entity.CompoundsPathway">
-        <id column="PISMID" property="PISMID" jdbcType="VARCHAR"></id>
-        <result column="PathwayID" property="PathwayID" jdbcType="VARCHAR"></result>
-        <result column="PathwayName" property="PathwayName" jdbcType="VARCHAR"></result>
+        <id column="PISMID" property="pismid" jdbcType="VARCHAR"></id>
+        <result column="PathwayID" property="pathwayID" jdbcType="VARCHAR"></result>
+        <result column="PathwayName" property="pathwayName" jdbcType="VARCHAR"></result>
     </resultMap>
 
     <select id="getPathwaysByPISMID" parameterType="string" resultMap="Pathway">
@@ -32,11 +32,11 @@
         <result column="endY" property="endY" jdbcType="FLOAT"></result>
         <result column="information" property="information" jdbcType="VARCHAR"></result>
         <result column="type" property="type" jdbcType="VARCHAR"></result>
-        <result column="ProteinTargetID" property="ProteinTargetID" jdbcType="VARCHAR"></result>
-        <result column="ProteinName" property="ProteinName" jdbcType="VARCHAR"></result>
-        <result column="MolecularPISMID" property="MolecularPISMID" jdbcType="VARCHAR"></result>
-        <result column="GroupName" property="GroupName" jdbcType="VARCHAR"></result>
-        <result column="PathwayID" property="PathwayID" jdbcType="VARCHAR"></result>
+        <result column="ProteinTargetID" property="proteinTargetID" jdbcType="VARCHAR"></result>
+        <result column="ProteinName" property="proteinName" jdbcType="VARCHAR"></result>
+        <result column="MolecularPISMID" property="molecularPISMID" jdbcType="VARCHAR"></result>
+        <result column="GroupName" property="groupName" jdbcType="VARCHAR"></result>
+        <result column="PathwayID" property="pathwayID" jdbcType="VARCHAR"></result>
     </resultMap>
 
     <select id="showPictureInformation" parameterType="int" resultMap="PicturesMap">

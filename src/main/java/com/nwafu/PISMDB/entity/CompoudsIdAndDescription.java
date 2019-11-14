@@ -15,6 +15,6 @@ import javax.persistence.Id;
 @Data
 public class CompoudsIdAndDescription {
     @Id
-    private String PISMID;
-    private String MocularDescription;
+    private String pismid;
+    private String mocularDescription;
 }

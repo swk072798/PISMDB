@@ -13,8 +13,7 @@ import javax.persistence.Id;
 
 @Data
 public class SequenceSearchResult {
-    @Id
-    private String ID;
+    private String id;
     private String identity;
     private String queryCoverage;
     private String protein;

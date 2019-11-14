@@ -61,9 +61,9 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
         System.out.println(list.size());
         for (CompoundsBasicInformationBean cbi : list) {
             log.info("cbi:{}",cbi);
-            String PISMID_ = cbi.getPISMID();
+            String PISMID_ = cbi.getPismid();
             String ChemicalNames_ = cbi.getChemicalNames();
-            String IUPAC_Name_ = cbi.getIUPAC_Name();
+            String IUPAC_Name_ = cbi.getIupacName();
             String ChemicalFormular_ = cbi.getChemicalFormular();
             String MolecularWeight = cbi.getMolecularWeight();
             String AlogP_ = cbi.getAlogP();
@@ -90,7 +90,7 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
 
 //        C:\Program Files\Apache Software Foundation\Tomcat 8.5\webapps\PISMDB-0.0.1-SNAPSHOT\WEB-INF\classes\luceneindex
 
-        Directory directory = FSDirectory.open(new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\luceneindex").toPath());  //服务器端路径
+        Directory directory = FSDirectory.open(new File("D:\\PISMDB\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\luceneindex").toPath());  //服务器端路径
 //        Directory directory = FSDirectory.open(new File("D:\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\luceneindex").toPath());//本地tomcat路径
         IndexReader indexReader = DirectoryReader.open(directory);
         IndexSearcher indexSearcher = new IndexSearcher(indexReader);
@@ -140,10 +140,10 @@ public class LuceneSearchServiceImpl implements LuceneSearchService {
             Compounds compounds = compoundsDao.findByPISMID(str[0]);
             formatData.setName(compounds.getChemicalNames());
             CompoundsBasic compoundsBasic = new CompoundsBasic();
-            compoundsBasic.setPISMID(compounds.getPISMID());
+            compoundsBasic.setPismid(compounds.getPismid());
             compoundsBasic.setAlogP(compounds.getAlogP());
             compoundsBasic.setChemicalFormular(compounds.getChemicalFormular());
-            compoundsBasic.setIUPAC_Name(compounds.getIUPAC_Name());
+            compoundsBasic.setIupacName(compounds.getIupacName());
             compoundsBasic.setMolecularWeight(compounds.getMolecularWeight());
             compoundsBasic.setSmiles(compounds.getSmiles());
             formatData.setImgurl(compounds.getStructure());

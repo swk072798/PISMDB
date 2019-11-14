@@ -7,8 +7,8 @@
         <result column="ProteinName" property="ProteinName" jdbcType="VARCHAR"></result>
         <result column="Organisml" property="Organisml" jdbcType="VARCHAR"></result>
         <result column="Sequencel" property="Sequencel" jdbcType="VARCHAR"></result>
-        <result column="PDBID" property="PDBID" jdbcType="VARCHAR"></result>
-        <result column="PISMID" property="PISMID" jdbcType="VARCHAR"></result>
+        <result column="PDBID" property="pdbid" jdbcType="VARCHAR"></result>
+        <result column="PISMID" property="pismid" jdbcType="VARCHAR"></result>
     </resultMap>
 
     <select id="getTargetsCount" resultType="java.lang.Integer">

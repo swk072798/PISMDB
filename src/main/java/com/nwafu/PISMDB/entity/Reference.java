@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Data
 public class Reference {
     @Id
-    private String ReferenceID;
+    private String referenceID;
     @Column(name="referencename")
-    private String ReferenceName;
+    private String referenceName;
 }

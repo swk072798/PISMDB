@@ -6,19 +6,19 @@ import java.util.List;
 
 @Data
 public class CompoundsRelatedCompounds {
-    private String PISMID;
+    private String pismid;
     List<String> compoundsList;
 
     public CompoundsRelatedCompounds(){}
     public CompoundsRelatedCompounds(String PISMID,List<String> compoundsList){
-        this.PISMID =  PISMID;
+        this.pismid =  PISMID;
         this.compoundsList = compoundsList;
     }
 
     @Override
     public String toString() {
         return "CompoundsRelatedCompounds{" +
-                "PISMID='" + PISMID + '\'' +
+                "PISMID='" + pismid + '\'' +
                 ", compoundsList=" + compoundsList +
                 '}';
     }

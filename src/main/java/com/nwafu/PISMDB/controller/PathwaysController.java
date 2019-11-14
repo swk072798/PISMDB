@@ -63,7 +63,7 @@ public class PathwaysController {
             List<GroupFormat> groupFormats=new ArrayList<>();
             for(int j=0;j<list.size();j++){
                 GroupFormat groupFormat=new GroupFormat();
-                groupFormat.setGroupname(list.get(j).getGroupName());
+                groupFormat.setGroupName(list.get(j).getGroupName());
                 if(list.get(j).getMolecularPISMID()!= null) {
                     groupFormat.setId(Arrays.asList(list.get(j).getMolecularPISMID().split("%%")));
                 }
@@ -72,7 +72,7 @@ public class PathwaysController {
             List<GroupFormat> groupFormat1 = new ArrayList<>();
             for (int k = 0; k < list.size(); k++) {
                 GroupFormat groupFormat = new GroupFormat();
-                groupFormat.setGroupname(list.get(k).getProteinName());
+                groupFormat.setGroupName(list.get(k).getProteinName());
                 if (list.get(k).getProteinTargetID() != null) {
                     groupFormat.setId(Arrays.asList(list.get(k).getProteinTargetID().split("%%")));
                 }
@@ -87,7 +87,6 @@ public class PathwaysController {
         CallbackResult<List<BrowsePathways>> result = new CallbackResult();
         result.setCallback(callback);
         result.setData(pathways);
-        log.info("{}",result.changToJsonp());
         return result.changToJsonp();
     }
 
@@ -109,7 +108,7 @@ public class PathwaysController {
         List<GroupFormat> groupFormats = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             GroupFormat groupFormat = new GroupFormat();
-            groupFormat.setGroupname(list.get(i).getGroupName());
+            groupFormat.setGroupName(list.get(i).getGroupName());
             if (list.get(i).getMolecularPISMID() != null) {
                 groupFormat.setId(Arrays.asList(list.get(i).getMolecularPISMID().split("%%")));
             }
@@ -118,7 +117,7 @@ public class PathwaysController {
         List<GroupFormat> groupFormat1 = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             GroupFormat groupFormat = new GroupFormat();
-            groupFormat.setGroupname(list.get(i).getProteinName());
+            groupFormat.setGroupName(list.get(i).getProteinName());
             if (list.get(i).getProteinTargetID() != null) {
                 groupFormat.setId(Arrays.asList(list.get(i).getProteinTargetID().split("%%")));
             }

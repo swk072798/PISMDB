@@ -19,15 +19,15 @@ public class Pictures {
     String type;
     String information;
     @Column(name = "proteintargetid")
-    String ProteinTargetID;
+    String proteinTargetID;
     @Column(name = "proteinname")
-    String ProteinName;
+    String proteinName;
     @Column(name = "molecularpismid")
-    String MolecularPISMID;
+    String molecularPISMID;
     @Column(name = "groupname")
-    String GroupName;
+    String groupName;
     @Column(name = "pathwayid")
-    String PathwayID;
+    String pathwayID;
 
     public Pictures(){}
     public Pictures(float startX,float startY,float endX,float endY,String information)

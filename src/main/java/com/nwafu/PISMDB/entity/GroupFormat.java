@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public class GroupFormat {
-    String groupname;
+    String groupName;
     List<String> id;
 
 }

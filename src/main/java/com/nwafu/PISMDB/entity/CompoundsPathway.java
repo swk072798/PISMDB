@@ -4,15 +4,15 @@ import lombok.Data;
 
 @Data
 public class CompoundsPathway {
-    private String PISMID;
-    private String PathwayID;
-    private String PathwayName;
+    private String pismid;
+    private String pathwayID;
+    private String pathwayName;
 
     @Override
     public String toString() {
         return "CompoundsPathway{" +
-                "PISMID='" + PISMID + '\'' +
-                ", PathwayID='" + PathwayID + '\'' +
+                "PISMID='" + pismid + '\'' +
+                ", PathwayID='" + pathwayID + '\'' +
                 '}';
     }
 }

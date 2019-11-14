@@ -1,5 +1,6 @@
 package com.nwafu.PISMDB.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -24,9 +25,9 @@ public class Targets {
     @Column
     private String Sequencel;
     @Column(name="pdbid")
-    private String PDBID;
+    private String pdbid;
     @Column(name="pismid")
-    private String PISMID;
+    private String pismid;
 
 //    @JsonProperty("TargetID")
 //    public String getTargetID() {

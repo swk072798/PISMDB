@@ -4,22 +4,22 @@ import lombok.Data;
 
 @Data
 public class CompoundsBasic {
-    private String PISMID;
-    private String IUPAC_Name;
-    private String ChemicalFormular;
-    private String MolecularWeight;
-    private String AlogP;
-    private String Smiles;
+    private String pismid;
+    private String iupacName;
+    private String chemicalFormular;
+    private String molecularWeight;
+    private String alogP;
+    private String smiles;
 
     @Override
     public String toString() {
         return "CompoundsBasic{" +
-                "PISMID='" + PISMID + '\'' +
-                ", IUPAC_Name='" + IUPAC_Name + '\'' +
-                ", ChemicalFormular='" + ChemicalFormular + '\'' +
-                ", MolecularWeight='" + MolecularWeight + '\'' +
-                ", AlogP='" + AlogP + '\'' +
-                ", Smiles='" + Smiles + '\'' +
+                "PISMID='" + pismid + '\'' +
+                ", IUPAC_Name='" + iupacName + '\'' +
+                ", ChemicalFormular='" + chemicalFormular + '\'' +
+                ", MolecularWeight='" + molecularWeight + '\'' +
+                ", AlogP='" + alogP + '\'' +
+                ", Smiles='" + smiles + '\'' +
                 '}';
     }
 }

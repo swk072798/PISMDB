@@ -128,7 +128,7 @@ public class FileSearchServiceImpl implements FileSearchService {
             deleteZeroAndNa();
             Float result = caculate(data_1, data_2);
             if(result > 0.5){
-                PISMIDs.add(ciad.getPISMID());
+                PISMIDs.add(ciad.getPismid());
             }
         }
 

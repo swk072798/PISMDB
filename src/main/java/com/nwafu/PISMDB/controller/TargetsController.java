@@ -37,6 +37,7 @@ public class TargetsController {
     @ResponseBody
     public String showTargets1(@RequestParam String callback) {
         List<FormatData<Targets>> list = targetsService.findTargetsFormat();
+        log.info("转换前：{}",list);
         CallbackResult<List<FormatData<Targets>>> result = new CallbackResult();
         result.setCallback(callback);
         result.setData(list);

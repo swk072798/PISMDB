@@ -2,31 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.nwafu.PISMDB.dao.CompoundsDao">
     <resultMap id="CompoundsMap" type="com.nwafu.PISMDB.entity.Compounds">
-        <id column="PISMID" property="PISMID" jdbcType="VARCHAR"></id>
-        <result column="TargetID" property="TargetID" jdbcType="VARCHAR"></result>
-        <result column="PathwayID" property="PathwayID" jdbcType="VARCHAR"></result>
-        <result column="Version" property="Version" jdbcType="VARCHAR"></result>
-        <result column="CreationDate" property="CreationDate" jdbcType="VARCHAR"></result>
-        <result column="UpdateDate" property="UpdateDate" jdbcType="VARCHAR"></result>
-        <result column="ChemicalNames" property="ChemicalNames" jdbcType="VARCHAR"></result>
-        <result column="IUPAC_Name" property="IUPAC_Name" jdbcType="VARCHAR"></result>
-        <result column="OtherNames" property="OtherNames" jdbcType="VARCHAR"></result>
-        <result column="ChemicalFormular" property="ChemicalFormular" jdbcType="VARCHAR"></result>
-        <result column="MolecularWeight" property="MolecularWeight" jdbcType="VARCHAR"></result>
-        <result column="AlogP" property="AlogP" jdbcType="VARCHAR"></result>
-        <result column="ThreeD_Structure" property="ThreeD_Structure" jdbcType="VARCHAR"></result>
-        <result column="Structure" property="Structure" jdbcType="VARCHAR"></result>
-        <result column="Smiles" property="Smiles" jdbcType="VARCHAR"></result>
-        <result column="Function" property="Function" jdbcType="VARCHAR"></result>
-        <result column="Mechanism" property="Mechanism" jdbcType="VARCHAR"></result>
-        <result column="Phenotype" property="Phenotype" jdbcType="VARCHAR"></result>
-        <result column="GroupDescription" property="GroupDescription" jdbcType="VARCHAR"></result>
-        <result column="StructureActivityRelationship" property="StructureActivityRelationship"
+        <id column="PISMID" property="pismid" jdbcType="VARCHAR"></id>
+        <result column="TargetID" property="targetID" jdbcType="VARCHAR"></result>
+        <result column="PathwayID" property="pathwayID" jdbcType="VARCHAR"></result>
+        <result column="Version" property="version" jdbcType="VARCHAR"></result>
+        <result column="CreationDate" property="creationDate" jdbcType="VARCHAR"></result>
+        <result column="UpdateDate" property="updateDate" jdbcType="VARCHAR"></result>
+        <result column="ChemicalNames" property="chemicalNames" jdbcType="VARCHAR"></result>
+        <result column="IUPAC_Name" property="iupacName" jdbcType="VARCHAR"></result>
+        <result column="OtherNames" property="otherNames" jdbcType="VARCHAR"></result>
+        <result column="ChemicalFormular" property="chemicalFormular" jdbcType="VARCHAR"></result>
+        <result column="MolecularWeight" property="molecularWeight" jdbcType="VARCHAR"></result>
+        <result column="AlogP" property="alogP" jdbcType="VARCHAR"></result>
+        <result column="ThreeD_Structure" property="threeD_Structure" jdbcType="VARCHAR"></result>
+        <result column="Structure" property="structure" jdbcType="VARCHAR"></result>
+        <result column="Smiles" property="smiles" jdbcType="VARCHAR"></result>
+        <result column="Function" property="function" jdbcType="VARCHAR"></result>
+        <result column="Mechanism" property="mechanism" jdbcType="VARCHAR"></result>
+        <result column="Phenotype" property="phenotype" jdbcType="VARCHAR"></result>
+        <result column="GroupDescription" property="groupDescription" jdbcType="VARCHAR"></result>
+        <result column="StructureActivityRelationship" property="structureActivityRelationship"
                 jdbcType="VARCHAR"></result>
-        <result column="StructuralSimilarity" property="StructuralSimilarity" jdbcType="VARCHAR"></result>
+        <result column="StructuralSimilarity" property="structuralSimilarity" jdbcType="VARCHAR"></result>
         <!--<result column="Address" property="Address" jdbcType="VARCHAR"></result>-->
         <!--<result column="updatedate2" property="updatedate2" jdbcType="VARCHAR"></result>-->
-        <result column="MocularDescription" property="MocularDescription" jdbcType="VARCHAR"></result>
+        <result column="MocularDescription" property="mocularDescription" jdbcType="VARCHAR"></result>
     </resultMap>
 
     <select id="getCompoundsCount" resultType="java.lang.Integer">
@@ -61,16 +61,16 @@
 
 <!--BasicInformation数据信息-->
     <resultMap id="BasicInformation" type="com.nwafu.PISMDB.entity.CompoundsBasicInformationBean">
-        <id column="PISMID" property="PISMID" jdbcType="VARCHAR"></id>
-        <result column="ChemicalNames" property="ChemicalNames" jdbcType="VARCHAR"></result>
-        <result column="IUPAC_Name" property="IUPAC_Name" jdbcType="VARCHAR"></result>
-        <result column="ChemicalFormular" property="ChemicalFormular" jdbcType="VARCHAR"></result>
-        <result column="MolecularWeight" property="MolecularWeight" jdbcType="VARCHAR"></result>
-        <result column="AlogP" property="AlogP" jdbcType="VARCHAR"></result>
-        <result column="Smiles" property="Smiles" jdbcType="VARCHAR"></result>
-        <result column="Function" property="Function" jdbcType="VARCHAR"></result>
-        <result column="Mechanism" property="Mechanism" jdbcType="VARCHAR"></result>
-        <result column="Phenotype" property="Phenotype" jdbcType="VARCHAR"></result>
+        <id column="PISMID" property="pismid" jdbcType="VARCHAR"></id>
+        <result column="ChemicalNames" property="chemicalNames" jdbcType="VARCHAR"></result>
+        <result column="IUPAC_Name" property="iupacName" jdbcType="VARCHAR"></result>
+        <result column="ChemicalFormular" property="chemicalFormular" jdbcType="VARCHAR"></result>
+        <result column="MolecularWeight" property="molecularWeight" jdbcType="VARCHAR"></result>
+        <result column="AlogP" property="alogP" jdbcType="VARCHAR"></result>
+        <result column="Smiles" property="smiles" jdbcType="VARCHAR"></result>
+        <result column="Function" property="function" jdbcType="VARCHAR"></result>
+        <result column="Mechanism" property="mechanism" jdbcType="VARCHAR"></result>
+        <result column="Phenotype" property="phenotype" jdbcType="VARCHAR"></result>
         <!--<result column="Address" property="Address" jdbcType="VARCHAR"></result>-->
     </resultMap>
 
@@ -81,12 +81,12 @@
 
     <!--BasicI数据信息-->
     <resultMap id="Basic" type="com.nwafu.PISMDB.entity.CompoundsBasic">
-        <id column="PISMID" property="PISMID" jdbcType="VARCHAR"></id>
-        <result column="IUPAC_Name" property="IUPAC_Name" jdbcType="VARCHAR"></result>
-        <result column="ChemicalFormular" property="ChemicalFormular" jdbcType="VARCHAR"></result>
-        <result column="MolecularWeight" property="MolecularWeight" jdbcType="VARCHAR"></result>
-        <result column="AlogP" property="AlogP" jdbcType="VARCHAR"></result>
-        <result column="Smiles" property="Smiles" jdbcType="VARCHAR"></result>
+        <id column="PISMID" property="pismdb" jdbcType="VARCHAR"></id>
+        <result column="IUPAC_Name" property="iupacName" jdbcType="VARCHAR"></result>
+        <result column="ChemicalFormular" property="chemicalFormular" jdbcType="VARCHAR"></result>
+        <result column="MolecularWeight" property="molecularWeight" jdbcType="VARCHAR"></result>
+        <result column="AlogP" property="alogP" jdbcType="VARCHAR"></result>
+        <result column="Smiles" property="smiles" jdbcType="VARCHAR"></result>
     </resultMap>
 
     <select id="FindBasic" resultMap="Basic">
@@ -96,9 +96,9 @@
 
     <!--Pathway数据信息-->
     <resultMap id="Pathway" type="com.nwafu.PISMDB.entity.CompoundsPathway">
-        <id column="PISMID" property="PISMID" jdbcType="VARCHAR"></id>
-        <result column="PathwayID" property="PathwayID" jdbcType="VARCHAR"></result>
-        <result column="PathwayName" property="PathwayName" jdbcType="VARCHAR"></result>
+        <id column="PISMID" property="pismid" jdbcType="VARCHAR"></id>
+        <result column="PathwayID" property="pathwayID" jdbcType="VARCHAR"></result>
+        <result column="PathwayName" property="pathwayName" jdbcType="VARCHAR"></result>
     </resultMap>
 
     <select id="FindPathway" resultMap="Pathway">
@@ -108,8 +108,8 @@
 
     <!--RelatedInformation数据信息-->
     <resultMap id="RelatedInformation" type="com.nwafu.PISMDB.entity.Compounds">
-        <id column="PISMID" property="PISMID" jdbcType="VARCHAR"></id>
-        <result column="IUPAC_Name" property="IUPAC_Name" jdbcType="VARCHAR"></result>
+        <id column="PISMID" property="pismid" jdbcType="VARCHAR"></id>
+        <result column="IUPAC_Name" property="iupacName" jdbcType="VARCHAR"></result>
     </resultMap>
 
     <select id="FindRelatedCompounds" resultMap="RelatedInformation">
@@ -119,10 +119,10 @@
 
     <!--SupportingInformation数据信息-->
     <resultMap id="SupportingInformation" type="com.nwafu.PISMDB.entity.CompoundSupportingInformation">
-        <id column="PISMID" property="PISMID" jdbcType="VARCHAR"></id>
-        <result column="Function" property="Function" jdbcType="VARCHAR"></result>
-        <result column="Mechanism" property="Mechanism" jdbcType="VARCHAR"></result>
-        <result column="Phenotype" property="Phenotype" jdbcType="VARCHAR"></result>
+        <id column="PISMID" property="pismid" jdbcType="VARCHAR"></id>
+        <result column="Function" property="function" jdbcType="VARCHAR"></result>
+        <result column="Mechanism" property="mechanism" jdbcType="VARCHAR"></result>
+        <result column="Phenotype" property="phenotype" jdbcType="VARCHAR"></result>
     </resultMap>
 
     <select id="FindSupportingInformation" resultMap="SupportingInformation">
@@ -131,8 +131,8 @@
     </select>
 
     <resultMap id="MocularDescription" type="com.nwafu.PISMDB.entity.CompoudsIdAndDescription">
-        <id column="PISMID" jdbcType="VARCHAR"></id>
-        <result column="MocularDescription" jdbcType="VARCHAR"></result>
+        <id column="PISMID" property="pismid" jdbcType="VARCHAR"></id>
+        <result column="MocularDescription" property="pismid" jdbcType="VARCHAR"></result>
     </resultMap>
 
     <select id="selectIdAndDescription" resultMap="MocularDescription">
@@ -142,8 +142,8 @@
 
 
     <resultMap id="ReferenceMap" type="com.nwafu.PISMDB.entity.Reference">
-        <id column="ReferenceID" property="ReferenceID" jdbcType="VARCHAR"></id>
-        <result column="ReferenceName" property="ReferenceName" jdbcType="VARCHAR"></result>
+        <id column="ReferenceID" property="referenceID" jdbcType="VARCHAR"></id>
+        <result column="ReferenceName" property="referenceName" jdbcType="VARCHAR"></result>
     </resultMap>
 
     <select id="findReference" resultMap="ReferenceMap">

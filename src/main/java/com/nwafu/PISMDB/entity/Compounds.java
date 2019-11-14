@@ -13,47 +13,47 @@ import java.util.Date;
 public class Compounds {
 
     @Id
-    private String PISMID;
+    private String pismid;
     @Column(name="targetid")
-    private String TargetID;
+    private String targetId;
     @Column(name="pathwayid")
-    private String PathwayID;
+    private String pathwayId;
     @Column
-    private String Version;
+    private String version;
     @Column(name="creationdate")
-    private String CreationDate;
+    private String creationDate;
     @Column(name="updatedate")
-    private String UpdateDate;
+    private String updateDate;
     @Column(name="chemicalnames")
-    private String ChemicalNames;
+    private String chemicalNames;
     @Column
-    private String IUPAC_Name;
+    private String iupacName;
     @Column(name="othernames")
-    private String OtherNames;
+    private String otherNames;
     @Column(name="chemicalformular")
-    private String ChemicalFormular;
+    private String chemicalFormular;
     @Column(name="molecularweight")
-    private String MolecularWeight;
+    private String molecularWeight;
     @Column
-    private String AlogP;
+    private String alogP;
     @Column
-    private String ThreeD_Structure;
+    private String threeD_Structure;
     @Column
-    private String Structure;
+    private String structure;
     @Column
-    private String Smiles;
+    private String smiles;
     @Column
-    private String Function;
+    private String function;
     @Column
-    private String Mechanism;
+    private String mechanism;
     @Column
-    private String Phenotype;
+    private String phenotype;
     @Column(name="groupdescription")
-    private String GroupDescription;
+    private String groupDescription;
     @Column(name="structureactivityrelationship")
-    private String StructureActivityRelationship;
+    private String structureActivityRelationship;
     @Column(name="structuralsimilarity")
-    private String StructuralSimilarity;
+    private String structuralSimilarity;
 //    @Column
 //    private String Address;
 //    @Column
@@ -64,27 +64,27 @@ public class Compounds {
     @Override
     public String toString() {
         return "Compounds{" +
-                "PISMID='" + PISMID + '\'' +
-                ", TargetID='" + TargetID + '\'' +
-                ", PathwayID='" + PathwayID + '\'' +
-                ", Version='" + Version + '\'' +
-                ", CreationDate='" + CreationDate + '\'' +
-                ", UpdateDate2='" + UpdateDate + '\'' +
-                ", ChemicalNames='" + ChemicalNames + '\'' +
-                ", IUPAC_Name='" + IUPAC_Name + '\'' +
-                ", OtherNames='" + OtherNames + '\'' +
-                ", ChemicalFormular='" + ChemicalFormular + '\'' +
-                ", MolecularWeight='" + MolecularWeight + '\'' +
-                ", AlogP='" + AlogP + '\'' +
-                ", ThreeD_Structure='" + ThreeD_Structure + '\'' +
-                ", Structure='" + Structure + '\'' +
-                ", Smiles='" + Smiles + '\'' +
-                ", Function='" + Function + '\'' +
-                ", Mechanism='" + Mechanism + '\'' +
-                ", Phenotype='" + Phenotype + '\'' +
-                ", GroupDescription='" + GroupDescription + '\'' +
-                ", StructureActivityRelationship='" + StructureActivityRelationship + '\'' +
-                ", StructuralSimilarity='" + StructuralSimilarity + '\'' +
+                "PISMID='" + pismid + '\'' +
+                ", TargetID='" + targetId + '\'' +
+                ", PathwayID='" + pathwayId + '\'' +
+                ", Version='" + version + '\'' +
+                ", CreationDate='" + creationDate + '\'' +
+                ", UpdateDate2='" + updateDate + '\'' +
+                ", ChemicalNames='" + chemicalNames + '\'' +
+                ", IUPAC_Name='" + iupacName + '\'' +
+                ", OtherNames='" + otherNames + '\'' +
+                ", ChemicalFormular='" + chemicalFormular + '\'' +
+                ", MolecularWeight='" + molecularWeight + '\'' +
+                ", AlogP='" + alogP + '\'' +
+                ", ThreeD_Structure='" + threeD_Structure + '\'' +
+                ", Structure='" + structure + '\'' +
+                ", Smiles='" + smiles + '\'' +
+                ", Function='" + function + '\'' +
+                ", Mechanism='" + mechanism + '\'' +
+                ", Phenotype='" + phenotype + '\'' +
+                ", GroupDescription='" + groupDescription + '\'' +
+                ", StructureActivityRelationship='" + structureActivityRelationship + '\'' +
+                ", StructuralSimilarity='" + structuralSimilarity + '\'' +
 //                ", Address='" + Address + '\'' +
                 '}';
     }

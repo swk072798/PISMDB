@@ -51,7 +51,7 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
         long nowTime = System.currentTimeMillis();
         File resultFile = null;
         try {
-            resultFile = new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\seqsearch\\result\\" + fastaFile.getName().split("\\.")[0] +".txt");     //服务器端用这个
+            resultFile = new File("D:\\PISMDB\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\seqsearch\\result\\" + fastaFile.getName().split("\\.")[0] +".txt");     //服务器端用这个
 //            resultFile = new File("D:\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\seqsearch\\result\\" + fastaFile.getName().split("\\.")[0] +".txt");     //本地端tomcat用这个
             log.info("结果文件位置：{}",resultFile.getAbsolutePath());
             log.info("待查询的fasta文件位置,{}",fastaFile.getAbsolutePath());
@@ -61,7 +61,7 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
             }
             log.info("调用查找功能！！！");
 
-            String command_1 = "blastp -task blastp -query "+ fastaFile.getAbsolutePath() +" -db C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\blastpackage\\blast-2.4.0+\\bin\\pismdb -out "+ resultFile.getAbsolutePath() +" -matrix BLOSUM50 -outfmt \"7 bitscore evalue qcovs pident sacc stitle \" -num_threads 4";      //服务器路径
+            String command_1 = "blastp -task blastp -query "+ fastaFile.getAbsolutePath() +" -db D:\\PISMDB\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\blastpackage\\blast-2.4.0+\\bin\\pismdb -out "+ resultFile.getAbsolutePath() +" -matrix BLOSUM50 -outfmt \"7 bitscore evalue qcovs pident sacc stitle \" -num_threads 4";      //服务器路径
 //            String command_1 = "blastp -task blastp -query "+ fastaFile.getAbsolutePath() +" -db D:\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\blastpackage\\blast-2.4.0+\\bin\\pismdb -out "+ resultFile.getAbsolutePath() +" -matrix BLOSUM50 -outfmt \"7 bitscore evalue qcovs pident sacc stitle \" -num_threads 4";      //本地tomcat路径
             log.info("执行命令：{}" ,command_1);
             Process process = Runtime.getRuntime().exec(command_1);
@@ -137,7 +137,7 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
                 f.setBasic(targets);
                 f.setId(targets.getTargetID());
                 f.setName(targets.getProteinName());
-                f.setRelated(new CompoundsRelatedCompounds(targets.getTargetID(),(targets.getPISMID() == null ? new ArrayList<String>() : Arrays.asList(targets.getPISMID().split("%%")))));
+                f.setRelated(new CompoundsRelatedCompounds(targets.getTargetID(),(targets.getPismid() == null ? new ArrayList<String>() : Arrays.asList(targets.getPismid().split("%%")))));
                 f.setSupporting(null);
                 f.setPathway(null);
                 f.setImgurl(null);
@@ -167,7 +167,7 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
         File fastaFile = null;
         try {
 //            log.info("{},{}",changedfastaFile,the);
-            fastaFile = new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\seqsearch\\exchangedfasta",fileName);      //服务器端用这个
+            fastaFile = new File("D:\\PISMDB\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\seqsearch\\exchangedfasta",fileName);      //服务器端用这个
 //            fastaFile = new File("D:\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\seqsearch\\exchangedfasta",fileName);        //本地端tomcat用这个
 
             log.info("fastaFile:{}",fastaFile.getAbsolutePath());

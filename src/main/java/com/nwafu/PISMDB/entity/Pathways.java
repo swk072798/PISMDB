@@ -12,8 +12,8 @@ import javax.persistence.Table;
 @Data
 public class Pathways {
     @Id
-    private String PathwayID;
+    private String pathwayID;
     @Column(name="pathwayname")
-    private String PathwayName;
+    private String pathwayName;
 
 }

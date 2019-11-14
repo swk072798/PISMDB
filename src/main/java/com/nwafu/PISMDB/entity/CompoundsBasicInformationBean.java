@@ -16,33 +16,33 @@ public class CompoundsBasicInformationBean {
     // 空返回
     //public static final CompoundsBasicInformationBean simple = new CompoundsBasicInformationBean();
     @Id
-    private String PISMID;
-    private String IUPAC_Name;
-    private String ChemicalFormular;
-    private String MolecularWeight;
-    private String AlogP;
+    private String pismid;
+    private String iupacName;
+    private String chemicalFormular;
+    private String molecularWeight;
+    private String alogP;
    // private String ThreeD_Structure;
-    private String Smiles;
-    private String ChemicalNames;
-    private String Function;
-    private String Mechanism;
-    private String Phenotype;
+    private String smiles;
+    private String chemicalNames;
+    private String function;
+    private String mechanism;
+    private String phenotype;
 //    private  String Address;
 
     public CompoundsBasicInformationBean(String PISMID, String IUPAC_Name, String ChemicalFormular, String AlogP,
                                          String Smiles,String chemicalNames,String Function,String Mechanism ,String Phenotype,
                                          String Address)  {
-        this.PISMID = PISMID;
-        this.IUPAC_Name = IUPAC_Name;
-        this.ChemicalFormular = ChemicalFormular;
+        this.pismid = PISMID;
+        this.iupacName = IUPAC_Name;
+        this.chemicalFormular = ChemicalFormular;
        // this.MolecularWeight = MolecularWeight;
-        this.AlogP = AlogP;
+        this.alogP = AlogP;
         //this.ThreeD_Structure = ThreeD_Structure;
-        this.Smiles = Smiles;
-        this.ChemicalNames=chemicalNames;
-        this.Function=Function;
-        this.Mechanism=Mechanism;
-        this.Phenotype=Phenotype;
+        this.smiles = Smiles;
+        this.chemicalNames=chemicalNames;
+        this.function=Function;
+        this.mechanism=Mechanism;
+        this.phenotype=Phenotype;
 //        this.Address=Address;
     }
 }

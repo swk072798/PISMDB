@@ -5,18 +5,18 @@ import lombok.Data;
 
 @Data
 public class CompoundSupportingInformation {
-    private String PISMID;
-    private String Function;
-    private String Mechanism;
-    private String Phenotype;
+    private String pismid;
+    private String function;
+    private String mechanism;
+    private String phenotype;
 
     @Override
     public String toString() {
         return "CompoundSupportingInformation{" +
-                "PISMID='" + PISMID + '\'' +
-                ", Function='" + Function + '\'' +
-                ", Mechanism='" + Mechanism + '\'' +
-                ", Phenotype='" + Phenotype + '\'' +
+                "PISMID='" + pismid + '\'' +
+                ", Function='" + function + '\'' +
+                ", Mechanism='" + mechanism + '\'' +
+                ", Phenotype='" + phenotype + '\'' +
                 '}';
     }
 }

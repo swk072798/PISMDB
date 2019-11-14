@@ -156,13 +156,13 @@ public class CompoundsController {
         for(int i=0;i<compoundsService.getCompoundsCount();i++){
         FormatData formatData=new FormatData();
         CompoundsRelatedCompounds compoundsRelatedCompounds=new CompoundsRelatedCompounds();
-        formatData.setId(list1.get(i).getPISMID());
-        formatData.setIdLink(list1.get(i).getPISMID());
+        formatData.setId(list1.get(i).getPismid());
+        formatData.setIdLink(list1.get(i).getPismid());
         formatData.setName(listc.get(i).getChemicalNames());
         formatData.setImgurl(listc.get(i).getStructure());
         formatData.setBasic(list1.get(i));
-        compoundsRelatedCompounds.setPISMID(list1.get(i).getPISMID());
-        compoundsRelatedCompounds.setCompoundsList(compoundsService.findRelatedById(list1.get(i).getPISMID()));
+        compoundsRelatedCompounds.setPismid(list1.get(i).getPismid());
+        compoundsRelatedCompounds.setCompoundsList(compoundsService.findRelatedById(list1.get(i).getPismid()));
         formatData.setRelated(compoundsRelatedCompounds);
         formatData.setPathway(list2.get(i));
         formatData.setSupporting(list4.get(i));
@@ -230,19 +230,13 @@ public class CompoundsController {
     @RequestMapping(value = "/upload_data", method = RequestMethod.POST)
     public String greetingSubmit(@ModelAttribute Compounds compounds/*HttpServletRequest request*/) {
         Compounds newCompounds = new Compounds();
-        newCompounds.setPISMID("PISM0"+String.valueOf(pid));
-//        newCompounds.setVersion(compounds.getVersion());
+        newCompounds.setPismid("PISM0"+String.valueOf(pid));
         newCompounds.setChemicalNames(compounds.getChemicalNames());
-        newCompounds.setIUPAC_Name(compounds.getIUPAC_Name());
+        newCompounds.setIupacName(compounds.getIupacName());
         newCompounds.setSmiles(compounds.getSmiles());
         pid++;
-        System.out.println(newCompounds.getPISMID());
-//        System.out.println(compounds.getChemicalNames());
-//        System.out.println(compounds.getSmiles());
-        //newCompounds.setSmiles(compounds.getSmiles());
-//      newCompounds.setPISMID(request.getParameter("PISMID"));
+        System.out.println(newCompounds.getPismid());
         userRepository.save(newCompounds);
-        //System.out.println("上传数据2"+ newCompounds.getPISMID());
         return "result";
 
     }
