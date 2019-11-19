@@ -66,7 +66,7 @@ public class TargetsController {
             } catch (IOException e) {
                 e.printStackTrace();
             }       //接收文件到resources下的文件夹中
-            List<FormatData<Targets>> result = blastpSearchProteinService.fileSearchProtein(new File("/src/main/resources/seqsearch/condition/"+file.getOriginalFilename()));
+            List<FormatData<Targets>> result = blastpSearchProteinService.fileSearchProtein(new File("D:\\PISMDB\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\seqsearch\\condition\\"+file.getOriginalFilename()));
             CallbackResult<List<FormatData<Targets>>> result1 = new CallbackResult();
             result1.setCallback(callback);
             result1.setData(result);

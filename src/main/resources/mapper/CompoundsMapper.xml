@@ -81,7 +81,7 @@
 
     <!--BasicI数据信息-->
     <resultMap id="Basic" type="com.nwafu.PISMDB.entity.CompoundsBasic">
-        <id column="PISMID" property="pismdb" jdbcType="VARCHAR"></id>
+        <id column="PISMID" property="pismid" jdbcType="VARCHAR"></id>
         <result column="IUPAC_Name" property="iupacName" jdbcType="VARCHAR"></result>
         <result column="ChemicalFormular" property="chemicalFormular" jdbcType="VARCHAR"></result>
         <result column="MolecularWeight" property="molecularWeight" jdbcType="VARCHAR"></result>

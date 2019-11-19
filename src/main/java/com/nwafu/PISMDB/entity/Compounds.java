@@ -15,9 +15,9 @@ public class Compounds {
     @Id
     private String pismid;
     @Column(name="targetid")
-    private String targetId;
+    private String targetID;
     @Column(name="pathwayid")
-    private String pathwayId;
+    private String pathwayID;
     @Column
     private String version;
     @Column(name="creationdate")
@@ -65,8 +65,8 @@ public class Compounds {
     public String toString() {
         return "Compounds{" +
                 "PISMID='" + pismid + '\'' +
-                ", TargetID='" + targetId + '\'' +
-                ", PathwayID='" + pathwayId + '\'' +
+                ", TargetID='" + targetID + '\'' +
+                ", PathwayID='" + pathwayID + '\'' +
                 ", Version='" + version + '\'' +
                 ", CreationDate='" + creationDate + '\'' +
                 ", UpdateDate2='" + updateDate + '\'' +
