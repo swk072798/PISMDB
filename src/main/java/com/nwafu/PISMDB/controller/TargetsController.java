@@ -51,7 +51,7 @@ public class TargetsController {
     * @Author: liu qinchang
     * @Date: 2019/9/30 
     */
-    @GetMapping("/seqSearchByFile")
+    @PostMapping("/seqSearchByFile")
     @ResponseBody
     public String seqSearchByFile(@RequestParam String callback,@RequestParam MultipartFile file){
         if(!file.isEmpty()){
