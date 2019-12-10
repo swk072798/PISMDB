@@ -1,4 +1,4 @@
-package com.nwafu.PISMDB;
+package com.nwafu.PISMDB.config;
 
 import com.nwafu.PISMDB.service.impl.ConnectServerAndChangeFileServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * @create: 2019-10-15 11:51
  **/
 
-//@Component
+@Component
 @Slf4j
 public class ConnectDragonServer implements ApplicationRunner {
     @Value("${Dragon.url}")
@@ -37,7 +37,7 @@ public class ConnectDragonServer implements ApplicationRunner {
         csacf.setUsername(username);
         csacf.setPsw(psw);
         if(port.equals("")){
-            csacf.setPort(0);
+            csacf.setPort(22);
         }
         else{
             csacf.setPort(Integer.parseInt(port));

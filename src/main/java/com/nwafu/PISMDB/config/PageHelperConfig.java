@@ -1,4 +1,4 @@
-package com.nwafu.PISMDB;
+package com.nwafu.PISMDB.config;
 
 import java.util.Properties;
 

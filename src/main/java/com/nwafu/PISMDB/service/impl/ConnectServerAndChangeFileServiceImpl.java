@@ -4,9 +4,13 @@ import com.jcraft.jsch.*;
 import com.nwafu.PISMDB.service.ConnectServerAndChangeFileService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.dom4j.*;
+import org.dom4j.io.SAXReader;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.rmi.ServerException;
 import java.util.Properties;
 
 /**
@@ -106,9 +110,11 @@ public class ConnectServerAndChangeFileServiceImpl implements ConnectServerAndCh
         } catch (FileNotFoundException e) {
             log.error("待计算描述符的本地文件不存在");
             e.printStackTrace();
+            return false;
         } catch (SftpException e) {
             log.error("sftp 异常");
             e.printStackTrace();
+            return false;
         }
         finally {
             if(in != null){
@@ -117,6 +123,7 @@ public class ConnectServerAndChangeFileServiceImpl implements ConnectServerAndCh
                 } catch (IOException e) {
                     log.error("in 关闭异常？？？");
                     e.printStackTrace();
+                    return false;
                 }
             }
         }
@@ -124,8 +131,38 @@ public class ConnectServerAndChangeFileServiceImpl implements ConnectServerAndCh
     }
 
     @Override
-    public boolean caculateMolecularDescriptor() {
-        return false;
+    public boolean caculateMolecularDescriptor(String uploadFilePath, String localFilePath) throws ServerException {
+        boolean uploadStatus = uploadFile(uploadFilePath,localFilePath);
+        if(uploadStatus == false){
+            throw new ServerException("文件上传dragon服务器失败");
+        }
+        try {
+            makeXMLScript(uploadFilePath);
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+        ChannelExec channelExec = null;
+        if(sshSession != null){
+            try {
+                channelExec = (ChannelExec) sshSession.openChannel("exec");
+                channelExec.setCommand("");
+                log.info("dragon服务器执行指令：{}","23333");
+                channelExec.setInputStream(null);
+                channelExec.setErrStream(System.err);
+                channelExec.connect();
+
+            } catch (JSchException e) {
+                e.printStackTrace();
+            }
+            finally {
+                if(channelExec != null){
+                    channelExec.disconnect();
+                }
+            }
+        }
+        dowloadResultFile(uploadFilePath,localFilePath);
+
+        return true;
     }
 
     @Override
@@ -163,6 +200,26 @@ public class ConnectServerAndChangeFileServiceImpl implements ConnectServerAndCh
 
     @Override
     public void deleteCacheFiles() {
+
+    }
+
+    @Override
+    public void makeXMLScript(String uploadFilePath) throws DocumentException {
+        SAXReader reader = new SAXReader();
+        Document document = reader.read(new File("src/main/java/resources/structure-files/script-test.drs"));
+        Element root = document.getRootElement();
+
+        Element molFiles = root.element("MOLFILES");
+        Element molFile = molFiles.element("molFile");
+        Attribute fileAtt = molFile.attribute("value");
+        fileAtt.setValue(uploadFilePath);
+
+        Element output = root.element("OUTPUT");
+        Element saveFilePath = output.element("SaveFilePath");
+        Attribute outputPath = saveFilePath.attribute("value");
+        outputPath.setValue("....");
+
+        uploadFile(uploadFilePath,"src/main/java/resources/structure-files/script-test.drs");
 
     }
 }
