@@ -1,4 +1,4 @@
-package com.nwafu.PISMDB.config;
+package com.nwafu.PISMDB;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
@@ -9,8 +9,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * 配置静态资源
  */
 
-@Component
-@Configuration
+//@Component
+//@Configuration
 public class WebConfigure implements WebMvcConfigurer {
     // 这个方法是用来配置静态资源的，比如html，js，css，等等
     @Override

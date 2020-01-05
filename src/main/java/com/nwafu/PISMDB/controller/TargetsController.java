@@ -51,13 +51,14 @@ public class TargetsController {
     * @Author: liu qinchang
     * @Date: 2019/9/30 
     */
-    @PostMapping("/seqSearchByFile")
+    @RequestMapping("/seqSearchByFile")
     @ResponseBody
-    public String seqSearchByFile(@RequestParam String callback,@RequestParam MultipartFile file){
+    public List<FormatData<Targets>> seqSearchByFile(@RequestParam("file") MultipartFile file){
+        log.info("上传文件的名称：{}",file.getOriginalFilename());
         if(!file.isEmpty()){
             try {
                 BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(
-                        new File("/src/main/resources/seqsearch/condition/"+file.getOriginalFilename())));
+                        new File("D:\\PISMDB\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\seqsearch\\condition\\"+file.getOriginalFilename())));
                 out.write(file.getBytes());
                 out.flush();
                 out.close();
@@ -66,11 +67,13 @@ public class TargetsController {
             } catch (IOException e) {
                 e.printStackTrace();
             }       //接收文件到resources下的文件夹中
-            List<FormatData<Targets>> result = blastpSearchProteinService.fileSearchProtein(new File("D:\\PISMDB\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\seqsearch\\condition\\"+file.getOriginalFilename()));
-            CallbackResult<List<FormatData<Targets>>> result1 = new CallbackResult();
-            result1.setCallback(callback);
-            result1.setData(result);
-            return result1.changToJsonp();
+            File fastaFile = new File("D:\\PISMDB\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\seqsearch\\condition\\"+file.getOriginalFilename());
+           log.info("controller中的文件路径为：{}",fastaFile.getAbsolutePath());
+            List<FormatData<Targets>> result = blastpSearchProteinService.fileSearchProtein(fastaFile);
+//            CallbackResult<List<FormatData<Targets>>> result1 = new CallbackResult();
+//            result1.setCallback(callback);
+//            result1.setData(result);
+            return result;
         }
         else{
             log.info("接收文件为空");

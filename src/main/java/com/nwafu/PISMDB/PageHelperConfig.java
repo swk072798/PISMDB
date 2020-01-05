@@ -1,4 +1,4 @@
-package com.nwafu.PISMDB.config;
+package com.nwafu.PISMDB;
 
 import java.util.Properties;
 
@@ -6,9 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.github.pagehelper.PageHelper;
 
-@Configuration
+//@Configuration
 public class PageHelperConfig {
-    @Bean
+//    @Bean
     public PageHelper pageHelper() {
         PageHelper pageHelper = new PageHelper();
         Properties p = new Properties();

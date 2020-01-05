@@ -13,7 +13,7 @@ import javax.annotation.PreDestroy;
  * @create: 2019-10-16 10:10
  **/
 @Slf4j
-@Component
+//@Component
 public class DestroyConnection {
 
     @PreDestroy

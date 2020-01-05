@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * @create: 2019-10-15 11:51
  **/
 
-@Component
+//@Component
 @Slf4j
 public class ConnectDragonServer implements ApplicationRunner {
     @Value("${Dragon.url}")

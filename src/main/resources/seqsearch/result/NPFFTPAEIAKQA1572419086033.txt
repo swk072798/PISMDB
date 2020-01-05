@@ -1,0 +1,16 @@
+# BLASTP 2.4.0+
+# Query: 
+# Database: D:\blast-2.4.0+\bin\pismdb
+# Fields: bit score, evalue, % query coverage per subject, % identity, subject acc., subject title
+# 10 hits found
+571	0.0	100	98.644	Q42524	4-coumarate--CoA ligase 1 OS=Arabidopsis thaliana OX=3702 GN=4CL1 PE=1 SV=1
+23.2	0.83	19	25.000	Q9FHD7	Serine/threonine-protein kinase BSK8 OS=Arabidopsis thaliana OX=3702 GN=BSK8 PE=1 SV=1
+21.8	2.7	24	26.087	Q9LJX0	ABC transporter B family member 19 OS=Arabidopsis thaliana OX=3702 GN=ABCB19 PE=1 SV=1
+21.5	2.8	24	26.087	A0A178V9I8	PGP19 OS=Arabidopsis thaliana OX=3702 GN=AXX17_At3g31560 PE=4 SV=1
+20.4	4.9	8	39.130	O80992	Abscisic acid receptor PYL2 OS=Arabidopsis thaliana OX=3702 GN=PYL2 PE=1 SV=1
+20.4	5.7	8	40.909	O22820	Flavonol 7-O-beta-glucosyltransferase UGT74F1 OS=Arabidopsis thaliana OX=3702 GN=UGT74F1 PE=1 SV=1
+20.4	5.7	22	27.536	Q96247	Auxin transporter protein 1 OS=Arabidopsis thaliana OX=3702 GN=AUX1 PE=1 SV=1
+20.2	6.9	25	27.397	Q9LM02	Cycloartenol-C-24-methyltransferase OS=Arabidopsis thaliana OX=3702 GN=SMT1 PE=1 SV=1
+19.9	9.4	3	70.000	Q9C5X4	Histone-lysine N-methyltransferase ATX1 OS=Arabidopsis thaliana OX=3702 GN=ATX1 PE=1 SV=2
+19.9	9.9	14	27.500	O65718	Cyclic nucleotide-gated ion channel 2 OS=Arabidopsis thaliana OX=3702 GN=CNGC2 PE=1 SV=1
+# BLAST processed 1 queries

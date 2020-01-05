@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.rmi.ServerException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -73,8 +74,12 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
 //        catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
-        while(resultFile.length() == 0){
-
+//        while(resultFile.length() == 0){
+//
+//        }
+        if(resultFile.length() == 0){
+            log.info("生成结果文件失败");
+            return null;
         }
 
         ArrayList<String> txt = new ArrayList();

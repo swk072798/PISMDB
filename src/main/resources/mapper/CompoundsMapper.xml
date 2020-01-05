@@ -3,8 +3,8 @@
 <mapper namespace="com.nwafu.PISMDB.dao.CompoundsDao">
     <resultMap id="CompoundsMap" type="com.nwafu.PISMDB.entity.Compounds">
         <id column="PISMID" property="pismid" jdbcType="VARCHAR"></id>
-        <result column="TargetID" property="targetID" jdbcType="VARCHAR"></result>
-        <result column="PathwayID" property="pathwayID" jdbcType="VARCHAR"></result>
+        <result column="TargetID" property="targetId" jdbcType="VARCHAR"></result>
+        <result column="PathwayID" property="pathwayId" jdbcType="VARCHAR"></result>
         <result column="Version" property="version" jdbcType="VARCHAR"></result>
         <result column="CreationDate" property="creationDate" jdbcType="VARCHAR"></result>
         <result column="UpdateDate" property="updateDate" jdbcType="VARCHAR"></result>
