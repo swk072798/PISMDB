@@ -1,6 +1,7 @@
 package com.nwafu.PISMDB.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,14 +22,21 @@ import java.io.File;
 @Slf4j
 public class DeleteCacheFiles {
 
+    @Value("${blast.junkPath1}")
+    private String dir1;
+
+    @Value("${blast.junkPath2}")
+    private String dir2;
+
+    @Value("${blast.junkPath3}")
+    private String dir3;
+
     @Scheduled(fixedDelay = 300000)     //定时任务每5分钟删除一次缓存
     public void deleteSeqSearchCache(){
-        String dir1Path = "src/main/resources/seqsearch/condition";
-        String dir2Path = "src/main/resources/seqsearch/exchangedfasta";
-        String dir3Path = "src/main/resources/seqsearch/result";
-        File[] dir1Files = new File(dir1Path).listFiles();
-        File[] dir2Files = new File(dir2Path).listFiles();
-        File[] dir3Files = new File(dir3Path).listFiles();
+
+        File[] dir1Files = new File(dir1).listFiles();
+        File[] dir2Files = new File(dir2).listFiles();
+        File[] dir3Files = new File(dir3).listFiles();
 
         Thread thread1 = new Thread(new DeleteThread(dir1Files));
         Thread thread2 = new Thread(new DeleteThread(dir2Files));
