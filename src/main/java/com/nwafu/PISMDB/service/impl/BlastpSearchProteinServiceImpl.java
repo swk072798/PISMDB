@@ -39,7 +39,7 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
     @Value("${blast.changedfasta}")
     private String changedfastaFile;
     @Value("${blast.result}")
-    private String resultFile;
+    private String resultFilePath;
     @Value("${blast.local}")
     private String blastLocalPath;
 
@@ -53,7 +53,7 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
         long nowTime = System.currentTimeMillis();
         File resultFile = null;
         try {
-            resultFile = new File(resultFile + fastaFile.getName().split("\\.")[0] +".txt");     //服务器端用这个
+            resultFile = new File(resultFilePath + fastaFile.getName().split("\\.")[0] +".txt");     //服务器端用这个
 //            resultFile = new File("D:\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\seqsearch\\result\\" + fastaFile.getName().split("\\.")[0] +".txt");     //本地端tomcat用这个
             log.info("结果文件位置：{}",resultFile.getAbsolutePath());
             log.info("待查询的fasta文件位置,{}",fastaFile.getAbsolutePath());
@@ -169,7 +169,7 @@ public class BlastpSearchProteinServiceImpl implements BlastpSearchProteinServic
         File fastaFile = null;
         try {
 //            log.info("{},{}",changedfastaFile,the);
-            fastaFile = new File(changedfastaFile, fileName);      //服务器端用这个
+            fastaFile = new File(changedfastaFile + fileName);      //服务器端用这个
 //            fastaFile = new File("D:\\Tomcat\\apache-tomcat-9.0.27\\webapps\\PISMDB-0.0.1-SNAPSHOT\\WEB-INF\\classes\\seqsearch\\exchangedfasta",fileName);        //本地端tomcat用这个
 
             log.info("fastaFile:{}",fastaFile.getAbsolutePath());
